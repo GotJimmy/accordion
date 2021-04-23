@@ -1,6 +1,6 @@
 name: accordion
 description: Accordion widget to display a list of expandable items with opening/closing and scroll-into-view animations.
-version: 0.0.1
+version: 1.0.0
 homepage: https://www.vulcansoft.com
 
 environment:

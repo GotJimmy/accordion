@@ -34,8 +34,9 @@ mixin VSCommonAccordionProps {
 
 class Accordion extends StatelessWidget with VSCommonAccordionProps {
   final List<AccordionSection>? children;
-  late final double? _paddingListHorizontal;
-  late final double? _paddingListTop;
+  late final double _paddingListHorizontal;
+  late final double _paddingListTop;
+  late final double _paddingListBottom;
 
   Accordion({
     int? maxOpenSections,
@@ -55,6 +56,7 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
     double? contentHorizontalPadding,
     double? contentVerticalPadding,
     double? paddingListTop,
+    double? paddingListBottom,
     double? paddingListHorizontal,
     EdgeInsets? headerPadding,
     double? paddingBetweenOpenSections,
@@ -62,8 +64,8 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
     ScrollIntoViewOfItems? scrollIntoViewOfItems,
   }) {
     this._headerBackgroundColor = headerBackgroundColor;
-    this._headerBorderRadius = headerBorderRadius;
-    this._headerTextAlign = headerTextAlign;
+    this._headerBorderRadius = headerBorderRadius ?? 30;
+    this._headerTextAlign = headerTextAlign ?? TextAlign.left;
     this._headerTextStyle = headerTextStyle;
     this._leftIcon = leftIcon;
     this._rightIcon = rightIcon;
@@ -72,10 +74,11 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
     this._contentBorderColor = contentBorderColor;
     this._contentBorderWidth = contentBorderWidth;
     this._contentBorderStyle = contentBorderStyle;
-    this._contentBorderRadius = contentBorderRadius;
+    this._contentBorderRadius = contentBorderRadius ?? 20;
     this._contentHorizontalPadding = contentHorizontalPadding;
     this._contentVerticalPadding = contentVerticalPadding;
     this._paddingListTop = paddingListTop ?? 20.0;
+    this._paddingListBottom = paddingListBottom ?? 40.0;
     this._paddingListHorizontal = paddingListHorizontal ?? 10.0;
     this._headerPadding = headerPadding ?? EdgeInsets.symmetric(horizontal: 20, vertical: 10);
     this._paddingBetweenOpenSections = paddingBetweenOpenSections ?? 10;
@@ -100,30 +103,32 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
       child: ListView(
         controller: listCtrl.controller,
         padding: EdgeInsets.only(
-          top: _paddingListTop!,
-          right: _paddingListHorizontal!,
-          left: _paddingListHorizontal!,
+          top: _paddingListTop,
+          bottom: _paddingListBottom,
+          right: _paddingListHorizontal,
+          left: _paddingListHorizontal,
         ),
         cacheExtent: 100000,
         children: children!.map(
           (child) {
-            var key = UniqueKey();
-            if (child.isOpen ?? false) listCtrl.openSections.add(key);
+            final key = UniqueKey();
+
+            if (child.isOpen) listCtrl.openSections.add(key);
 
             return AutoScrollTag(
               key: ValueKey(key),
               controller: listCtrl.controller,
               index: index,
               child: AccordionSection(
-                // key: key,
+                key: key,
                 index: index++,
                 isOpen: child.isOpen,
                 scrollIntoViewOfItems: _scrollIntoViewOfItems,
                 headerBackgroundColor: child._headerBackgroundColor ?? _headerBackgroundColor,
-                headerBorderRadius: child._headerBorderRadius ?? _headerBorderRadius ?? 10,
+                headerBorderRadius: child._headerBorderRadius ?? _headerBorderRadius,
                 headerText: child.headerText,
                 headerTextStyle: child._headerTextStyle ?? _headerTextStyle,
-                headerTextAlign: child._headerTextAlign ?? _headerTextAlign ?? TextAlign.left,
+                headerTextAlign: child._headerTextAlign ?? _headerTextAlign,
                 headerPadding: child._headerPadding ?? _headerPadding,
                 leftIcon: child._leftIcon ?? _leftIcon,
                 rightIcon: child._rightIcon ??
@@ -154,15 +159,16 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
 }
 
 class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
-  final UniqueKey? key = UniqueKey();
-  late final int? index;
-  late final bool? isOpen;
-  late final String headerText;
-  late final Widget? content;
-  late final SectionController _sectionCtrl;
-  final _firstRun = true.obs;
+  UniqueKey? key = UniqueKey();
+  int index;
+  bool isOpen;
+  String headerText;
+  Widget content;
+  late SectionController _sectionCtrl;
+  bool _firstRun = true;
 
   AccordionSection({
+    this.key,
     this.index = 0,
     this.isOpen = false,
     required this.headerText,
@@ -213,10 +219,10 @@ class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
   get _isOpen {
     final open = listCtrl.openSections.contains(key);
     Timer(
-      _firstRun.value ? (min(index! * 200, 1000)).milliseconds : 0.seconds,
+      _firstRun ? (min(index * 200, 1000)).milliseconds : 0.seconds,
       () {
         _sectionCtrl.controller.fling(velocity: open ? 1 : -1, springDescription: springFast);
-        _firstRun.value = false;
+        _firstRun = false;
       },
     );
     return open;
@@ -233,9 +239,9 @@ class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
 
               if (_isOpen && _scrollIntoViewOfItems != ScrollIntoViewOfItems.none)
                 Timer(
-                  0.25.seconds,
+                  0.5.seconds,
                   () {
-                    listCtrl.controller.scrollToIndex(index ?? 0,
+                    listCtrl.controller.scrollToIndex(index,
                         preferPosition: AutoScrollPosition.middle,
                         duration: (_scrollIntoViewOfItems == ScrollIntoViewOfItems.fast ? .5 : 1).seconds);
                   },
@@ -279,7 +285,6 @@ class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
               child: ScaleTransition(
                 scale: _sectionCtrl.controller,
                 child: Center(
-                  //info  outer container for border
                   child: Container(
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
@@ -327,7 +332,7 @@ class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
 }
 
 class ListController extends GetxController {
-  late final controller = AutoScrollController(axis: Axis.vertical);
+  final controller = AutoScrollController(axis: Axis.vertical);
   final openSections = <UniqueKey>[].obs;
   int maxOpenSections = 1;
 

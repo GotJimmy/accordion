@@ -8,6 +8,9 @@
 .buildlog/
 .history
 .svn/
+.dart_tool/
+.git/
+.vscode
 
 # IntelliJ related
 *.iml
