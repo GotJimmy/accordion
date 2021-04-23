@@ -52,32 +52,32 @@ class AccordionPage extends StatelessWidget //__
               content: Icon(Icons.contact_page, size: 300, color: Colors.grey),
             ),
             AccordionSection(
-              isOpen: true,
+              isOpen: false,
               headerText: 'Technical Jobs',
               content: Icon(Icons.computer, size: 200, color: Colors.amber),
             ),
             AccordionSection(
-              isOpen: true,
+              isOpen: false,
               headerText: 'Administrative Jobs',
               content: Icon(Icons.emoji_people, size: 200, color: Colors.amber),
             ),
             AccordionSection(
-              isOpen: true,
+              isOpen: false,
               headerText: 'Culture',
               content: Icon(Icons.calculate_rounded, size: 200, color: Colors.green),
             ),
             AccordionSection(
-              isOpen: true,
+              isOpen: false,
               headerText: 'Community',
               content: Icon(Icons.commute_outlined, size: 200, color: Colors.blueAccent),
             ),
             AccordionSection(
-              isOpen: true,
+              isOpen: false,
               headerText: 'Friends Of Us',
               content: Icon(Icons.child_friendly, size: 200, color: Colors.red),
             ),
             AccordionSection(
-              isOpen: true,
+              isOpen: false,
               headerText: 'Map',
               content: Icon(Icons.map, size: 200, color: Colors.blue),
             ),

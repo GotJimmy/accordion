@@ -1,10 +1,10 @@
 name: accordion
 description: Accordion widget to display a list of expandable items with opening/closing and scroll-into-view animations.
-version: 1.0.0
+version: 1.0.1
 homepage: https://www.vulcansoft.com
 
 environment:
-  sdk: ">=2.12.3 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
   flutter: ">=2.0.5"
 
 dependencies:
