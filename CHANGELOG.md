@@ -2,7 +2,6 @@
 * fixed dependencies
 * added null safety
 * fixed static analysis problems
-* added platforms
 * fixed problem with dartdoc
 
 ## [1.0.0]

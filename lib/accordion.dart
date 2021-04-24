@@ -23,7 +23,6 @@ mixin VSCommonAccordionProps {
   late final Color? _contentBackgroundColor;
   late final Color? _contentBorderColor;
   late final double? _contentBorderWidth;
-  late final BorderStyle? _contentBorderStyle;
   late final double? _contentBorderRadius;
   late final double? _contentHorizontalPadding;
   late final double? _contentVerticalPadding;
@@ -51,7 +50,6 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
     Color? contentBackgroundColor,
     Color? contentBorderColor,
     double? contentBorderWidth,
-    BorderStyle? contentBorderStyle,
     double? contentBorderRadius,
     double? contentHorizontalPadding,
     double? contentVerticalPadding,
@@ -73,7 +71,6 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
     this._contentBackgroundColor = contentBackgroundColor;
     this._contentBorderColor = contentBorderColor;
     this._contentBorderWidth = contentBorderWidth;
-    this._contentBorderStyle = contentBorderStyle;
     this._contentBorderRadius = contentBorderRadius ?? 20;
     this._contentHorizontalPadding = contentHorizontalPadding;
     this._contentVerticalPadding = contentVerticalPadding;
@@ -145,7 +142,6 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
                 contentBackgroundColor: child._contentBackgroundColor ?? _contentBackgroundColor,
                 contentBorderColor: child._contentBorderColor ?? _contentBorderColor,
                 contentBorderWidth: child._contentBorderWidth ?? _contentBorderWidth,
-                contentBorderStyle: child._contentBorderStyle ?? _contentBorderStyle,
                 contentBorderRadius: child._contentBorderRadius ?? _contentBorderRadius,
                 contentHorizontalPadding: child._contentHorizontalPadding ?? _contentHorizontalPadding,
                 contentVerticalPadding: child._contentVerticalPadding ?? _contentVerticalPadding,
@@ -184,7 +180,6 @@ class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
     Color? contentBackgroundColor,
     Color? contentBorderColor,
     double? contentBorderWidth,
-    BorderStyle? contentBorderStyle,
     double? contentBorderRadius,
     double? contentHorizontalPadding,
     double? contentVerticalPadding,
@@ -205,7 +200,6 @@ class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
     this._contentBackgroundColor = contentBackgroundColor;
     this._contentBorderColor = contentBorderColor;
     this._contentBorderWidth = contentBorderWidth;
-    this._contentBorderStyle = contentBorderStyle;
     this._contentBorderRadius = contentBorderRadius;
     this._contentHorizontalPadding = contentHorizontalPadding ?? 10;
     this._contentVerticalPadding = contentVerticalPadding ?? 10;
