@@ -17,9 +17,9 @@ Enjoy!
 <br>
 
 
-|                                                                                             |                                                                                              |
-| :-----------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------------------- |
-| ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/example/accordion_demo.gif) | ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/example/accordion_demo2.gif) |
+|                                                                                            |                                                                                             |
+| :----------------------------------------------------------------------------------------: | ------------------------------------------------------------------------------------------- |
+| ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/assets/accordion_demo.gif) | ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/assets/accordion_demo2.gif) |
 
 
 <br>
