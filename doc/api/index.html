@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 0.42.0">
+  <meta name="description" content="accordion API docs, for the Dart programming language.">
+  <title>accordion - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+  
+</head>
+
+
+<body data-base-href=""
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://www.vulcansoft.com">accordion package</a></li>
+  </ol>
+  <div class="self-name">accordion</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="https://www.vulcansoft.com">accordion package</a></li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">accordion</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="accordion/accordion-library.html">accordion</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="accordion">accordion</h1>
+<p>Accordion widget to display a list of expandable items with opening/closing and scroll-into-view animations.</p><br>
+<p>Simple to use accordion widget with lots of preset properties. Use the <code>maxOpenSections</code> property to automatically close sections when opening a new section. This is especially helpful if you always want your list to look clean -- just set this parameter to 1 and whenever you open a new section the previous one closes. <code>scrollIntoView</code> paramter can be set to <code>fast</code>, <code>slow</code>, or <code>none</code>. This parameter will only take affect if there are enough items in the list so scrolling is feasible.</p>
+<p>Many parameters can be set globally on <code>Accordion</code> as well as individually on each <code>AccordionSection</code> (see list below).</p>
+<p>The header consists of the left and right icons (right icon is preset to arrow down). Both can be set globally and individually. The headerText parameter is required and needs to be set for each <code>AccordionSection</code>.</p>
+<p>The content area basically provides the container in which you drop whatever you want to display when <code>AccordionSection</code> opens. Background and borders can be set globally or individually per section.</p>
+<p>Enjoy!</p><br>
+<table><thead><tr><th style="text-align: center;"></th><th></th></tr></thead><tbody><tr><td style="text-align: center;"><img src="https://raw.githubusercontent.com/GotJimmy/accordion/master/example/accordion_demo.gif" alt=""></td><td><img src="https://raw.githubusercontent.com/GotJimmy/accordion/master/example/accordion_demo2.gif" alt=""></td></tr></tbody></table><br>
+<h2 id="sample-code">Sample Code</h2>
+<pre class="language-dart"><code class="language-dart">Accordion(
+	maxOpenSections: 2,
+	headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+	leftIcon: Icon(Icons.audiotrack, color: Colors.white),
+	children: [
+	AccordionSection(
+		isOpen: true,
+		headerText: 'Introduction',
+		content: Text('This is the introduction right here ...'),
+	),
+	AccordionSection(
+		isOpen: true,
+		headerText: 'About Us',
+		content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
+	),
+	AccordionSection(
+		isOpen: true,
+		headerText: 'Company Info',
+		content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
+	),
+	],
+),
+</code></pre><br>
+<h2 id="common-properties">Common Properties</h2>
+<p>The following properties can be set globally for all sections or for each section individually:</p>
+<table><thead><tr><th style="text-align: right;">Property</th><th style="text-align: left;">Description</th><th style="text-align: center;">Type</th><th style="text-align: center;">Required</th><th>Default value</th></tr></thead><tbody><tr><td style="text-align: right;">headerBackgroundColor</td><td style="text-align: left;">background color of the section header</td><td style="text-align: center;">Color</td><td style="text-align: center;">no</td><td>primaryColor (of theme)</td></tr><tr><td style="text-align: right;">headerBorderRadius</td><td style="text-align: left;">border radius of the section header</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>30</td></tr><tr><td style="text-align: right;">headerTextAlign</td><td style="text-align: left;">alignment of the title in the section header</td><td style="text-align: center;">TextAlign</td><td style="text-align: center;">no</td><td>TextAlign.left</td></tr><tr><td style="text-align: right;">headerTextStyle</td><td style="text-align: left;">text style of the title in the section header</td><td style="text-align: center;">TextStyle</td><td style="text-align: center;">no</td><td>TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)</td></tr><tr><td style="text-align: right;">headerPadding</td><td style="text-align: left;">padding of the title in the section header</td><td style="text-align: center;">EdgeInsets</td><td style="text-align: center;">no</td><td>EdgeInsets.symmetric(horizontal: 20, vertical: 10)</td></tr><tr><td style="text-align: right;">leftIcon</td><td style="text-align: left;">widget to the left of the title in the section header</td><td style="text-align: center;">Widget</td><td style="text-align: center;">no</td><td>null</td></tr><tr><td style="text-align: right;">rightIcon</td><td style="text-align: left;">widget to the right of the title in the section header</td><td style="text-align: center;">Widget</td><td style="text-align: center;">no</td><td>Icon(Icons.keyboard_arrow_down, color: Colors.white60, size:  20)</td></tr><tr><td style="text-align: right;">flipRightIconIfOpen</td><td style="text-align: left;">if the right icon in the header should be flipped when section is open</td><td style="text-align: center;">bool</td><td style="text-align: center;">no</td><td>true</td></tr><tr><td style="text-align: right;">contentBackgroundColor</td><td style="text-align: left;">background color of the content part of the section</td><td style="text-align: center;">Color</td><td style="text-align: center;">no</td><td>Colors.white</td></tr><tr><td style="text-align: right;">contentBorderColor</td><td style="text-align: left;">border color of the content part of the section</td><td style="text-align: center;">Color</td><td style="text-align: center;">no</td><td>Colors.white</td></tr><tr><td style="text-align: right;">contentBorderWidth</td><td style="text-align: left;">border width of the content part of the section</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>0</td></tr><tr><td style="text-align: right;">contentBorderRadius</td><td style="text-align: left;">border radius of the content part of the section</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>20</td></tr><tr><td style="text-align: right;">contentHorizontalPadding</td><td style="text-align: left;">horizontal padding within the content part of the section</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>10</td></tr><tr><td style="text-align: right;">contentVerticalPadding</td><td style="text-align: left;">vertical padding within the content part of the section</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>10</td></tr><tr><td style="text-align: right;">paddingBetweenClosedSections</td><td style="text-align: left;">padding below closed sections</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>3</td></tr><tr><td style="text-align: right;">paddingBetweenOpenSections</td><td style="text-align: left;">padding below an open section to visually make it stand out more</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>10</td></tr><tr><td style="text-align: right;">scrollIntoViewOfItems</td><td style="text-align: left;">if a section should automatically be scrolled to the center of the list when opened</td><td style="text-align: center;">ScrollIntoViewOfItems</td><td style="text-align: center;">no</td><td>ScrollIntoViewOfItems.fast</td></tr><tr><td style="text-align: right;">initialOpeningSequenceDelay</td><td style="text-align: left;">the delay in milliseconds (when the entire accordion loads) before the individual sections open one after another. Helpful if you go to a new page in your app and then (after the delay) have a nice opening sequence.</td><td style="text-align: center;">int</td><td style="text-align: center;">no</td><td>0</td></tr></tbody></table>
+<p><br><br></p>
+<h2 id="properties-for-accordion">Properties for <code>Accordion</code></h2>
+<table><thead><tr><th style="text-align: right;">Property</th><th style="text-align: left;">Description</th><th style="text-align: center;">Type</th><th style="text-align: center;">Required</th><th>Default value</th></tr></thead><tbody><tr><td style="text-align: right;">maxOpenSections</td><td style="text-align: left;">maximum number of open sections at any given time. Opening a new section will close the "oldest" open section</td><td style="text-align: center;">int</td><td style="text-align: center;">no</td><td>1</td></tr><tr><td style="text-align: right;">children</td><td style="text-align: left;">the list of <code>AccordionSection</code></td><td style="text-align: center;">List<accordionsection></accordionsection></td><td style="text-align: center;">YES</td><td>[]</td></tr><tr><td style="text-align: right;">paddingListTop</td><td style="text-align: left;">padding of the <code>Accordion</code> list at the top</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>20.0</td></tr><tr><td style="text-align: right;">paddingListBottom</td><td style="text-align: left;">padding of the <code>Accordion</code> list at the bottom</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>40.0</td></tr><tr><td style="text-align: right;">paddingListHorizontal</td><td style="text-align: left;">horizontal padding of the <code>Accordion</code> list</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>10.0</td></tr></tbody></table>
+<p><br><br></p>
+<h2 id="properties-for-accordionsection">Properties for <code>AccordionSection</code></h2>
+<table><thead><tr><th style="text-align: right;">Property</th><th style="text-align: left;">Description</th><th style="text-align: center;">Type</th><th style="text-align: center;">Required</th><th>Default value</th></tr></thead><tbody><tr><td style="text-align: right;">isOpen</td><td style="text-align: left;">if this section should initially be displayed open or not</td><td style="text-align: center;">bool</td><td style="text-align: center;">no</td><td>false</td></tr><tr><td style="text-align: right;">headerText</td><td style="text-align: left;">the title text</td><td style="text-align: center;">String</td><td style="text-align: center;">YES</td><td>""</td></tr><tr><td style="text-align: right;">content</td><td style="text-align: left;">the widget you want to display as the visible content when the section is open</td><td style="text-align: center;">Widget</td><td style="text-align: center;">YES</td><td></td></tr><tr><td style="text-align: right;">paddingListBottom</td><td style="text-align: left;">padding of the <code>Accordion</code> list at the bottom</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>40.0</td></tr><tr><td style="text-align: right;">paddingListHorizontal</td><td style="text-align: left;">horizontal padding of the <code>Accordion</code> list</td><td style="text-align: center;">double</td><td style="text-align: center;">no</td><td>10.0</td></tr></tbody></table>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="accordion">
+  <span class="name"><a href="accordion/accordion-library.html">accordion</a></span> 
+
+</dt>
+<dd>Copyright 2021 Christian Gotschim. <a href="accordion/accordion-library.html">[...]</a>
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    accordion
+      1.0.3
+  </span>
+
+  
+</footer>
+
+
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+
+</body>
+
+</html>
+

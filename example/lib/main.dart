@@ -27,7 +27,7 @@ class AccordionPage extends StatelessWidget //__
           title: Text('Accordion'),
         ),
         body: Accordion(
-          maxOpenSections: 3,
+          maxOpenSections: 1,
           headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
           leftIcon: Icon(Icons.audiotrack, color: Colors.white),
           children: [
@@ -85,4 +85,3 @@ class AccordionPage extends StatelessWidget //__
         ),
       );
 }//__
-

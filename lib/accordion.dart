@@ -1,3 +1,53 @@
+/// Copyright 2021 Christian Gotschim.
+///
+/// Published under the new BSD license.
+///
+/// Simple to use accordion widget with lots of preset properties.
+///
+/// Use the `maxOpenSections` property to automatically close sections
+/// when opening a new section. This is especially helpful if you
+/// always want your list to look clean -- just set this parameter
+/// to 1 and whenever you open a new section the previous one closes.
+///
+/// `scrollIntoView` paramter can be set to `fast`, `slow`, or `none`.
+/// This parameter will only take affect if there are enough items in
+/// the list so scrolling is feasible.
+///
+/// Many parameters can be set globally on `Accordion` as well as individually
+/// on each `AccordionSection` (see list below).
+///
+/// The header consists of the left and right icons (right icon is preset
+/// to arrow down). Both can be set globally and individually. The
+/// headerText parameter is required and needs to be set for each `AccordionSection`.
+///
+/// The content area basically provides the container in which you drop
+/// whatever you want to display when `AccordionSection` opens. Background
+/// and borders can be set globally or individually per section.
+///
+/// ```dart
+///	Accordion(
+///		maxOpenSections: 1,
+///		headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+///		leftIcon: Icon(Icons.audiotrack, color: Colors.white),
+///		children: [
+///			AccordionSection(
+///				isOpen: true,
+///				headerText: 'Introduction',
+///				content: Icon(Icons.airplanemode_active, size: 200, color: Colors.amber),
+///			),
+///			AccordionSection(
+///				isOpen: true,
+///				headerText: 'About Us',
+///				content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
+///			),
+///			AccordionSection(
+///				isOpen: true,
+///				headerText: 'Company Info',
+///				content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
+///			),
+///		],
+///	)
+/// ```
 library accordion;
 
 import 'dart:async';
@@ -12,7 +62,7 @@ enum ScrollIntoViewOfItems { none, slow, fast }
 
 final springFast = SpringDescription(mass: 1, stiffness: 200, damping: 30);
 
-mixin VSCommonAccordionProps {
+mixin CommonParams {
   late final Color? _headerBackgroundColor;
   late final double? _headerBorderRadius;
   late final TextAlign? _headerTextAlign;
@@ -31,15 +81,66 @@ mixin VSCommonAccordionProps {
   late final ScrollIntoViewOfItems? _scrollIntoViewOfItems;
 }
 
-class Accordion extends StatelessWidget with VSCommonAccordionProps {
+class ListController extends GetxController {
+  final controller = AutoScrollController(axis: Axis.vertical);
+  final openSections = <UniqueKey>[].obs;
+
+  /// Maximum number of open sections at any given time. Opening a new section will close the "oldest" open section
+  int maxOpenSections = 1;
+
+  /// The delay in milliseconds (when the entire accordion loads) before the individual sections open one after another. Helpful if you go to a new page in your app and then (after the delay) have a nice opening sequence.
+  int initialOpeningSequenceDelay = 250;
+
+  void updateSections(UniqueKey key) {
+    openSections.contains(key) ? openSections.remove(key) : openSections.add(key);
+
+    if (openSections.length > maxOpenSections) openSections.removeRange(0, openSections.length - maxOpenSections);
+  }
+
+  @override
+  void onClose() {
+    controller.dispose();
+    super.onClose();
+  }
+}
+
+final listCtrl = ListController();
+
+/// The container list for all accordion sections. Usage:
+/// ```dart
+///	Accordion(
+///		maxOpenSections: 1,
+///		headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+///		leftIcon: Icon(Icons.audiotrack, color: Colors.white),
+///		children: [
+///			AccordionSection(
+///				isOpen: true,
+///				headerText: 'Introduction',
+///				content: Icon(Icons.airplanemode_active, size: 200, color: Colors.amber),
+///			),
+///			AccordionSection(
+///				isOpen: true,
+///				headerText: 'About Us',
+///				content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
+///			),
+///			AccordionSection(
+///				isOpen: true,
+///				headerText: 'Company Info',
+///				content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
+///			),
+///		],
+///	)
+/// ```
+class Accordion extends StatelessWidget with CommonParams {
   final List<AccordionSection>? children;
-  late final double _paddingListHorizontal;
-  late final double _paddingListTop;
-  late final double _paddingListBottom;
+  final double paddingListHorizontal;
+  final double paddingListTop;
+  final double paddingListBottom;
 
   Accordion({
     int? maxOpenSections,
     this.children,
+    int? initialOpeningSequenceDelay,
     Color? headerBackgroundColor,
     double? headerBorderRadius,
     TextAlign? headerTextAlign,
@@ -53,14 +154,15 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
     double? contentBorderRadius,
     double? contentHorizontalPadding,
     double? contentVerticalPadding,
-    double? paddingListTop,
-    double? paddingListBottom,
-    double? paddingListHorizontal,
+    this.paddingListTop = 20.0,
+    this.paddingListBottom = 40.0,
+    this.paddingListHorizontal = 10.0,
     EdgeInsets? headerPadding,
     double? paddingBetweenOpenSections,
     double? paddingBetweenClosedSections,
     ScrollIntoViewOfItems? scrollIntoViewOfItems,
   }) {
+    listCtrl.initialOpeningSequenceDelay = initialOpeningSequenceDelay ?? 0;
     this._headerBackgroundColor = headerBackgroundColor;
     this._headerBorderRadius = headerBorderRadius ?? 30;
     this._headerTextAlign = headerTextAlign ?? TextAlign.left;
@@ -74,9 +176,6 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
     this._contentBorderRadius = contentBorderRadius ?? 20;
     this._contentHorizontalPadding = contentHorizontalPadding;
     this._contentVerticalPadding = contentVerticalPadding;
-    this._paddingListTop = paddingListTop ?? 20.0;
-    this._paddingListBottom = paddingListBottom ?? 40.0;
-    this._paddingListHorizontal = paddingListHorizontal ?? 10.0;
     this._headerPadding = headerPadding ?? EdgeInsets.symmetric(horizontal: 20, vertical: 10);
     this._paddingBetweenOpenSections = paddingBetweenOpenSections ?? 10;
     this._paddingBetweenClosedSections = paddingBetweenClosedSections ?? 3;
@@ -85,10 +184,10 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
     int count = 0;
     listCtrl.maxOpenSections = maxOpenSections ?? 1;
     children!.forEach((child) {
-      if (child.isOpen == true) {
+      if (child._sectionCtrl.isSectionOpen.value == true) {
         count++;
 
-        if (count > listCtrl.maxOpenSections) child.isOpen = false;
+        if (count > listCtrl.maxOpenSections) child._sectionCtrl.isSectionOpen.value = false;
       }
     });
   }
@@ -100,17 +199,17 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
       child: ListView(
         controller: listCtrl.controller,
         padding: EdgeInsets.only(
-          top: _paddingListTop,
-          bottom: _paddingListBottom,
-          right: _paddingListHorizontal,
-          left: _paddingListHorizontal,
+          top: paddingListTop,
+          bottom: paddingListBottom,
+          right: paddingListHorizontal,
+          left: paddingListHorizontal,
         ),
         cacheExtent: 100000,
         children: children!.map(
           (child) {
             final key = UniqueKey();
 
-            if (child.isOpen) listCtrl.openSections.add(key);
+            if (child._sectionCtrl.isSectionOpen.value) listCtrl.openSections.add(key);
 
             return AutoScrollTag(
               key: ValueKey(key),
@@ -119,7 +218,7 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
               child: AccordionSection(
                 key: key,
                 index: index++,
-                isOpen: child.isOpen,
+                isOpen: child._sectionCtrl.isSectionOpen.value,
                 scrollIntoViewOfItems: _scrollIntoViewOfItems,
                 headerBackgroundColor: child._headerBackgroundColor ?? _headerBackgroundColor,
                 headerBorderRadius: child._headerBorderRadius ?? _headerBorderRadius,
@@ -154,19 +253,59 @@ class Accordion extends StatelessWidget with VSCommonAccordionProps {
   }
 }
 
-class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
-  UniqueKey? key = UniqueKey();
-  int index;
-  bool isOpen;
-  String headerText;
-  Widget content;
-  late SectionController _sectionCtrl;
+class SectionController extends GetxController with SingleGetTickerProviderMixin {
+  late final controller = AnimationController(vsync: this);
+  final isSectionOpen = false.obs;
   bool _firstRun = true;
+
+  @override
+  void onClose() {
+    controller.dispose();
+    super.onClose();
+  }
+}
+
+/// `AccordionSection` is one section within the `Accordion` widget.
+/// Usage:
+/// ```dart
+///	Accordion(
+///		maxOpenSections: 1,
+///		headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+///		leftIcon: Icon(Icons.audiotrack, color: Colors.white),
+///		children: [
+///			AccordionSection(
+///				isOpen: true,
+///				headerText: 'Introduction',
+///				content: Icon(Icons.airplanemode_active, size: 200, color: Colors.amber),
+///			),
+///			AccordionSection(
+///				isOpen: true,
+///				headerText: 'About Us',
+///				content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
+///			),
+///			AccordionSection(
+///				isOpen: true,
+///				headerText: 'Company Info',
+///				content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
+///			),
+///		],
+///	)
+/// ```
+class AccordionSection extends StatelessWidget with CommonParams {
+  late final SectionController _sectionCtrl;
+  late final UniqueKey? key;
+  late final int index;
+
+  /// The text to be displayed in the header
+  final String headerText;
+
+  /// The widget to be displayed as the content of the section when open
+  final Widget content;
 
   AccordionSection({
     this.key,
     this.index = 0,
-    this.isOpen = false,
+    bool isOpen = false,
     required this.headerText,
     required this.content,
     Color? headerBackgroundColor,
@@ -188,6 +327,7 @@ class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
     ScrollIntoViewOfItems? scrollIntoViewOfItems,
   }) {
     _sectionCtrl = SectionController();
+    _sectionCtrl.isSectionOpen.value = isOpen;
 
     this._headerBackgroundColor = headerBackgroundColor;
     this._headerBorderRadius = headerBorderRadius;
@@ -205,7 +345,7 @@ class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
     this._contentVerticalPadding = contentVerticalPadding ?? 10;
     this._paddingBetweenOpenSections = paddingBetweenOpenSections;
     this._paddingBetweenClosedSections = paddingBetweenClosedSections;
-    this._scrollIntoViewOfItems = scrollIntoViewOfItems;
+    this._scrollIntoViewOfItems = scrollIntoViewOfItems ?? ScrollIntoViewOfItems.fast;
   }
 
   get _flipQuarterTurns => _flipRightIconIfOpen == true ? (_isOpen ? 2 : 0) : 0;
@@ -213,10 +353,10 @@ class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
   get _isOpen {
     final open = listCtrl.openSections.contains(key);
     Timer(
-      _firstRun ? (min(index * 200, 1000)).milliseconds : 0.seconds,
+      _sectionCtrl._firstRun ? (listCtrl.initialOpeningSequenceDelay + min(index * 200, 1000)).milliseconds : 0.seconds,
       () {
         _sectionCtrl.controller.fling(velocity: open ? 1 : -1, springDescription: springFast);
-        _firstRun = false;
+        _sectionCtrl._firstRun = false;
       },
     );
     return open;
@@ -233,8 +373,9 @@ class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
 
               if (_isOpen && _scrollIntoViewOfItems != ScrollIntoViewOfItems.none)
                 Timer(
-                  0.5.seconds,
+                  0.25.seconds,
                   () {
+                    listCtrl.controller.cancelAllHighlights();
                     listCtrl.controller.scrollToIndex(index,
                         preferPosition: AutoScrollPosition.middle,
                         duration: (_scrollIntoViewOfItems == ScrollIntoViewOfItems.fast ? .5 : 1).seconds);
@@ -318,39 +459,9 @@ class AccordionSection extends StatelessWidget with VSCommonAccordionProps {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
-  }
-}
-
-class ListController extends GetxController {
-  final controller = AutoScrollController(axis: Axis.vertical);
-  final openSections = <UniqueKey>[].obs;
-  int maxOpenSections = 1;
-
-  void updateSections(UniqueKey key) {
-    openSections.contains(key) ? openSections.remove(key) : openSections.add(key);
-
-    if (openSections.length > maxOpenSections) openSections.removeRange(0, openSections.length - maxOpenSections);
-  }
-
-  @override
-  void onClose() {
-    controller.dispose();
-    super.onClose();
-  }
-}
-
-final listCtrl = ListController();
-
-class SectionController extends GetxController with SingleGetTickerProviderMixin {
-  late final controller = AnimationController(vsync: this);
-
-  @override
-  void onClose() {
-    controller.dispose();
-    super.onClose();
   }
 }
