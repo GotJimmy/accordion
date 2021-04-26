@@ -15,5 +15,6 @@
 		"titleBar.inactiveBackground": "#ff990099",
 		"titleBar.inactiveForeground": "#15202b99"
 	},
-	"peacock.color": "#ff9900"
+	"peacock.color": "#ff9900",
+	"dart.lineLength": 80,
 }

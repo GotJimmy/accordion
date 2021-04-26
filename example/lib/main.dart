@@ -28,18 +28,21 @@ class AccordionPage extends StatelessWidget //__
         ),
         body: Accordion(
           maxOpenSections: 1,
-          headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+          headerTextStyle: TextStyle(
+              color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
           leftIcon: Icon(Icons.audiotrack, color: Colors.white),
           children: [
             AccordionSection(
               isOpen: true,
               headerText: 'Introduction',
-              content: Icon(Icons.airplanemode_active, size: 200, color: Colors.amber),
+              content: Icon(Icons.airplanemode_active,
+                  size: 200, color: Colors.amber),
             ),
             AccordionSection(
               isOpen: true,
               headerText: 'About Us',
-              content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
+              content: Icon(Icons.airline_seat_flat,
+                  size: 120, color: Colors.blue[200]),
             ),
             AccordionSection(
               isOpen: true,
@@ -64,12 +67,14 @@ class AccordionPage extends StatelessWidget //__
             AccordionSection(
               isOpen: false,
               headerText: 'Culture',
-              content: Icon(Icons.calculate_rounded, size: 200, color: Colors.green),
+              content:
+                  Icon(Icons.calculate_rounded, size: 200, color: Colors.green),
             ),
             AccordionSection(
               isOpen: false,
               headerText: 'Community',
-              content: Icon(Icons.commute_outlined, size: 200, color: Colors.blueAccent),
+              content: Icon(Icons.commute_outlined,
+                  size: 200, color: Colors.blueAccent),
             ),
             AccordionSection(
               isOpen: false,

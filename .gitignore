@@ -10,7 +10,7 @@
 .svn/
 .dart_tool/
 .git/
-.vscode
+.vscode/launch.json
 
 # IntelliJ related
 *.iml

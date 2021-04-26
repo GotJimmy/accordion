@@ -1,3 +1,6 @@
+## [1.0.4]
+* changed line length to 80 for dartfmt
+
 ## [1.0.3]
 * fixed non-final values in AccordionSection
 * changed default `scrollIntoView` animation to `fast`

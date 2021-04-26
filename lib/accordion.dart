@@ -18,7 +18,8 @@
 ///
 /// The header consists of the left and right icons (right icon is preset
 /// to arrow down). Both can be set globally and individually. The
-/// headerText parameter is required and needs to be set for each `AccordionSection`.
+/// headerText parameter is required and needs to be set for each
+/// `AccordionSection`.
 ///
 /// The content area basically provides the container in which you drop
 /// whatever you want to display when `AccordionSection` opens. Background
@@ -27,18 +28,19 @@
 /// ```dart
 ///	Accordion(
 ///		maxOpenSections: 1,
-///		headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+///		headerTextStyle:
+///			TextStyle(color: Colors.white, fontSize: 17),
 ///		leftIcon: Icon(Icons.audiotrack, color: Colors.white),
 ///		children: [
 ///			AccordionSection(
 ///				isOpen: true,
 ///				headerText: 'Introduction',
-///				content: Icon(Icons.airplanemode_active, size: 200, color: Colors.amber),
+///				content: Icon(Icons.airplanemode_active, size: 200),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
 ///				headerText: 'About Us',
-///				content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
+///				content: Icon(Icons.airline_seat_flat, size: 120),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
@@ -85,16 +87,23 @@ class ListController extends GetxController {
   final controller = AutoScrollController(axis: Axis.vertical);
   final openSections = <UniqueKey>[].obs;
 
-  /// Maximum number of open sections at any given time. Opening a new section will close the "oldest" open section
+  /// Maximum number of open sections at any given time.
+  /// Opening a new section will close the "oldest" open section
   int maxOpenSections = 1;
 
-  /// The delay in milliseconds (when the entire accordion loads) before the individual sections open one after another. Helpful if you go to a new page in your app and then (after the delay) have a nice opening sequence.
+  /// The delay in milliseconds (when the entire accordion loads)
+  /// before the individual sections open one after another.
+  /// Helpful if you go to a new page in your app and then (after
+  /// the delay) have a nice opening sequence.
   int initialOpeningSequenceDelay = 250;
 
   void updateSections(UniqueKey key) {
-    openSections.contains(key) ? openSections.remove(key) : openSections.add(key);
+    openSections.contains(key)
+        ? openSections.remove(key)
+        : openSections.add(key);
 
-    if (openSections.length > maxOpenSections) openSections.removeRange(0, openSections.length - maxOpenSections);
+    if (openSections.length > maxOpenSections)
+      openSections.removeRange(0, openSections.length - maxOpenSections);
   }
 
   @override
@@ -110,18 +119,19 @@ final listCtrl = ListController();
 /// ```dart
 ///	Accordion(
 ///		maxOpenSections: 1,
-///		headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+///		headerTextStyle:
+///			TextStyle(color: Colors.white, fontSize: 17),
 ///		leftIcon: Icon(Icons.audiotrack, color: Colors.white),
 ///		children: [
 ///			AccordionSection(
 ///				isOpen: true,
 ///				headerText: 'Introduction',
-///				content: Icon(Icons.airplanemode_active, size: 200, color: Colors.amber),
+///				content: Icon(Icons.airplanemode_active, size: 200),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
 ///				headerText: 'About Us',
-///				content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
+///				content: Icon(Icons.airline_seat_flat, size: 120),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
@@ -176,7 +186,8 @@ class Accordion extends StatelessWidget with CommonParams {
     this._contentBorderRadius = contentBorderRadius ?? 20;
     this._contentHorizontalPadding = contentHorizontalPadding;
     this._contentVerticalPadding = contentVerticalPadding;
-    this._headerPadding = headerPadding ?? EdgeInsets.symmetric(horizontal: 20, vertical: 10);
+    this._headerPadding =
+        headerPadding ?? EdgeInsets.symmetric(horizontal: 20, vertical: 10);
     this._paddingBetweenOpenSections = paddingBetweenOpenSections ?? 10;
     this._paddingBetweenClosedSections = paddingBetweenClosedSections ?? 3;
     this._scrollIntoViewOfItems = scrollIntoViewOfItems;
@@ -187,7 +198,8 @@ class Accordion extends StatelessWidget with CommonParams {
       if (child._sectionCtrl.isSectionOpen.value == true) {
         count++;
 
-        if (count > listCtrl.maxOpenSections) child._sectionCtrl.isSectionOpen.value = false;
+        if (count > listCtrl.maxOpenSections)
+          child._sectionCtrl.isSectionOpen.value = false;
       }
     });
   }
@@ -209,7 +221,8 @@ class Accordion extends StatelessWidget with CommonParams {
           (child) {
             final key = UniqueKey();
 
-            if (child._sectionCtrl.isSectionOpen.value) listCtrl.openSections.add(key);
+            if (child._sectionCtrl.isSectionOpen.value)
+              listCtrl.openSections.add(key);
 
             return AutoScrollTag(
               key: ValueKey(key),
@@ -220,8 +233,10 @@ class Accordion extends StatelessWidget with CommonParams {
                 index: index++,
                 isOpen: child._sectionCtrl.isSectionOpen.value,
                 scrollIntoViewOfItems: _scrollIntoViewOfItems,
-                headerBackgroundColor: child._headerBackgroundColor ?? _headerBackgroundColor,
-                headerBorderRadius: child._headerBorderRadius ?? _headerBorderRadius,
+                headerBackgroundColor:
+                    child._headerBackgroundColor ?? _headerBackgroundColor,
+                headerBorderRadius:
+                    child._headerBorderRadius ?? _headerBorderRadius,
                 headerText: child.headerText,
                 headerTextStyle: child._headerTextStyle ?? _headerTextStyle,
                 headerTextAlign: child._headerTextAlign ?? _headerTextAlign,
@@ -234,16 +249,26 @@ class Accordion extends StatelessWidget with CommonParams {
                       color: Colors.white60,
                       size: 20,
                     ),
-                flipRightIconIfOpen: child._flipRightIconIfOpen ?? _flipRightIconIfOpen,
-                paddingBetweenClosedSections: child._paddingBetweenClosedSections ?? _paddingBetweenClosedSections,
-                paddingBetweenOpenSections: child._paddingBetweenOpenSections ?? _paddingBetweenOpenSections,
+                flipRightIconIfOpen:
+                    child._flipRightIconIfOpen ?? _flipRightIconIfOpen,
+                paddingBetweenClosedSections:
+                    child._paddingBetweenClosedSections ??
+                        _paddingBetweenClosedSections,
+                paddingBetweenOpenSections: child._paddingBetweenOpenSections ??
+                    _paddingBetweenOpenSections,
                 content: child.content,
-                contentBackgroundColor: child._contentBackgroundColor ?? _contentBackgroundColor,
-                contentBorderColor: child._contentBorderColor ?? _contentBorderColor,
-                contentBorderWidth: child._contentBorderWidth ?? _contentBorderWidth,
-                contentBorderRadius: child._contentBorderRadius ?? _contentBorderRadius,
-                contentHorizontalPadding: child._contentHorizontalPadding ?? _contentHorizontalPadding,
-                contentVerticalPadding: child._contentVerticalPadding ?? _contentVerticalPadding,
+                contentBackgroundColor:
+                    child._contentBackgroundColor ?? _contentBackgroundColor,
+                contentBorderColor:
+                    child._contentBorderColor ?? _contentBorderColor,
+                contentBorderWidth:
+                    child._contentBorderWidth ?? _contentBorderWidth,
+                contentBorderRadius:
+                    child._contentBorderRadius ?? _contentBorderRadius,
+                contentHorizontalPadding: child._contentHorizontalPadding ??
+                    _contentHorizontalPadding,
+                contentVerticalPadding:
+                    child._contentVerticalPadding ?? _contentVerticalPadding,
               ),
             );
           },
@@ -253,7 +278,8 @@ class Accordion extends StatelessWidget with CommonParams {
   }
 }
 
-class SectionController extends GetxController with SingleGetTickerProviderMixin {
+class SectionController extends GetxController
+    with SingleGetTickerProviderMixin {
   late final controller = AnimationController(vsync: this);
   final isSectionOpen = false.obs;
   bool _firstRun = true;
@@ -270,18 +296,19 @@ class SectionController extends GetxController with SingleGetTickerProviderMixin
 /// ```dart
 ///	Accordion(
 ///		maxOpenSections: 1,
-///		headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+///		headerTextStyle:
+///			TextStyle(color: Colors.white, fontSize: 17),
 ///		leftIcon: Icon(Icons.audiotrack, color: Colors.white),
 ///		children: [
 ///			AccordionSection(
 ///				isOpen: true,
 ///				headerText: 'Introduction',
-///				content: Icon(Icons.airplanemode_active, size: 200, color: Colors.amber),
+///				content: Icon(Icons.airplanemode_active, size: 200),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
 ///				headerText: 'About Us',
-///				content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
+///				content: Icon(Icons.airline_seat_flat, size: 120),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
@@ -345,7 +372,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
     this._contentVerticalPadding = contentVerticalPadding ?? 10;
     this._paddingBetweenOpenSections = paddingBetweenOpenSections;
     this._paddingBetweenClosedSections = paddingBetweenClosedSections;
-    this._scrollIntoViewOfItems = scrollIntoViewOfItems ?? ScrollIntoViewOfItems.fast;
+    this._scrollIntoViewOfItems =
+        scrollIntoViewOfItems ?? ScrollIntoViewOfItems.fast;
   }
 
   get _flipQuarterTurns => _flipRightIconIfOpen == true ? (_isOpen ? 2 : 0) : 0;
@@ -353,9 +381,13 @@ class AccordionSection extends StatelessWidget with CommonParams {
   get _isOpen {
     final open = listCtrl.openSections.contains(key);
     Timer(
-      _sectionCtrl._firstRun ? (listCtrl.initialOpeningSequenceDelay + min(index * 200, 1000)).milliseconds : 0.seconds,
+      _sectionCtrl._firstRun
+          ? (listCtrl.initialOpeningSequenceDelay + min(index * 200, 1000))
+              .milliseconds
+          : 0.seconds,
       () {
-        _sectionCtrl.controller.fling(velocity: open ? 1 : -1, springDescription: springFast);
+        _sectionCtrl.controller
+            .fling(velocity: open ? 1 : -1, springDescription: springFast);
         _sectionCtrl._firstRun = false;
       },
     );
@@ -371,14 +403,19 @@ class AccordionSection extends StatelessWidget with CommonParams {
             onTap: () {
               listCtrl.updateSections(key!);
 
-              if (_isOpen && _scrollIntoViewOfItems != ScrollIntoViewOfItems.none)
+              if (_isOpen &&
+                  _scrollIntoViewOfItems != ScrollIntoViewOfItems.none)
                 Timer(
                   0.25.seconds,
                   () {
                     listCtrl.controller.cancelAllHighlights();
                     listCtrl.controller.scrollToIndex(index,
                         preferPosition: AutoScrollPosition.middle,
-                        duration: (_scrollIntoViewOfItems == ScrollIntoViewOfItems.fast ? .5 : 1).seconds);
+                        duration: (_scrollIntoViewOfItems ==
+                                    ScrollIntoViewOfItems.fast
+                                ? .5
+                                : 1)
+                            .seconds);
                   },
                 );
             },
@@ -404,17 +441,26 @@ class AccordionSection extends StatelessWidget with CommonParams {
                       child: Text(
                         headerText,
                         textAlign: _headerTextAlign,
-                        style: _headerTextStyle ?? TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                        style: _headerTextStyle ??
+                            TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
-                  if (_rightIcon != null) RotatedBox(quarterTurns: _flipQuarterTurns, child: _rightIcon!),
+                  if (_rightIcon != null)
+                    RotatedBox(
+                        quarterTurns: _flipQuarterTurns, child: _rightIcon!),
                 ],
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: _isOpen ? _paddingBetweenOpenSections! : _paddingBetweenClosedSections!),
+            padding: EdgeInsets.only(
+                bottom: _isOpen
+                    ? _paddingBetweenOpenSections!
+                    : _paddingBetweenClosedSections!),
             child: SizeTransition(
               sizeFactor: _sectionCtrl.controller,
               child: ScaleTransition(
@@ -424,7 +470,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
                       color: _contentBorderColor ?? Colors.white,
-                      borderRadius: BorderRadius.vertical(bottom: Radius.circular(_contentBorderRadius!)),
+                      borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(_contentBorderRadius!)),
                     ),
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(
@@ -437,12 +484,16 @@ class AccordionSection extends StatelessWidget with CommonParams {
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.vertical(bottom: Radius.circular(_contentBorderRadius! / 1.02))),
+                            borderRadius: BorderRadius.vertical(
+                                bottom: Radius.circular(
+                                    _contentBorderRadius! / 1.02))),
                         child: Container(
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
                               color: _contentBackgroundColor,
-                              borderRadius: BorderRadius.vertical(bottom: Radius.circular(_contentBorderRadius! / 1.02))),
+                              borderRadius: BorderRadius.vertical(
+                                  bottom: Radius.circular(
+                                      _contentBorderRadius! / 1.02))),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: _contentHorizontalPadding!,

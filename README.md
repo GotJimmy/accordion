@@ -32,21 +32,21 @@ Accordion(
 	headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
 	leftIcon: Icon(Icons.audiotrack, color: Colors.white),
 	children: [
-	AccordionSection(
-		isOpen: true,
-		headerText: 'Introduction',
-		content: Text('This is the introduction right here ...'),
-	),
-	AccordionSection(
-		isOpen: true,
-		headerText: 'About Us',
-		content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
-	),
-	AccordionSection(
-		isOpen: true,
-		headerText: 'Company Info',
-		content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
-	),
+		AccordionSection(
+			isOpen: true,
+			headerText: 'Introduction',
+			content: Text('This is the introduction right here ...'),
+		),
+		AccordionSection(
+			isOpen: true,
+			headerText: 'About Us',
+			content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
+		),
+		AccordionSection(
+			isOpen: true,
+			headerText: 'Company Info',
+			content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
+		),
 	],
 ),
 ```
