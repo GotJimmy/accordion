@@ -1,14 +1,15 @@
 # accordion
 
-Accordion widget to display a list of expandable items with opening/closing and scroll-into-view animations.
+An expandable Flutter widget list where each item can be expanded or collapsed simply by clicking on the header.
 
 <br>
 
-Simple to use accordion widget with lots of preset properties. Use the `maxOpenSections` property to automatically close sections when opening a new section. This is especially helpful if you always want your list to look clean -- just set this parameter to 1 and whenever you open a new section the previous one closes. `scrollIntoView` paramter can be set to `fast`, `slow`, or `none`. This parameter will only take affect if there are enough items in the list so scrolling is feasible.
+Simple to use accordion widget with lots of preset properties. Use the `maxOpenSections` property to automatically close sections when opening a new section. This is especially helpful if you always want your list to look clean -- just set this parameter to 1 and whenever you open a new section the previous one closes. `scrollIntoView` paramter can be set to `fast`, `slow`, or `none` and makes sure that just opened items will be fully visible. This parameter will only take affect if there are enough items in the list so scrolling is feasible.
 
 Many parameters can be set globally on `Accordion` as well as individually on each `AccordionSection` (see list below).
 
-The header consists of the left and right icons (right icon is preset to arrow down). Both can be set globally and individually. The headerText parameter is required and needs to be set for each `AccordionSection`.
+The header consists of the left and right icons (right icon is preset to arrow down). Both can be set globally and individually. 
+As of version 2.0: the `headerText`, `headerTextStyle` & `headerTextAlign` parameters have been deprecated and should be replaced with the `header` widget parameter.
 
 The content area basically provides the container in which you drop whatever you want to display when `AccordionSection` opens. Background and borders can be set globally or individually per section.
 
@@ -34,17 +35,17 @@ Accordion(
 	children: [
 		AccordionSection(
 			isOpen: true,
-			headerText: 'Introduction',
+			header: Text('Introduction', TextStyle(color: Colors.white, fontSize: 17)),
 			content: Text('This is the introduction right here ...'),
 		),
 		AccordionSection(
 			isOpen: true,
-			headerText: 'About Us',
+			header: Text('About Us', TextStyle(color: Colors.white, fontSize: 17)),
 			content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
 		),
 		AccordionSection(
 			isOpen: true,
-			headerText: 'Company Info',
+			header: Text('Company Info', TextStyle(color: Colors.white, fontSize: 17)),
 			content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
 		),
 	],
@@ -60,8 +61,8 @@ The following properties can be set globally for all sections or for each sectio
 | ---------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------: | :------: | ------------------------------------------------------------------------- |
 |        headerBackgroundColor | background color of the section header                                                                                                                                                                                  |         Color         |    no    | primaryColor (of theme)                                                   |
 |           headerBorderRadius | border radius of the section header                                                                                                                                                                                     |        double         |    no    | 30                                                                        |
-|              headerTextAlign | alignment of the title in the section header                                                                                                                                                                            |       TextAlign       |    no    | TextAlign.left                                                            |
-|              headerTextStyle | text style of the title in the section header                                                                                                                                                                           |       TextStyle       |    no    | TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold) |
+| headerTextAlign (deprecated) | alignment of the title in the section header                                                                                                                                                                            |       TextAlign       |    no    | TextAlign.left                                                            |
+| headerTextStyle (deprecated) | text style of the title in the section header                                                                                                                                                                           |       TextStyle       |    no    | TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold) |
 |                headerPadding | padding of the title in the section header                                                                                                                                                                              |      EdgeInsets       |    no    | EdgeInsets.symmetric(horizontal: 20, vertical: 10)                        |
 |                     leftIcon | widget to the left of the title in the section header                                                                                                                                                                   |        Widget         |    no    | null                                                                      |
 |                    rightIcon | widget to the right of the title in the section header                                                                                                                                                                  |        Widget         |    no    | Icon(Icons.keyboard_arrow_down, color: Colors.white60, size:  20)         |
@@ -93,12 +94,13 @@ The following properties can be set globally for all sections or for each sectio
 <br><br>
 ## Properties for `AccordionSection`
 
-|              Property | Description                                                                    |  Type  | Required | Default value |
-| --------------------: | :----------------------------------------------------------------------------- | :----: | :------: | ------------- |
-|                isOpen | if this section should initially be displayed open or not                      |  bool  |    no    | false         |
-|            headerText | the title text                                                                 | String |   YES    | ""            |
-|               content | the widget you want to display as the visible content when the section is open | Widget |   YES    |               |
-|     paddingListBottom | padding of the `Accordion` list at the bottom                                  | double |    no    | 40.0          |
-| paddingListHorizontal | horizontal padding of the `Accordion` list                                     | double |    no    | 10.0          |
+|                Property | Description                                                                    |  Type  | Required | Default value |
+| ----------------------: | :----------------------------------------------------------------------------- | :----: | :------: | ------------- |
+|                  isOpen | if this section should initially be displayed open or not                      |  bool  |    no    | false         |
+|                  header | the header widget located between leftIcon & rightIcon                         | Widget |    no    |               |
+| headerText (deprecated) | the title text                                                                 | String |   YES    | ""            |
+|                 content | the widget you want to display as the visible content when the section is open | Widget |   YES    |               |
+|       paddingListBottom | padding of the `Accordion` list at the bottom                                  | double |    no    | 40.0          |
+|   paddingListHorizontal | horizontal padding of the `Accordion` list                                     | double |    no    | 10.0          |
 
 

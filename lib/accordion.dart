@@ -18,8 +18,10 @@
 ///
 /// The header consists of the left and right icons (right icon is preset
 /// to arrow down). Both can be set globally and individually. The
-/// headerText parameter is required and needs to be set for each
+/// `header` parameter is required and needs to be set for each
 /// `AccordionSection`.
+/// `headerText`, `headerTextAlign`, `headerTextStyle` have been
+/// deprecated as of version 2.0 and should be replaced with `header`
 ///
 /// The content area basically provides the container in which you drop
 /// whatever you want to display when `AccordionSection` opens. Background
@@ -34,17 +36,17 @@
 ///		children: [
 ///			AccordionSection(
 ///				isOpen: true,
-///				headerText: 'Introduction',
+///				header: Text('Introduction', style: TextStyle(color: Colors.white, fontSize: 20)),
 ///				content: Icon(Icons.airplanemode_active, size: 200),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
-///				headerText: 'About Us',
+///				header: Text('About Us', style: TextStyle(color: Colors.white, fontSize: 20)),
 ///				content: Icon(Icons.airline_seat_flat, size: 120),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
-///				headerText: 'Company Info',
+///				header: Text('Company Info', style: TextStyle(color: Colors.white, fontSize: 20)),
 ///				content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
 ///			),
 ///		],
@@ -119,23 +121,21 @@ final listCtrl = ListController();
 /// ```dart
 ///	Accordion(
 ///		maxOpenSections: 1,
-///		headerTextStyle:
-///			TextStyle(color: Colors.white, fontSize: 17),
 ///		leftIcon: Icon(Icons.audiotrack, color: Colors.white),
 ///		children: [
 ///			AccordionSection(
 ///				isOpen: true,
-///				headerText: 'Introduction',
+///				header: Text('Introduction', style: TextStyle(color: Colors.white, fontSize: 20)),
 ///				content: Icon(Icons.airplanemode_active, size: 200),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
-///				headerText: 'About Us',
+///				header: Text('About Us', style: TextStyle(color: Colors.white, fontSize: 20)),
 ///				content: Icon(Icons.airline_seat_flat, size: 120),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
-///				headerText: 'Company Info',
+///				header: Text('Company Info', style: TextStyle(color: Colors.white, fontSize: 20)),
 ///				content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
 ///			),
 ///		],
@@ -153,10 +153,11 @@ class Accordion extends StatelessWidget with CommonParams {
     int? initialOpeningSequenceDelay,
     Color? headerBackgroundColor,
     double? headerBorderRadius,
-    TextAlign? headerTextAlign,
-    TextStyle? headerTextStyle,
+    @deprecated TextAlign? headerTextAlign,
+    @deprecated TextStyle? headerTextStyle,
     Widget? leftIcon,
     Widget? rightIcon,
+    Widget? header,
     bool? flipRightIconIfOpen,
     Color? contentBackgroundColor,
     Color? contentBorderColor,
@@ -241,6 +242,7 @@ class Accordion extends StatelessWidget with CommonParams {
                 headerTextStyle: child._headerTextStyle ?? _headerTextStyle,
                 headerTextAlign: child._headerTextAlign ?? _headerTextAlign,
                 headerPadding: child._headerPadding ?? _headerPadding,
+                header: child.header,
                 leftIcon: child._leftIcon ?? _leftIcon,
                 rightIcon: child._rightIcon ??
                     _rightIcon ??
@@ -296,23 +298,21 @@ class SectionController extends GetxController
 /// ```dart
 ///	Accordion(
 ///		maxOpenSections: 1,
-///		headerTextStyle:
-///			TextStyle(color: Colors.white, fontSize: 17),
 ///		leftIcon: Icon(Icons.audiotrack, color: Colors.white),
 ///		children: [
 ///			AccordionSection(
 ///				isOpen: true,
-///				headerText: 'Introduction',
+///				header: Text('Introduction', style: TextStyle(color: Colors.white, fontSize: 20)),
 ///				content: Icon(Icons.airplanemode_active, size: 200),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
-///				headerText: 'About Us',
+///				header: Text('About Us', style: TextStyle(color: Colors.white, fontSize: 20)),
 ///				content: Icon(Icons.airline_seat_flat, size: 120),
 ///			),
 ///			AccordionSection(
 ///				isOpen: true,
-///				headerText: 'Company Info',
+///				header: Text('Company Info', style: TextStyle(color: Colors.white, fontSize: 20)),
 ///				content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
 ///			),
 ///		],
@@ -324,7 +324,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
   late final int index;
 
   /// The text to be displayed in the header
-  final String headerText;
+  final Widget? header;
+  final String? headerText;
 
   /// The widget to be displayed as the content of the section when open
   final Widget content;
@@ -333,7 +334,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
     this.key,
     this.index = 0,
     bool isOpen = false,
-    required this.headerText,
+    this.header,
+    @deprecated this.headerText,
     required this.content,
     Color? headerBackgroundColor,
     double? headerBorderRadius,
@@ -438,15 +440,17 @@ class AccordionSection extends StatelessWidget with CommonParams {
                     flex: 10,
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Text(
-                        headerText,
-                        textAlign: _headerTextAlign,
-                        style: _headerTextStyle ??
-                            TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                      ),
+                      child: header == null
+                          ? Text(
+                              headerText ?? '',
+                              textAlign: _headerTextAlign,
+                              style: _headerTextStyle ??
+                                  TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                            )
+                          : header,
                     ),
                   ),
                   if (_rightIcon != null)

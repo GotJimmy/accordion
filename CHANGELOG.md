@@ -1,3 +1,7 @@
+## [2.0.0]
+* deprecated `headerText`, `headerTextStyle`, `headerTextAlign`
+* new parameter `header` which replaces all of the above
+
 ## [1.0.4]
 * changed line length to 80 for dartfmt
 
