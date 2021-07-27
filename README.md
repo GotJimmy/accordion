@@ -13,6 +13,12 @@ As of version 2.0: the `headerText`, `headerTextStyle` & `headerTextAlign` param
 
 The content area basically provides the container in which you drop whatever you want to display when `AccordionSection` opens. Background and borders can be set globally or individually per section.
 
+Side note: it is possible to nest an `Accordion` within an `AccordionSection` but you will have to watch out for the following:
+- you should set `maxOpenSections` of the main `Accordion` to at least >= 2
+- you must wrap the nested `Accordion` with something like `Container` and give that wrapper a specific height
+- `scrollIntoView` will not work for nested `Accordions` at this point!
+- see the example app (in the "Accordion within Accordion" section) for further info
+
 Enjoy!
 
 <br>

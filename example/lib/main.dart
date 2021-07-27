@@ -21,8 +21,18 @@ class AccordionApp extends StatelessWidget {
 
 class AccordionPage extends StatelessWidget //__
 {
-  final _headerStyle =
-      TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold);
+  final _headerStyle = TextStyle(
+      color: Color(0xffffffff), fontSize: 15, fontWeight: FontWeight.bold);
+  final _headerStyleSmall = TextStyle(
+      color: Color(0xffffffff), fontSize: 12, fontWeight: FontWeight.bold);
+  final _contentStyleHeader = TextStyle(
+      color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w700);
+  final _contentStyle = TextStyle(
+      color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
+  final _loremIpsum =
+      '''In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available. It is also used to temporarily replace text in a process called greeking, which allows designers to consider the form of a webpage or publication, without the meaning of the text influencing the design.''';
+  final _loremIpsum2 =
+      '''Lorem ipsum is typically a corrupted version of 'De finibus bonorum et malorum', a 1st century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin.''';
 
   build(context) => Scaffold(
         backgroundColor: Colors.blueGrey[100],
@@ -30,64 +40,177 @@ class AccordionPage extends StatelessWidget //__
           title: Text('Accordion'),
         ),
         body: Accordion(
-          maxOpenSections: 1,
-          leftIcon: Icon(Icons.audiotrack, color: Colors.white),
+          maxOpenSections: 4,
+          headerBorderRadius: 20,
+          headerBackgroundColor: Color(0xff999999),
+          headerPadding: EdgeInsets.symmetric(vertical: 7, horizontal: 15),
           children: [
             AccordionSection(
               isOpen: true,
+              leftIcon: Icon(Icons.insights_rounded, color: Colors.white),
               header: Text('Introduction', style: _headerStyle),
-              content: Icon(Icons.airplanemode_active,
-                  size: 200, color: Colors.amber),
+              content: Text(_loremIpsum2, style: _contentStyle),
+              contentHorizontalPadding: 20,
             ),
             AccordionSection(
-              isOpen: true,
+              isOpen: false,
+              leftIcon: Icon(Icons.compare_rounded, color: Colors.white),
               header: Text('About Us', style: _headerStyle),
-              content: Icon(Icons.airline_seat_flat,
-                  size: 120, color: Colors.blue[200]),
+              content: Row(
+                children: [
+                  Icon(Icons.compare_rounded,
+                      size: 120, color: Colors.orangeAccent),
+                  Flexible(
+                      flex: 1, child: Text(_loremIpsum2, style: _contentStyle)),
+                ],
+              ),
             ),
             AccordionSection(
-              isOpen: true,
+              isOpen: false,
+              leftIcon: Icon(Icons.food_bank, color: Colors.white),
               header: Text('Company Info', style: _headerStyle),
-              content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
+              content: DataTable(
+                sortAscending: true,
+                sortColumnIndex: 1,
+                dataRowHeight: 40,
+                showBottomBorder: false,
+                columns: [
+                  DataColumn(
+                      label: Text('ID', style: _contentStyleHeader),
+                      numeric: true),
+                  DataColumn(
+                      label: Text('Description', style: _contentStyleHeader)),
+                  DataColumn(
+                      label: Text('Price', style: _contentStyleHeader),
+                      numeric: true),
+                ],
+                rows: [
+                  DataRow(
+                    cells: [
+                      DataCell(Text('1',
+                          style: _contentStyle, textAlign: TextAlign.right)),
+                      DataCell(Text('Fancy Product', style: _contentStyle)),
+                      DataCell(Text(r'$ 199.99',
+                          style: _contentStyle, textAlign: TextAlign.right))
+                    ],
+                  ),
+                  DataRow(
+                    cells: [
+                      DataCell(Text('2',
+                          style: _contentStyle, textAlign: TextAlign.right)),
+                      DataCell(Text('Another Product', style: _contentStyle)),
+                      DataCell(Text(r'$ 79.00',
+                          style: _contentStyle, textAlign: TextAlign.right))
+                    ],
+                  ),
+                  DataRow(
+                    cells: [
+                      DataCell(Text('3',
+                          style: _contentStyle, textAlign: TextAlign.right)),
+                      DataCell(Text('Really Cool Stuff', style: _contentStyle)),
+                      DataCell(Text(r'$ 9.99',
+                          style: _contentStyle, textAlign: TextAlign.right))
+                    ],
+                  ),
+                  DataRow(
+                    cells: [
+                      DataCell(Text('4',
+                          style: _contentStyle, textAlign: TextAlign.right)),
+                      DataCell(
+                          Text('Last Product goes here', style: _contentStyle)),
+                      DataCell(Text(r'$ 19.99',
+                          style: _contentStyle, textAlign: TextAlign.right))
+                    ],
+                  ),
+                ],
+              ),
             ),
             AccordionSection(
-              isOpen: true,
+              isOpen: false,
+              leftIcon: Icon(Icons.contact_page, color: Colors.white),
               header: Text('Contact', style: _headerStyle),
-              content: Icon(Icons.contact_page, size: 300, color: Colors.grey),
+              content: Wrap(
+                children: List.generate(
+                    30,
+                    (index) => Icon(Icons.contact_page,
+                        size: 30, color: Color(0xff999999))),
+              ),
             ),
             AccordionSection(
               isOpen: false,
-              header: Text('Technical Jobs', style: _headerStyle),
-              content: Icon(Icons.computer, size: 200, color: Colors.amber),
-            ),
-            AccordionSection(
-              isOpen: false,
-              header: Text('Administrative Jobs', style: _headerStyle),
-              content: Icon(Icons.emoji_people, size: 200, color: Colors.amber),
-            ),
-            AccordionSection(
-              isOpen: false,
-              header: Text('Culture', style: _headerStyle),
+              leftIcon: Icon(Icons.computer, color: Colors.white),
+              header: Text('Jobs', style: _headerStyle),
               content:
-                  Icon(Icons.calculate_rounded, size: 200, color: Colors.green),
+                  Icon(Icons.computer, size: 200, color: Color(0xff999999)),
             ),
             AccordionSection(
               isOpen: false,
+              leftIcon: Icon(Icons.movie, color: Colors.white),
+              header: Text('Culture', style: _headerStyle),
+              content: Icon(Icons.movie, size: 200, color: Color(0xff999999)),
+            ),
+            AccordionSection(
+              isOpen: false,
+              leftIcon: Icon(Icons.people, color: Colors.white),
               header: Text('Community', style: _headerStyle),
-              content: Icon(Icons.commute_outlined,
-                  size: 200, color: Colors.blueAccent),
+              content: Icon(Icons.people, size: 200, color: Color(0xff999999)),
             ),
             AccordionSection(
               isOpen: false,
-              header: Text('Friends Of Us', style: _headerStyle),
-              content: Icon(Icons.child_friendly, size: 200, color: Colors.red),
+              leftIcon: Icon(Icons.person_add, color: Colors.white),
+              header: Text('Accordion within Accordion', style: _headerStyle),
+              contentHorizontalPadding: 15,
+              contentVerticalPadding: 15,
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Text(
+                      '\nTo your right you have an accordion nested within an accordion:',
+                      style: _contentStyle,
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                  Container(
+                    width: 200,
+                    height: 200,
+                    child: Accordion(
+                      headerBackgroundColor: Colors.blue[200],
+                      headerPadding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                      contentBackgroundColor: Colors.blue[50],
+                      contentBorderRadius: 10,
+                      children: [
+                        AccordionSection(
+                            isOpen: false,
+                            header: Text('Section #1', style: _headerStyle),
+                            content: Text('This is sub-accordion #1 ...',
+                                style: _contentStyle)),
+                        AccordionSection(
+                            isOpen: false,
+                            header: Text('Section #2', style: _headerStyle),
+                            content: Text('This is sub-accordion #2 ...',
+                                style: _contentStyle)),
+                        AccordionSection(
+                            isOpen: false,
+                            header: Text('Section #3', style: _headerStyle),
+                            content: Text('This is sub-accordion #3 ...',
+                                style: _contentStyle)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             AccordionSection(
               isOpen: false,
+              leftIcon: Icon(Icons.map, color: Colors.white),
               header: Text('Map', style: _headerStyle),
-              content: Icon(Icons.map, size: 200, color: Colors.blue),
+              content: Icon(Icons.map, size: 200, color: Color(0xff999999)),
             ),
           ],
         ),
       );
-}//__
+} //__

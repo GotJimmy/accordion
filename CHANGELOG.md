@@ -1,3 +1,8 @@
+## [2.0.1]
+* included "Accordion within Accordion" in the example app (see notes in README)
+* changed default borderRadius of header and content to 10
+* updated documentation and example app
+
 ## [2.0.0]
 * deprecated `headerText`, `headerTextStyle`, `headerTextAlign`
 * new parameter `header` which replaces all of the above

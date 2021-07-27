@@ -175,7 +175,7 @@ class Accordion extends StatelessWidget with CommonParams {
   }) {
     listCtrl.initialOpeningSequenceDelay = initialOpeningSequenceDelay ?? 0;
     this._headerBackgroundColor = headerBackgroundColor;
-    this._headerBorderRadius = headerBorderRadius ?? 30;
+    this._headerBorderRadius = headerBorderRadius ?? 10;
     this._headerTextAlign = headerTextAlign ?? TextAlign.left;
     this._headerTextStyle = headerTextStyle;
     this._leftIcon = leftIcon;
@@ -184,11 +184,11 @@ class Accordion extends StatelessWidget with CommonParams {
     this._contentBackgroundColor = contentBackgroundColor;
     this._contentBorderColor = contentBorderColor;
     this._contentBorderWidth = contentBorderWidth;
-    this._contentBorderRadius = contentBorderRadius ?? 20;
+    this._contentBorderRadius = contentBorderRadius ?? 10;
     this._contentHorizontalPadding = contentHorizontalPadding;
     this._contentVerticalPadding = contentVerticalPadding;
     this._headerPadding =
-        headerPadding ?? EdgeInsets.symmetric(horizontal: 20, vertical: 10);
+        headerPadding ?? EdgeInsets.symmetric(horizontal: 15, vertical: 7);
     this._paddingBetweenOpenSections = paddingBetweenOpenSections ?? 10;
     this._paddingBetweenClosedSections = paddingBetweenClosedSections ?? 3;
     this._scrollIntoViewOfItems = scrollIntoViewOfItems;
