@@ -1,3 +1,8 @@
+## [2.1.0]
+* `headerText`, `headerTextStyle`, `headerTextAlign` have been removed -- please use `header` instead
+* the content area now has a 1px border by default
+* the background color of the `header` and the `contentBorderColor` share the same default color (primaryColor)
+
 ## [2.0.1]
 * included "Accordion within Accordion" in the example app (see notes in README)
 * changed default borderRadius of header and content to 10

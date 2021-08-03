@@ -69,8 +69,6 @@ final springFast = SpringDescription(mass: 1, stiffness: 200, damping: 30);
 mixin CommonParams {
   late final Color? _headerBackgroundColor;
   late final double? _headerBorderRadius;
-  late final TextAlign? _headerTextAlign;
-  late final TextStyle? _headerTextStyle;
   late final EdgeInsets? _headerPadding;
   late final Widget? _leftIcon, _rightIcon;
   late final bool? _flipRightIconIfOpen;
@@ -153,8 +151,6 @@ class Accordion extends StatelessWidget with CommonParams {
     int? initialOpeningSequenceDelay,
     Color? headerBackgroundColor,
     double? headerBorderRadius,
-    @deprecated TextAlign? headerTextAlign,
-    @deprecated TextStyle? headerTextStyle,
     Widget? leftIcon,
     Widget? rightIcon,
     Widget? header,
@@ -176,8 +172,6 @@ class Accordion extends StatelessWidget with CommonParams {
     listCtrl.initialOpeningSequenceDelay = initialOpeningSequenceDelay ?? 0;
     this._headerBackgroundColor = headerBackgroundColor;
     this._headerBorderRadius = headerBorderRadius ?? 10;
-    this._headerTextAlign = headerTextAlign ?? TextAlign.left;
-    this._headerTextStyle = headerTextStyle;
     this._leftIcon = leftIcon;
     this._rightIcon = rightIcon;
     this._flipRightIconIfOpen = flipRightIconIfOpen;
@@ -238,9 +232,6 @@ class Accordion extends StatelessWidget with CommonParams {
                     child._headerBackgroundColor ?? _headerBackgroundColor,
                 headerBorderRadius:
                     child._headerBorderRadius ?? _headerBorderRadius,
-                headerText: child.headerText,
-                headerTextStyle: child._headerTextStyle ?? _headerTextStyle,
-                headerTextAlign: child._headerTextAlign ?? _headerTextAlign,
                 headerPadding: child._headerPadding ?? _headerPadding,
                 header: child.header,
                 leftIcon: child._leftIcon ?? _leftIcon,
@@ -324,8 +315,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
   late final int index;
 
   /// The text to be displayed in the header
-  final Widget? header;
-  final String? headerText;
+  final Widget header;
 
   /// The widget to be displayed as the content of the section when open
   final Widget content;
@@ -334,13 +324,10 @@ class AccordionSection extends StatelessWidget with CommonParams {
     this.key,
     this.index = 0,
     bool isOpen = false,
-    this.header,
-    @deprecated this.headerText,
+    required this.header,
     required this.content,
     Color? headerBackgroundColor,
     double? headerBorderRadius,
-    TextAlign? headerTextAlign,
-    TextStyle? headerTextStyle,
     EdgeInsets? headerPadding,
     Widget? leftIcon,
     Widget? rightIcon,
@@ -360,8 +347,6 @@ class AccordionSection extends StatelessWidget with CommonParams {
 
     this._headerBackgroundColor = headerBackgroundColor;
     this._headerBorderRadius = headerBorderRadius;
-    this._headerTextAlign = headerTextAlign;
-    this._headerTextStyle = headerTextStyle;
     this._headerPadding = headerPadding;
     this._leftIcon = leftIcon;
     this._rightIcon = rightIcon;
@@ -439,18 +424,9 @@ class AccordionSection extends StatelessWidget with CommonParams {
                   Expanded(
                     flex: 10,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: header == null
-                          ? Text(
-                              headerText ?? '',
-                              textAlign: _headerTextAlign,
-                              style: _headerTextStyle ??
-                                  TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                            )
-                          : header,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: _leftIcon == null ? 0 : 15),
+                      child: header,
                     ),
                   ),
                   if (_rightIcon != null)
@@ -473,16 +449,17 @@ class AccordionSection extends StatelessWidget with CommonParams {
                   child: Container(
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
-                      color: _contentBorderColor ?? Colors.white,
+                      color:
+                          _contentBorderColor ?? Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.vertical(
                           bottom: Radius.circular(_contentBorderRadius!)),
                     ),
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(
-                        _contentBorderWidth ?? 0,
+                        _contentBorderWidth ?? 1,
                         0,
-                        _contentBorderWidth ?? 0,
-                        _contentBorderWidth ?? 0,
+                        _contentBorderWidth ?? 1,
+                        _contentBorderWidth ?? 1,
                       ),
                       child: Container(
                         clipBehavior: Clip.antiAlias,
