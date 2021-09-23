@@ -204,6 +204,8 @@ class Accordion extends StatelessWidget with CommonParams {
 
     return Scrollbar(
       child: ListView(
+        shrinkWrap: true,
+        physics: ClampingScrollPhysics(),
         controller: listCtrl.controller,
         padding: EdgeInsets.only(
           top: paddingListTop,
