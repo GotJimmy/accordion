@@ -1,3 +1,9 @@
+## [2.1.1]
+* fixed controller issue with scrollbar
+* fixed problem with `flipRightIconIfOpen`
+* fixed `headerBorderRadius` prop not reacting when set globally via `Accordion`
+* added `shrinkWrap` and `AlwaysScrollableScrollPhysics` to the `Accordion` widget
+
 ## [2.1.0]
 * `headerText`, `headerTextStyle`, `headerTextAlign` have been removed -- please use `header` instead
 * the content area now has a 1px border by default

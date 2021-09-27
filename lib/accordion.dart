@@ -71,7 +71,7 @@ mixin CommonParams {
   late final double? _headerBorderRadius;
   late final EdgeInsets? _headerPadding;
   late final Widget? _leftIcon, _rightIcon;
-  late final bool? _flipRightIconIfOpen;
+  late final RxBool? _flipRightIconIfOpen = true.obs;
   late final Color? _contentBackgroundColor;
   late final Color? _contentBorderColor;
   late final double? _contentBorderWidth;
@@ -171,10 +171,10 @@ class Accordion extends StatelessWidget with CommonParams {
   }) {
     listCtrl.initialOpeningSequenceDelay = initialOpeningSequenceDelay ?? 0;
     this._headerBackgroundColor = headerBackgroundColor;
-    this._headerBorderRadius = headerBorderRadius ?? 10;
+    this._headerBorderRadius = headerBorderRadius;
     this._leftIcon = leftIcon;
     this._rightIcon = rightIcon;
-    this._flipRightIconIfOpen = flipRightIconIfOpen;
+    this._flipRightIconIfOpen?.value = flipRightIconIfOpen ?? true;
     this._contentBackgroundColor = contentBackgroundColor;
     this._contentBorderColor = contentBorderColor;
     this._contentBorderWidth = contentBorderWidth;
@@ -203,8 +203,11 @@ class Accordion extends StatelessWidget with CommonParams {
     int index = 0;
 
     return Scrollbar(
+      controller: listCtrl.controller,
       child: ListView(
         controller: listCtrl.controller,
+        shrinkWrap: true,
+        physics: AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.only(
           top: paddingListTop,
           bottom: paddingListBottom,
@@ -242,8 +245,8 @@ class Accordion extends StatelessWidget with CommonParams {
                       color: Colors.white60,
                       size: 20,
                     ),
-                flipRightIconIfOpen:
-                    child._flipRightIconIfOpen ?? _flipRightIconIfOpen,
+                flipRightIconIfOpen: child._flipRightIconIfOpen?.value ??
+                    _flipRightIconIfOpen?.value,
                 paddingBetweenClosedSections:
                     child._paddingBetweenClosedSections ??
                         _paddingBetweenClosedSections,
@@ -350,23 +353,25 @@ class AccordionSection extends StatelessWidget with CommonParams {
     this._headerPadding = headerPadding;
     this._leftIcon = leftIcon;
     this._rightIcon = rightIcon;
-    this._flipRightIconIfOpen = flipRightIconIfOpen ?? true;
+    this._flipRightIconIfOpen?.value = flipRightIconIfOpen ?? true;
     this._contentBackgroundColor = contentBackgroundColor;
     this._contentBorderColor = contentBorderColor;
-    this._contentBorderWidth = contentBorderWidth;
-    this._contentBorderRadius = contentBorderRadius;
+    this._contentBorderWidth = contentBorderWidth ?? 1;
+    this._contentBorderRadius = contentBorderRadius ?? 10;
     this._contentHorizontalPadding = contentHorizontalPadding ?? 10;
     this._contentVerticalPadding = contentVerticalPadding ?? 10;
-    this._paddingBetweenOpenSections = paddingBetweenOpenSections;
-    this._paddingBetweenClosedSections = paddingBetweenClosedSections;
+    this._paddingBetweenOpenSections = paddingBetweenOpenSections ?? 10;
+    this._paddingBetweenClosedSections = paddingBetweenClosedSections ?? 10;
     this._scrollIntoViewOfItems =
         scrollIntoViewOfItems ?? ScrollIntoViewOfItems.fast;
   }
 
-  get _flipQuarterTurns => _flipRightIconIfOpen == true ? (_isOpen ? 2 : 0) : 0;
+  get _flipQuarterTurns =>
+      _flipRightIconIfOpen?.value == true ? (_isOpen ? 2 : 0) : 0;
 
   get _isOpen {
     final open = listCtrl.openSections.contains(key);
+
     Timer(
       _sectionCtrl._firstRun
           ? (listCtrl.initialOpeningSequenceDelay + min(index * 200, 1000))
@@ -378,10 +383,13 @@ class AccordionSection extends StatelessWidget with CommonParams {
         _sectionCtrl._firstRun = false;
       },
     );
+
     return open;
   }
 
   build(context) {
+    final _borderRadius = _headerBorderRadius ?? 10;
+
     return Obx(
       () => Column(
         key: key,
@@ -391,7 +399,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
               listCtrl.updateSections(key!);
 
               if (_isOpen &&
-                  _scrollIntoViewOfItems != ScrollIntoViewOfItems.none)
+                  _scrollIntoViewOfItems != ScrollIntoViewOfItems.none &&
+                  listCtrl.controller.hasClients)
                 Timer(
                   0.25.seconds,
                   () {
@@ -414,8 +423,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
               decoration: BoxDecoration(
                 color: _headerBackgroundColor ?? Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(_headerBorderRadius!),
-                  bottom: Radius.circular(_isOpen ? 0 : _headerBorderRadius!),
+                  top: Radius.circular(_borderRadius),
+                  bottom: Radius.circular(_isOpen ? 0 : _borderRadius),
                 ),
               ),
               child: Row(

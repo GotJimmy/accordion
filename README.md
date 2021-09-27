@@ -15,7 +15,6 @@ The content area basically provides the container in which you drop whatever you
 
 Side note: it is possible to nest an `Accordion` within an `AccordionSection` but you will have to watch out for the following:
 - you should set `maxOpenSections` of the main `Accordion` to at least >= 2
-- you must wrap the nested `Accordion` with something like `Container` and give that wrapper a specific height
 - `scrollIntoView` will not work for nested `Accordions` at this point!
 - see the example app (in the "Accordion within Accordion" section) for further info
 
