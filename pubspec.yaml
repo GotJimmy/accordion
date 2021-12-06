@@ -1,6 +1,6 @@
 name: accordion
 description: An expandable Flutter widget list where each item can be expanded or collapsed simply by clicking on the header.
-version: 2.1.1
+version: 2.1.2
 homepage: https://www.vulcansoft.com
 repository: https://github.com/GotJimmy/accordion
 

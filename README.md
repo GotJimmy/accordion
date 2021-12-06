@@ -85,13 +85,14 @@ The following properties can be set globally for all sections or for each sectio
 
 ## Properties for `Accordion`
 
-|              Property | Description                                                                                                   |          Type          | Required | Default value |
-| --------------------: | :------------------------------------------------------------------------------------------------------------ | :--------------------: | :------: | ------------- |
-|       maxOpenSections | maximum number of open sections at any given time. Opening a new section will close the "oldest" open section |          int           |    no    | 1             |
-|              children | the list of `AccordionSection`                                                                                | List<AccordionSection> |   YES    | []            |
-|        paddingListTop | padding of the `Accordion` list at the top                                                                    |         double         |    no    | 20.0          |
-|     paddingListBottom | padding of the `Accordion` list at the bottom                                                                 |         double         |    no    | 40.0          |
-| paddingListHorizontal | horizontal padding of the `Accordion` list                                                                    |         double         |    no    | 10.0          |
+|              Property | Description                                                                                                                                       |          Type          | Required | Default value |
+| --------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------: | :------: | ------------- |
+|       maxOpenSections | maximum number of open sections at any given time. Opening a new section will close the "oldest" open section                                     |          int           |    no    | 1             |
+|              children | the list of `AccordionSection`                                                                                                                    | List<AccordionSection> |   YES    | []            |
+|        paddingListTop | padding of the `Accordion` list at the top                                                                                                        |         double         |    no    | 20.0          |
+|     paddingListBottom | padding of the `Accordion` list at the bottom                                                                                                     |         double         |    no    | 40.0          |
+| paddingListHorizontal | horizontal padding of the `Accordion` list                                                                                                        |         double         |    no    | 10.0          |
+|      disableScrolling | disables internal scrolling of the `Accordion` widget. Useful when the `Accordion` is used within a ListView or something else already scrollable |          bool          |    no    | false         |
 
 
 <br><br>

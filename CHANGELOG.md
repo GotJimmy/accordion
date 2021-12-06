@@ -1,3 +1,6 @@
+## [2.1.2]
+* added `disableScrolling` prop to `Accordion`. Useful when the `Accordion` is used within a ListView or something else that already scrolls.
+
 ## [2.1.1]
 * fixed controller issue with scrollbar
 * fixed problem with `flipRightIconIfOpen`

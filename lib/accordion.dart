@@ -144,6 +144,7 @@ class Accordion extends StatelessWidget with CommonParams {
   final double paddingListHorizontal;
   final double paddingListTop;
   final double paddingListBottom;
+  final bool disableScrolling;
 
   Accordion({
     int? maxOpenSections,
@@ -168,6 +169,7 @@ class Accordion extends StatelessWidget with CommonParams {
     double? paddingBetweenOpenSections,
     double? paddingBetweenClosedSections,
     ScrollIntoViewOfItems? scrollIntoViewOfItems,
+    this.disableScrolling = false,
   }) {
     listCtrl.initialOpeningSequenceDelay = initialOpeningSequenceDelay ?? 0;
     this._headerBackgroundColor = headerBackgroundColor;
@@ -207,7 +209,9 @@ class Accordion extends StatelessWidget with CommonParams {
       child: ListView(
         controller: listCtrl.controller,
         shrinkWrap: true,
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: disableScrolling
+            ? NeverScrollableScrollPhysics()
+            : AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.only(
           top: paddingListTop,
           bottom: paddingListBottom,

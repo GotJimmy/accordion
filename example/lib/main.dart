@@ -21,9 +21,12 @@ class AccordionApp extends StatelessWidget {
 
 class AccordionPage extends StatelessWidget //__
 {
-  final _headerStyle = TextStyle(color: Color(0xffffffff), fontSize: 15, fontWeight: FontWeight.bold);
-  final _contentStyleHeader = TextStyle(color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w700);
-  final _contentStyle = TextStyle(color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
+  final _headerStyle = TextStyle(
+      color: Color(0xffffffff), fontSize: 15, fontWeight: FontWeight.bold);
+  final _contentStyleHeader = TextStyle(
+      color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w700);
+  final _contentStyle = TextStyle(
+      color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
   final _loremIpsum =
       '''Lorem ipsum is typically a corrupted version of 'De finibus bonorum et malorum', a 1st century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin.''';
 
@@ -51,8 +54,10 @@ class AccordionPage extends StatelessWidget //__
               contentBorderColor: Color(0xffffffff),
               content: Row(
                 children: [
-                  Icon(Icons.compare_rounded, size: 120, color: Colors.orangeAccent),
-                  Flexible(flex: 1, child: Text(_loremIpsum, style: _contentStyle)),
+                  Icon(Icons.compare_rounded,
+                      size: 120, color: Colors.orangeAccent),
+                  Flexible(
+                      flex: 1, child: Text(_loremIpsum, style: _contentStyle)),
                 ],
               ),
             ),
@@ -66,37 +71,51 @@ class AccordionPage extends StatelessWidget //__
                 dataRowHeight: 40,
                 showBottomBorder: false,
                 columns: [
-                  DataColumn(label: Text('ID', style: _contentStyleHeader), numeric: true),
-                  DataColumn(label: Text('Description', style: _contentStyleHeader)),
-                  DataColumn(label: Text('Price', style: _contentStyleHeader), numeric: true),
+                  DataColumn(
+                      label: Text('ID', style: _contentStyleHeader),
+                      numeric: true),
+                  DataColumn(
+                      label: Text('Description', style: _contentStyleHeader)),
+                  DataColumn(
+                      label: Text('Price', style: _contentStyleHeader),
+                      numeric: true),
                 ],
                 rows: [
                   DataRow(
                     cells: [
-                      DataCell(Text('1', style: _contentStyle, textAlign: TextAlign.right)),
+                      DataCell(Text('1',
+                          style: _contentStyle, textAlign: TextAlign.right)),
                       DataCell(Text('Fancy Product', style: _contentStyle)),
-                      DataCell(Text(r'$ 199.99', style: _contentStyle, textAlign: TextAlign.right))
+                      DataCell(Text(r'$ 199.99',
+                          style: _contentStyle, textAlign: TextAlign.right))
                     ],
                   ),
                   DataRow(
                     cells: [
-                      DataCell(Text('2', style: _contentStyle, textAlign: TextAlign.right)),
+                      DataCell(Text('2',
+                          style: _contentStyle, textAlign: TextAlign.right)),
                       DataCell(Text('Another Product', style: _contentStyle)),
-                      DataCell(Text(r'$ 79.00', style: _contentStyle, textAlign: TextAlign.right))
+                      DataCell(Text(r'$ 79.00',
+                          style: _contentStyle, textAlign: TextAlign.right))
                     ],
                   ),
                   DataRow(
                     cells: [
-                      DataCell(Text('3', style: _contentStyle, textAlign: TextAlign.right)),
+                      DataCell(Text('3',
+                          style: _contentStyle, textAlign: TextAlign.right)),
                       DataCell(Text('Really Cool Stuff', style: _contentStyle)),
-                      DataCell(Text(r'$ 9.99', style: _contentStyle, textAlign: TextAlign.right))
+                      DataCell(Text(r'$ 9.99',
+                          style: _contentStyle, textAlign: TextAlign.right))
                     ],
                   ),
                   DataRow(
                     cells: [
-                      DataCell(Text('4', style: _contentStyle, textAlign: TextAlign.right)),
-                      DataCell(Text('Last Product goes here', style: _contentStyle)),
-                      DataCell(Text(r'$ 19.99', style: _contentStyle, textAlign: TextAlign.right))
+                      DataCell(Text('4',
+                          style: _contentStyle, textAlign: TextAlign.right)),
+                      DataCell(
+                          Text('Last Product goes here', style: _contentStyle)),
+                      DataCell(Text(r'$ 19.99',
+                          style: _contentStyle, textAlign: TextAlign.right))
                     ],
                   ),
                 ],
@@ -107,14 +126,18 @@ class AccordionPage extends StatelessWidget //__
               leftIcon: Icon(Icons.contact_page, color: Colors.white),
               header: Text('Contact', style: _headerStyle),
               content: Wrap(
-                children: List.generate(30, (index) => Icon(Icons.contact_page, size: 30, color: Color(0xff999999))),
+                children: List.generate(
+                    30,
+                    (index) => Icon(Icons.contact_page,
+                        size: 30, color: Color(0xff999999))),
               ),
             ),
             AccordionSection(
               isOpen: false,
               leftIcon: Icon(Icons.computer, color: Colors.white),
               header: Text('Jobs', style: _headerStyle),
-              content: Icon(Icons.computer, size: 200, color: Color(0xff999999)),
+              content:
+                  Icon(Icons.computer, size: 200, color: Color(0xff999999)),
             ),
             AccordionSection(
               isOpen: false,
