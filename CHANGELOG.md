@@ -1,3 +1,7 @@
+## [2.2.1]
+* fixed missing documentation
+* fixed deprecated SingleGetTickerProviderMixin to GetSingleTickerProviderStateMixin
+
 ## [2.2.0]
 * code refactoring
 * added `headerBackgroundColorOpened` as an option when a section is open. Default is `headerBackgroundColor`

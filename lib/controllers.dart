@@ -3,7 +3,14 @@ import 'package:flutter/physics.dart';
 import 'package:get/get.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
+/// ScrollIntoViewOfItems is used to adjust the position of newly
+/// opened sections in the center of the screen
 enum ScrollIntoViewOfItems { none, slow, fast }
+
+/// SectionHapticFeedback controls which (if any) haptic feedback
+/// should be played when clicking the header of a section.
+/// Can be applied to both `Accordion` for all sections or
+/// to `AccordionSection` for individula sections.
 enum SectionHapticFeedback {
   none,
   light,
@@ -15,6 +22,8 @@ enum SectionHapticFeedback {
 
 const springFast = SpringDescription(mass: 1, stiffness: 200, damping: 30);
 
+/// `CommonParams` is used for both `Accordion` (for all sections)
+/// and `AccordionSections` for individual sections.
 mixin CommonParams {
   late final Color? headerBackgroundColor;
   late final Color? headerBackgroundColorOpened;
@@ -35,6 +44,7 @@ mixin CommonParams {
   late final SectionHapticFeedback? sectionClosingHapticFeedback;
 }
 
+/// Controller for `Accordion` widget
 class ListController extends GetxController {
   final controller = AutoScrollController(axis: Axis.vertical);
   final openSections = <UniqueKey>[].obs;
@@ -68,8 +78,9 @@ class ListController extends GetxController {
 
 final listCtrl = ListController();
 
+/// Controller for `AccordionSection` widgets
 class SectionController extends GetxController
-    with SingleGetTickerProviderMixin {
+    with GetSingleTickerProviderStateMixin {
   late final controller = AnimationController(vsync: this);
   final isSectionOpen = false.obs;
   bool firstRun = true;

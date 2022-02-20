@@ -21,6 +21,7 @@ class AccordionApp extends StatelessWidget {
   }
 }
 
+/// Main example page
 class AccordionPage extends StatelessWidget //__
 {
   const AccordionPage({Key key}) : super(key: key);
