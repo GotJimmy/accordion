@@ -1,3 +1,9 @@
+## [2.2.0]
+* code refactoring
+* added `headerBackgroundColorOpened` as an option when a section is open. Default is `headerBackgroundColor`
+* added `sectionOpeningHapticFeedback` and `sectionClosingHapticFeedback` to play a haptic feedback when opening/closing a section.
+* added `openAndCloseAnimation` to `Accordion` to control if sections should animate when opened/closed.
+
 ## [2.1.2]
 * added `disableScrolling` prop to `Accordion`. Useful when the `Accordion` is used within a ListView or something else that already scrolls.
 
