@@ -47,7 +47,7 @@ mixin CommonParams {
 /// Controller for `Accordion` widget
 class ListController extends GetxController {
   final controller = AutoScrollController(axis: Axis.vertical);
-  final openSections = <UniqueKey>[].obs;
+  final openSections = <Key>[].obs;
 
   /// Maximum number of open sections at any given time.
   /// Opening a new section will close the "oldest" open section
@@ -59,13 +59,15 @@ class ListController extends GetxController {
   /// the delay) have a nice opening sequence.
   int initialOpeningSequenceDelay = 250;
 
-  void updateSections(UniqueKey key) {
+  void updateSections(Key key) {
     openSections.contains(key)
         ? openSections.remove(key)
         : openSections.add(key);
 
     if (openSections.length > maxOpenSections) {
       openSections.removeRange(0, openSections.length - maxOpenSections);
+
+      print(openSections.value.join(', '));
     }
   }
 

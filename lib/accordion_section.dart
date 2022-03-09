@@ -35,7 +35,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 /// ```
 class AccordionSection extends StatelessWidget with CommonParams {
   late final SectionController sectionCtrl;
-  late final UniqueKey? uniqueKey;
+  late final Key? uniqueKey;
   late final int index;
 
   /// The text to be displayed in the header
@@ -73,6 +73,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
     sectionCtrl = SectionController();
     sectionCtrl.isSectionOpen.value = isOpen;
 
+    // if (isOpen) listCtrl.openSections.add(Key(index.toString()));
     this.headerBackgroundColor = headerBackgroundColor;
     this.headerBackgroundColorOpened =
         headerBackgroundColorOpened ?? headerBackgroundColor;
@@ -99,7 +100,10 @@ class AccordionSection extends StatelessWidget with CommonParams {
       flipRightIconIfOpen?.value == true ? (_isOpen ? 2 : 0) : 0;
 
   get _isOpen {
-    final open = listCtrl.openSections.contains(uniqueKey);
+    // final open = listCtrl.openSections.contains(key);
+    // final open = isOpen;
+    // sectionCtrl.isSectionOpen.value =
+    final open = sectionCtrl.isSectionOpen.value;
 
     Timer(
       sectionCtrl.firstRun
@@ -150,11 +154,12 @@ class AccordionSection extends StatelessWidget with CommonParams {
 
     return Obx(
       () => Column(
-        key: uniqueKey,
+        // key: uniqueKey,
         children: [
           InkWell(
             onTap: () {
-              listCtrl.updateSections(uniqueKey!);
+              // listCtrl.updateSections(key);
+              sectionCtrl.isSectionOpen.toggle();
 
               _playHapticFeedback(_isOpen);
 
