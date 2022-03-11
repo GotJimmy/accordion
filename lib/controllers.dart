@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:get/get.dart';
@@ -47,7 +49,10 @@ mixin CommonParams {
 /// Controller for `Accordion` widget
 class ListController extends GetxController {
   final controller = AutoScrollController(axis: Axis.vertical);
-  final openSections = <Key>[].obs;
+  final openSections = <UniqueKey>[];
+  StreamController<String> controllerIsOpen =
+      StreamController<String>.broadcast();
+  final keys = List<UniqueKey>.generate(1000, (index) => UniqueKey());
 
   /// Maximum number of open sections at any given time.
   /// Opening a new section will close the "oldest" open section
@@ -59,26 +64,29 @@ class ListController extends GetxController {
   /// the delay) have a nice opening sequence.
   int initialOpeningSequenceDelay = 250;
 
-  void updateSections(Key key) {
+  void updateSections(UniqueKey key) {
     openSections.contains(key)
         ? openSections.remove(key)
         : openSections.add(key);
 
-    if (openSections.length > maxOpenSections) {
-      openSections.removeRange(0, openSections.length - maxOpenSections);
-
-      print(openSections.value.join(', '));
+    while (openSections.length > maxOpenSections) {
+      openSections.removeAt(0);
     }
+
+    // if (openSections.length > maxOpenSections) {
+    //   openSections.removeRange(0, openSections.length - maxOpenSections);
+    // }
+
+    controllerIsOpen.sink.add('update list');
   }
 
   @override
   void onClose() {
+    controllerIsOpen.close();
     controller.dispose();
     super.onClose();
   }
 }
-
-final listCtrl = ListController();
 
 /// Controller for `AccordionSection` widgets
 class SectionController extends GetxController

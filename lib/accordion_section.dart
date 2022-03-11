@@ -34,9 +34,11 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 /// )
 /// ```
 class AccordionSection extends StatelessWidget with CommonParams {
-  late final SectionController sectionCtrl;
-  late final Key? uniqueKey;
+  final SectionController sectionCtrl = SectionController();
+  late final UniqueKey uniqueKey;
   late final int index;
+  final listCtrl = Get.put(ListController());
+  final bool isOpen;
 
   /// The text to be displayed in the header
   final Widget header;
@@ -46,9 +48,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
 
   AccordionSection({
     Key? key,
-    this.uniqueKey,
     this.index = 0,
-    bool isOpen = false,
+    this.isOpen = false,
     required this.header,
     required this.content,
     Color? headerBackgroundColor,
@@ -70,10 +71,9 @@ class AccordionSection extends StatelessWidget with CommonParams {
     SectionHapticFeedback? sectionOpeningHapticFeedback,
     SectionHapticFeedback? sectionClosingHapticFeedback,
   }) : super(key: key) {
-    sectionCtrl = SectionController();
-    sectionCtrl.isSectionOpen.value = isOpen;
+    uniqueKey = listCtrl.keys.elementAt(index);
+    sectionCtrl.isSectionOpen.value = listCtrl.openSections.contains(uniqueKey);
 
-    // if (isOpen) listCtrl.openSections.add(Key(index.toString()));
     this.headerBackgroundColor = headerBackgroundColor;
     this.headerBackgroundColorOpened =
         headerBackgroundColorOpened ?? headerBackgroundColor;
@@ -94,15 +94,16 @@ class AccordionSection extends StatelessWidget with CommonParams {
         scrollIntoViewOfItems ?? ScrollIntoViewOfItems.fast;
     this.sectionOpeningHapticFeedback = sectionOpeningHapticFeedback;
     this.sectionClosingHapticFeedback = sectionClosingHapticFeedback;
+
+    listCtrl.controllerIsOpen.stream.asBroadcastStream().listen((data) {
+      sectionCtrl.isSectionOpen.value = listCtrl.openSections.contains(key);
+    });
   }
 
   get _flipQuarterTurns =>
       flipRightIconIfOpen?.value == true ? (_isOpen ? 2 : 0) : 0;
 
   get _isOpen {
-    // final open = listCtrl.openSections.contains(key);
-    // final open = isOpen;
-    // sectionCtrl.isSectionOpen.value =
     final open = sectionCtrl.isSectionOpen.value;
 
     Timer(
@@ -154,13 +155,11 @@ class AccordionSection extends StatelessWidget with CommonParams {
 
     return Obx(
       () => Column(
-        // key: uniqueKey,
+        key: uniqueKey,
         children: [
           InkWell(
             onTap: () {
-              // listCtrl.updateSections(key);
-              sectionCtrl.isSectionOpen.toggle();
-
+              listCtrl.updateSections(uniqueKey);
               _playHapticFeedback(_isOpen);
 
               if (_isOpen &&

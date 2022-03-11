@@ -16,38 +16,7 @@ class AccordionApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const pages(),
-    );
-  }
-}
-
-class pages extends StatefulWidget {
-  const pages({Key key}) : super(key: key);
-
-  @override
-  State<pages> createState() => _pagesState();
-}
-
-class _pagesState extends State<pages> {
-  final PageController _controller = PageController(
-    initialPage: 0,
-  );
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return PageView(
-      children: const [AccordionPage(), AccordionPage()],
+      home: const AccordionPage(),
     );
   }
 }
@@ -73,7 +42,7 @@ class AccordionPage extends StatelessWidget //__
           title: const Text('Accordion'),
         ),
         body: Accordion(
-          maxOpenSections: 3,
+          maxOpenSections: 2,
           headerBackgroundColorOpened: Colors.black54,
           headerPadding:
               const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
@@ -94,7 +63,7 @@ class AccordionPage extends StatelessWidget //__
               // sectionClosingHapticFeedback: SectionHapticFeedback.vibrate,
             ),
             AccordionSection(
-              isOpen: false,
+              isOpen: true,
               leftIcon: const Icon(Icons.compare_rounded, color: Colors.white),
               header: Text('About Us', style: _headerStyle),
               contentBorderColor: const Color(0xffffffff),
@@ -167,102 +136,6 @@ class AccordionPage extends StatelessWidget //__
                   ),
                 ],
               ),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.contact_page, color: Colors.white),
-              header: Text('Contact', style: _headerStyle),
-              content: Wrap(
-                children: List.generate(
-                    30,
-                    (index) => const Icon(Icons.contact_page,
-                        size: 30, color: Color(0xff999999))),
-              ),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.computer, color: Colors.white),
-              header: Text('Jobs', style: _headerStyle),
-              content: const Icon(Icons.computer,
-                  size: 200, color: Color(0xff999999)),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.movie, color: Colors.white),
-              header: Text('Culture', style: _headerStyle),
-              content:
-                  const Icon(Icons.movie, size: 200, color: Color(0xff999999)),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.people, color: Colors.white),
-              header: Text('Community', style: _headerStyle),
-              content:
-                  const Icon(Icons.people, size: 200, color: Color(0xff999999)),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.contact_page, color: Colors.white),
-              header: Text('Contact', style: _headerStyle),
-              content: Wrap(
-                children: List.generate(
-                    30,
-                    (index) => const Icon(Icons.contact_page,
-                        size: 30, color: Color(0xff999999))),
-              ),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.computer, color: Colors.white),
-              header: Text('Jobs', style: _headerStyle),
-              content: const Icon(Icons.computer,
-                  size: 200, color: Color(0xff999999)),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.movie, color: Colors.white),
-              header: Text('Culture', style: _headerStyle),
-              content:
-                  const Icon(Icons.movie, size: 200, color: Color(0xff999999)),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.people, color: Colors.white),
-              header: Text('Community', style: _headerStyle),
-              content:
-                  const Icon(Icons.people, size: 200, color: Color(0xff999999)),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.contact_page, color: Colors.white),
-              header: Text('Contact', style: _headerStyle),
-              content: Wrap(
-                children: List.generate(
-                    30,
-                    (index) => const Icon(Icons.contact_page,
-                        size: 30, color: Color(0xff999999))),
-              ),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.computer, color: Colors.white),
-              header: Text('Jobs', style: _headerStyle),
-              content: const Icon(Icons.computer,
-                  size: 200, color: Color(0xff999999)),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.movie, color: Colors.white),
-              header: Text('Culture', style: _headerStyle),
-              content:
-                  const Icon(Icons.movie, size: 200, color: Color(0xff999999)),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.people, color: Colors.white),
-              header: Text('Community', style: _headerStyle),
-              content:
-                  const Icon(Icons.people, size: 200, color: Color(0xff999999)),
             ),
             AccordionSection(
               isOpen: false,

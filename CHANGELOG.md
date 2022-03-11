@@ -1,3 +1,6 @@
+## [2.2.2]
+* fixed error when using multiple `Accordion` in a `PageView`
+
 ## [2.2.1]
 * fixed missing documentation
 * fixed deprecated SingleGetTickerProviderMixin to GetSingleTickerProviderStateMixin

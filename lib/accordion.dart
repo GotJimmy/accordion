@@ -57,6 +57,7 @@ library accordion;
 import 'package:accordion/accordion_section.dart';
 import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 export 'accordion_section.dart';
@@ -86,17 +87,18 @@ export 'accordion_section.dart';
 /// 	)
 /// ```
 class Accordion extends StatelessWidget with CommonParams {
-  final List<AccordionSection>? children;
+  final List<AccordionSection> children;
   final double paddingListHorizontal;
   final double paddingListTop;
   final double paddingListBottom;
   final bool disableScrolling;
   static bool sectionAnimation = true;
+  final listCtrl = Get.put(ListController());
 
   Accordion({
     Key? key,
     int? maxOpenSections,
-    this.children,
+    required this.children,
     int? initialOpeningSequenceDelay,
     Color? headerBackgroundColor,
     Color? headerBackgroundColorOpened,
@@ -124,6 +126,17 @@ class Accordion extends StatelessWidget with CommonParams {
     bool? openAndCloseAnimation,
   }) : super(key: key) {
     listCtrl.initialOpeningSequenceDelay = initialOpeningSequenceDelay ?? 0;
+    listCtrl.maxOpenSections = maxOpenSections ?? 1;
+
+    int index = 0;
+    for (var child in children) {
+      if (child.isOpen &&
+          listCtrl.openSections.length < listCtrl.maxOpenSections) {
+        listCtrl.openSections.add(listCtrl.keys.elementAt(index));
+      }
+      index++;
+    }
+
     this.headerBackgroundColor = headerBackgroundColor;
     this.headerBackgroundColorOpened =
         headerBackgroundColorOpened ?? headerBackgroundColor;
@@ -147,273 +160,77 @@ class Accordion extends StatelessWidget with CommonParams {
     this.sectionClosingHapticFeedback =
         sectionClosingHapticFeedback ?? SectionHapticFeedback.none;
     sectionAnimation = openAndCloseAnimation ?? true;
-
-    int count = 0;
-    listCtrl.maxOpenSections = maxOpenSections ?? 1;
-    for (var child in children!) {
-      // child.key = UniqueKey();
-      // print(UniqueKey());
-      if (child.sectionCtrl.isSectionOpen.value == true) {
-        count++;
-        // listCtrl.openSections.add(Key(count.toString()));
-
-        if (count > listCtrl.maxOpenSections) {
-          child.sectionCtrl.isSectionOpen.value = false;
-        }
-        // else if (child.sectionCtrl.isSectionOpen.value) {
-        //   listCtrl.openSections.add(key);
-        // }
-      }
-    }
   }
-
-  // buildOpenList() async {
-  //   if (child.sectionCtrl.isSectionOpen.value) {
-  //     listCtrl.openSections.add(key);
-  //     Key(1.toString());
-  //   }
-  // }
 
   @override
   build(context) {
-    int index = 0;
-
-    return Scrollbar(
+    return ListView.builder(
+      itemCount: children.length,
       controller: listCtrl.controller,
-      child: ListView.builder(
-          itemCount: children?.length,
+      shrinkWrap: true,
+      physics: disableScrolling
+          ? const NeverScrollableScrollPhysics()
+          : const AlwaysScrollableScrollPhysics(),
+      padding: EdgeInsets.only(
+        top: paddingListTop,
+        bottom: paddingListBottom,
+        right: paddingListHorizontal,
+        left: paddingListHorizontal,
+      ),
+      cacheExtent: 100000,
+      itemBuilder: (context, index) {
+        final key = listCtrl.keys.elementAt(index);
+        final child = children.elementAt(index);
+
+        return AutoScrollTag(
+          key: key,
           controller: listCtrl.controller,
-          shrinkWrap: true,
-          physics: disableScrolling
-              ? const NeverScrollableScrollPhysics()
-              : const AlwaysScrollableScrollPhysics(),
-          padding: EdgeInsets.only(
-            top: paddingListTop,
-            bottom: paddingListBottom,
-            right: paddingListHorizontal,
-            left: paddingListHorizontal,
-          ),
-          cacheExtent: 100000,
-          itemBuilder: (context, index) {
-            final key = Key(index.toString());
-            // UniqueKey();
-            final child = children?.elementAt(index);
-            if (child != null) {
-              // if (child.sectionCtrl.isSectionOpen.value) {
-              //   listCtrl.openSections.add(key);
-              // }
-
-              return AutoScrollTag(
-                key: key,
-                // key: ValueKey(key),
-                controller: listCtrl.controller,
-                index: index,
-                child: AccordionSection(
-                  key: key,
-                  uniqueKey: key,
-                  index: index++,
-                  isOpen: child.sectionCtrl.isSectionOpen.value,
-                  scrollIntoViewOfItems: scrollIntoViewOfItems,
-                  headerBackgroundColor:
-                      child.headerBackgroundColor ?? headerBackgroundColor,
-                  headerBackgroundColorOpened:
-                      child.headerBackgroundColorOpened ??
-                          headerBackgroundColorOpened ??
-                          headerBackgroundColor,
-                  headerBorderRadius:
-                      child.headerBorderRadius ?? headerBorderRadius,
-                  headerPadding: child.headerPadding ?? headerPadding,
-                  header: child.header,
-                  leftIcon: child.leftIcon ?? leftIcon,
-                  rightIcon: child.rightIcon ??
-                      rightIcon ??
-                      const Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.white60,
-                        size: 20,
-                      ),
-                  flipRightIconIfOpen: child.flipRightIconIfOpen?.value ??
-                      flipRightIconIfOpen?.value,
-                  paddingBetweenClosedSections:
-                      child.paddingBetweenClosedSections ??
-                          paddingBetweenClosedSections,
-                  paddingBetweenOpenSections:
-                      child.paddingBetweenOpenSections ??
-                          paddingBetweenOpenSections,
-                  content: child.content,
-                  contentBackgroundColor:
-                      child.contentBackgroundColor ?? contentBackgroundColor,
-                  contentBorderColor:
-                      child.contentBorderColor ?? contentBorderColor,
-                  contentBorderWidth:
-                      child.contentBorderWidth ?? contentBorderWidth,
-                  contentBorderRadius:
-                      child.contentBorderRadius ?? contentBorderRadius,
-                  contentHorizontalPadding: child.contentHorizontalPadding ??
-                      contentHorizontalPadding,
-                  contentVerticalPadding:
-                      child.contentVerticalPadding ?? contentVerticalPadding,
-                  sectionOpeningHapticFeedback:
-                      child.sectionOpeningHapticFeedback ??
-                          sectionOpeningHapticFeedback,
-                  sectionClosingHapticFeedback:
-                      child.sectionClosingHapticFeedback ??
-                          sectionClosingHapticFeedback,
+          index: index,
+          child: AccordionSection(
+            key: key,
+            index: index,
+            isOpen: child.isOpen,
+            scrollIntoViewOfItems: scrollIntoViewOfItems,
+            headerBackgroundColor:
+                child.headerBackgroundColor ?? headerBackgroundColor,
+            headerBackgroundColorOpened: child.headerBackgroundColorOpened ??
+                headerBackgroundColorOpened ??
+                headerBackgroundColor,
+            headerBorderRadius: child.headerBorderRadius ?? headerBorderRadius,
+            headerPadding: child.headerPadding ?? headerPadding,
+            header: child.header,
+            leftIcon: child.leftIcon ?? leftIcon,
+            rightIcon: child.rightIcon ??
+                rightIcon ??
+                const Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.white60,
+                  size: 20,
                 ),
-              );
-            } else {
-              return Container();
-            }
-          }
-          // children: children!.map(
-          //   (child) {
-          //     final key = UniqueKey();
-
-          //     if (child.sectionCtrl.isSectionOpen.value) {
-          //       listCtrl.openSections.add(key);
-          //     }
-
-          //     return AutoScrollTag(
-          //       key: ValueKey(key),
-          //       controller: listCtrl.controller,
-          //       index: index,
-          //       child: AccordionSection(
-          //         uniqueKey: key,
-          //         index: index++,
-          //         isOpen: child.sectionCtrl.isSectionOpen.value,
-          //         scrollIntoViewOfItems: scrollIntoViewOfItems,
-          //         headerBackgroundColor:
-          //             child.headerBackgroundColor ?? headerBackgroundColor,
-          //         headerBackgroundColorOpened:
-          //             child.headerBackgroundColorOpened ??
-          //                 headerBackgroundColorOpened ??
-          //                 headerBackgroundColor,
-          //         headerBorderRadius:
-          //             child.headerBorderRadius ?? headerBorderRadius,
-          //         headerPadding: child.headerPadding ?? headerPadding,
-          //         header: child.header,
-          //         leftIcon: child.leftIcon ?? leftIcon,
-          //         rightIcon: child.rightIcon ??
-          //             rightIcon ??
-          //             const Icon(
-          //               Icons.keyboard_arrow_down,
-          //               color: Colors.white60,
-          //               size: 20,
-          //             ),
-          //         flipRightIconIfOpen: child.flipRightIconIfOpen?.value ??
-          //             flipRightIconIfOpen?.value,
-          //         paddingBetweenClosedSections:
-          //             child.paddingBetweenClosedSections ??
-          //                 paddingBetweenClosedSections,
-          //         paddingBetweenOpenSections: child.paddingBetweenOpenSections ??
-          //             paddingBetweenOpenSections,
-          //         content: child.content,
-          //         contentBackgroundColor:
-          //             child.contentBackgroundColor ?? contentBackgroundColor,
-          //         contentBorderColor:
-          //             child.contentBorderColor ?? contentBorderColor,
-          //         contentBorderWidth:
-          //             child.contentBorderWidth ?? contentBorderWidth,
-          //         contentBorderRadius:
-          //             child.contentBorderRadius ?? contentBorderRadius,
-          //         contentHorizontalPadding:
-          //             child.contentHorizontalPadding ?? contentHorizontalPadding,
-          //         contentVerticalPadding:
-          //             child.contentVerticalPadding ?? contentVerticalPadding,
-          //         sectionOpeningHapticFeedback:
-          //             child.sectionOpeningHapticFeedback ??
-          //                 sectionOpeningHapticFeedback,
-          //         sectionClosingHapticFeedback:
-          //             child.sectionClosingHapticFeedback ??
-          //                 sectionClosingHapticFeedback,
-          //       ),
-          //     );
-          //   },
-          // ).toList(),
+            flipRightIconIfOpen:
+                child.flipRightIconIfOpen?.value ?? flipRightIconIfOpen?.value,
+            paddingBetweenClosedSections: child.paddingBetweenClosedSections ??
+                paddingBetweenClosedSections,
+            paddingBetweenOpenSections:
+                child.paddingBetweenOpenSections ?? paddingBetweenOpenSections,
+            content: child.content,
+            contentBackgroundColor:
+                child.contentBackgroundColor ?? contentBackgroundColor,
+            contentBorderColor: child.contentBorderColor ?? contentBorderColor,
+            contentBorderWidth: child.contentBorderWidth ?? contentBorderWidth,
+            contentBorderRadius:
+                child.contentBorderRadius ?? contentBorderRadius,
+            contentHorizontalPadding:
+                child.contentHorizontalPadding ?? contentHorizontalPadding,
+            contentVerticalPadding:
+                child.contentVerticalPadding ?? contentVerticalPadding,
+            sectionOpeningHapticFeedback: child.sectionOpeningHapticFeedback ??
+                sectionOpeningHapticFeedback,
+            sectionClosingHapticFeedback: child.sectionClosingHapticFeedback ??
+                sectionClosingHapticFeedback,
           ),
+        );
+      },
     );
-
-    // return Scrollbar(
-    //   controller: listCtrl.controller,
-    //   child: ListView(
-    //     controller: listCtrl.controller,
-    //     shrinkWrap: true,
-    //     physics: disableScrolling
-    //         ? const NeverScrollableScrollPhysics()
-    //         : const AlwaysScrollableScrollPhysics(),
-    //     padding: EdgeInsets.only(
-    //       top: paddingListTop,
-    //       bottom: paddingListBottom,
-    //       right: paddingListHorizontal,
-    //       left: paddingListHorizontal,
-    //     ),
-    //     cacheExtent: 100000,
-    //     children: children!.map(
-    //       (child) {
-    //         final key = UniqueKey();
-
-    //         if (child.sectionCtrl.isSectionOpen.value) {
-    //           listCtrl.openSections.add(key);
-    //         }
-
-    //         return AutoScrollTag(
-    //           key: ValueKey(key),
-    //           controller: listCtrl.controller,
-    //           index: index,
-    //           child: AccordionSection(
-    //             uniqueKey: key,
-    //             index: index++,
-    //             isOpen: child.sectionCtrl.isSectionOpen.value,
-    //             scrollIntoViewOfItems: scrollIntoViewOfItems,
-    //             headerBackgroundColor:
-    //                 child.headerBackgroundColor ?? headerBackgroundColor,
-    //             headerBackgroundColorOpened:
-    //                 child.headerBackgroundColorOpened ??
-    //                     headerBackgroundColorOpened ??
-    //                     headerBackgroundColor,
-    //             headerBorderRadius:
-    //                 child.headerBorderRadius ?? headerBorderRadius,
-    //             headerPadding: child.headerPadding ?? headerPadding,
-    //             header: child.header,
-    //             leftIcon: child.leftIcon ?? leftIcon,
-    //             rightIcon: child.rightIcon ??
-    //                 rightIcon ??
-    //                 const Icon(
-    //                   Icons.keyboard_arrow_down,
-    //                   color: Colors.white60,
-    //                   size: 20,
-    //                 ),
-    //             flipRightIconIfOpen: child.flipRightIconIfOpen?.value ??
-    //                 flipRightIconIfOpen?.value,
-    //             paddingBetweenClosedSections:
-    //                 child.paddingBetweenClosedSections ??
-    //                     paddingBetweenClosedSections,
-    //             paddingBetweenOpenSections: child.paddingBetweenOpenSections ??
-    //                 paddingBetweenOpenSections,
-    //             content: child.content,
-    //             contentBackgroundColor:
-    //                 child.contentBackgroundColor ?? contentBackgroundColor,
-    //             contentBorderColor:
-    //                 child.contentBorderColor ?? contentBorderColor,
-    //             contentBorderWidth:
-    //                 child.contentBorderWidth ?? contentBorderWidth,
-    //             contentBorderRadius:
-    //                 child.contentBorderRadius ?? contentBorderRadius,
-    //             contentHorizontalPadding:
-    //                 child.contentHorizontalPadding ?? contentHorizontalPadding,
-    //             contentVerticalPadding:
-    //                 child.contentVerticalPadding ?? contentVerticalPadding,
-    //             sectionOpeningHapticFeedback:
-    //                 child.sectionOpeningHapticFeedback ??
-    //                     sectionOpeningHapticFeedback,
-    //             sectionClosingHapticFeedback:
-    //                 child.sectionClosingHapticFeedback ??
-    //                     sectionClosingHapticFeedback,
-    //           ),
-    //         );
-    //       },
-    //     ).toList(),
-    //   ),
-    // );
   }
 }
