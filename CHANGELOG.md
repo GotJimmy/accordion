@@ -1,3 +1,6 @@
+## [2.2.3]
+* added some missing documentation
+
 ## [2.2.2]
 * fixed error when using multiple `Accordion` in a `PageView`
 

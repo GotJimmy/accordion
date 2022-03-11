@@ -100,9 +100,13 @@ class AccordionSection extends StatelessWidget with CommonParams {
     });
   }
 
+  /// getter to flip the widget vertically (Icon by default)
+  /// on the right of this section header to visually indicate
+  /// if this section is open or closed
   get _flipQuarterTurns =>
       flipRightIconIfOpen?.value == true ? (_isOpen ? 2 : 0) : 0;
 
+  /// getter indication the open or closed status of this section
   get _isOpen {
     final open = sectionCtrl.isSectionOpen.value;
 
@@ -125,6 +129,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
     return open;
   }
 
+  /// play haptic feedback when opening/closing sections
   _playHapticFeedback(bool opening) {
     final feedback =
         opening ? sectionOpeningHapticFeedback : sectionClosingHapticFeedback;

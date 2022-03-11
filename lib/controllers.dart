@@ -22,6 +22,7 @@ enum SectionHapticFeedback {
   vibrate,
 }
 
+/// spring to set the speed of opening/closing animations of a section
 const springFast = SpringDescription(mass: 1, stiffness: 200, damping: 30);
 
 /// `CommonParams` is used for both `Accordion` (for all sections)
@@ -64,6 +65,8 @@ class ListController extends GetxController {
   /// the delay) have a nice opening sequence.
   int initialOpeningSequenceDelay = 250;
 
+  /// adds or removes a section key from the list of open sections
+  /// and notifies sections to open or close accordingly
   void updateSections(UniqueKey key) {
     openSections.contains(key)
         ? openSections.remove(key)
@@ -72,10 +75,6 @@ class ListController extends GetxController {
     while (openSections.length > maxOpenSections) {
       openSections.removeAt(0);
     }
-
-    // if (openSections.length > maxOpenSections) {
-    //   openSections.removeRange(0, openSections.length - maxOpenSections);
-    // }
 
     controllerIsOpen.sink.add('update list');
   }
