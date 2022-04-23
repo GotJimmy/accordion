@@ -124,7 +124,9 @@ class Accordion extends StatelessWidget with CommonParams {
     SectionHapticFeedback? sectionOpeningHapticFeedback,
     SectionHapticFeedback? sectionClosingHapticFeedback,
     bool? openAndCloseAnimation,
+    String? accordionId,
   }) : super(key: key) {
+    final listCtrl = Get.put(ListController(), tag: hashCode.toString());
     listCtrl.initialOpeningSequenceDelay = initialOpeningSequenceDelay ?? 0;
     listCtrl.maxOpenSections = maxOpenSections ?? 1;
 
@@ -160,10 +162,12 @@ class Accordion extends StatelessWidget with CommonParams {
     this.sectionClosingHapticFeedback =
         sectionClosingHapticFeedback ?? SectionHapticFeedback.none;
     sectionAnimation = openAndCloseAnimation ?? true;
+    this.accordionId = hashCode.toString();
   }
 
   @override
   build(context) {
+    final listCtrl = Get.put(ListController(), tag: hashCode.toString());
     return ListView.builder(
       itemCount: children.length,
       controller: listCtrl.controller,
@@ -228,6 +232,7 @@ class Accordion extends StatelessWidget with CommonParams {
                 sectionOpeningHapticFeedback,
             sectionClosingHapticFeedback: child.sectionClosingHapticFeedback ??
                 sectionClosingHapticFeedback,
+            accordionId: accordionId,
           ),
         );
       },

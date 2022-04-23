@@ -45,6 +45,7 @@ mixin CommonParams {
   late final ScrollIntoViewOfItems? scrollIntoViewOfItems;
   late final SectionHapticFeedback? sectionOpeningHapticFeedback;
   late final SectionHapticFeedback? sectionClosingHapticFeedback;
+  late final String? accordionId;
 }
 
 /// Controller for `Accordion` widget
