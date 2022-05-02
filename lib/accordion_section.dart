@@ -37,7 +37,6 @@ class AccordionSection extends StatelessWidget with CommonParams {
   final SectionController sectionCtrl = SectionController();
   late final UniqueKey uniqueKey;
   late final int index;
-  final listCtrl = Get.put(ListController());
   final bool isOpen;
 
   /// The text to be displayed in the header
@@ -70,7 +69,9 @@ class AccordionSection extends StatelessWidget with CommonParams {
     ScrollIntoViewOfItems? scrollIntoViewOfItems,
     SectionHapticFeedback? sectionOpeningHapticFeedback,
     SectionHapticFeedback? sectionClosingHapticFeedback,
+    String? accordionId,
   }) : super(key: key) {
+    final listCtrl = Get.put(ListController(), tag: accordionId);
     uniqueKey = listCtrl.keys.elementAt(index);
     sectionCtrl.isSectionOpen.value = listCtrl.openSections.contains(uniqueKey);
 
@@ -94,6 +95,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
         scrollIntoViewOfItems ?? ScrollIntoViewOfItems.fast;
     this.sectionOpeningHapticFeedback = sectionOpeningHapticFeedback;
     this.sectionClosingHapticFeedback = sectionClosingHapticFeedback;
+    this.accordionId = accordionId;
 
     listCtrl.controllerIsOpen.stream.asBroadcastStream().listen((data) {
       sectionCtrl.isSectionOpen.value = listCtrl.openSections.contains(key);
@@ -108,6 +110,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
 
   /// getter indication the open or closed status of this section
   get _isOpen {
+    final listCtrl = Get.put(ListController(), tag: accordionId);
     final open = sectionCtrl.isSectionOpen.value;
 
     Timer(
@@ -164,6 +167,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
         children: [
           InkWell(
             onTap: () {
+              final listCtrl = Get.put(ListController(), tag: accordionId);
               listCtrl.updateSections(uniqueKey);
               _playHapticFeedback(_isOpen);
 
