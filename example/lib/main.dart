@@ -6,7 +6,7 @@ void main() async {
 }
 
 class AccordionApp extends StatelessWidget {
-  const AccordionApp({Key key}) : super(key: key);
+  const AccordionApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -24,7 +24,7 @@ class AccordionApp extends StatelessWidget {
 /// Main example page
 class AccordionPage extends StatelessWidget //__
 {
-  const AccordionPage({Key key}) : super(key: key);
+  const AccordionPage({Key? key}) : super(key: key);
 
   final _headerStyle = const TextStyle(
       color: Color(0xffffffff), fontSize: 15, fontWeight: FontWeight.bold);
