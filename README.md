@@ -13,9 +13,7 @@ As of version 2.1: the `headerText`, `headerTextStyle` & `headerTextAlign` param
 
 The content area basically provides the container in which you drop whatever you want to display when `AccordionSection` opens. Background and borders can be set globally or individually per section.
 
-Side note: it is possible to nest an `Accordion` within an `AccordionSection` but you will have to watch out for the following:
-- you should set `maxOpenSections` of the main `Accordion` to at least >= 2
-- `scrollIntoView` will not work for nested `Accordions` at this point!
+Side note: it is possible to nest an `Accordion` within an `AccordionSection`
 - see the example app (in the "Accordion within Accordion" section) for further info
 
 Enjoy!
@@ -25,7 +23,7 @@ Enjoy!
 
 |                                                                                            |                                                                                             |
 | :----------------------------------------------------------------------------------------: | ------------------------------------------------------------------------------------------- |
-| ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/assets/accordion_demo.gif) | ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/assets/accordion_demo2.gif) |
+| ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/assets/accordion_demo.gif) | ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/assets/accordion_demo3.gif) |
 
 
 <br>
@@ -100,12 +98,14 @@ The following properties can be set globally for all sections or for each sectio
 <br><br>
 ## Properties for `AccordionSection`
 
-|              Property | Description                                                                    |  Type  | Required | Default value |
-| --------------------: | :----------------------------------------------------------------------------- | :----: | :------: | ------------- |
-|                isOpen | if this section should initially be displayed open or not                      |  bool  |    no    | false         |
-|                header | the header widget located between leftIcon & rightIcon                         | Widget |    no    |               |
-|               content | the widget you want to display as the visible content when the section is open | Widget |   YES    |               |
-|     paddingListBottom | padding of the `Accordion` list at the bottom                                  | double |    no    | 40.0          |
-| paddingListHorizontal | horizontal padding of the `Accordion` list                                     | double |    no    | 10.0          |
+|              Property | Description                                                                    |   Type   | Required | Default value |
+| --------------------: | :----------------------------------------------------------------------------- | :------: | :------: | ------------- |
+|                isOpen | if this section should initially be displayed open or not                      |   bool   |    no    | false         |
+|                header | the header widget located between leftIcon & rightIcon                         |  Widget  |    no    |               |
+|               content | the widget you want to display as the visible content when the section is open |  Widget  |   YES    |               |
+|     paddingListBottom | padding of the `Accordion` list at the bottom                                  |  double  |    no    | 40.0          |
+| paddingListHorizontal | horizontal padding of the `Accordion` list                                     |  double  |    no    | 10.0          |
+|         onOpenSection | callback function when this section opens                                      | Function |    no    |               |
+|        onCloseSection | callback function when this section closes                                     | Function |    no    |               |
 
 

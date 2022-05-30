@@ -20,4 +20,9 @@
 	},
 	"peacock.color": "#0000aa",
 	"dart.lineLength": 80,
+	"githubPullRequests.remotes": [
+		"origin",
+		"upstream",
+		"https://github.com/GotJimmy/accordion"
+	],
 }

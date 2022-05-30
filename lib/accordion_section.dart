@@ -38,6 +38,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
   late final UniqueKey uniqueKey;
   late final int index;
   final bool isOpen;
+  final Function? onOpenSection;
+  final Function? onCloseSection;
 
   /// The text to be displayed in the header
   final Widget header;
@@ -70,6 +72,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
     SectionHapticFeedback? sectionOpeningHapticFeedback,
     SectionHapticFeedback? sectionClosingHapticFeedback,
     String? accordionId,
+    this.onOpenSection,
+    this.onCloseSection,
   }) : super(key: key) {
     final listCtrl = Get.put(ListController(), tag: accordionId);
     uniqueKey = listCtrl.keys.elementAt(index);
@@ -187,6 +191,12 @@ class AccordionSection extends StatelessWidget with CommonParams {
                                 .seconds);
                   },
                 );
+              }
+
+              if (_isOpen) {
+                if (onCloseSection != null) onCloseSection!.call();
+              } else {
+                if (onOpenSection != null) onOpenSection!.call();
               }
             },
             child: AnimatedContainer(

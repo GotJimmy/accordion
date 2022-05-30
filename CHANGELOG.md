@@ -1,3 +1,13 @@
+## [2.4.0]
+* merged PR from @anatolinicolae
+* updated to latest versions of GetX & scroll_to_index
+* increased maximum number of sections to 10,000
+
+## [2.3.0]
+* merged PR from @jobic10 to make Key optional
+* merged PR from @SirObi to allow multiple `Accordion` instances on one page
+* added callbacks when opening/closing `AccordionSections`. Inspired by @singh-karan-7
+
 ## [2.2.3]
 * added some missing documentation
 

@@ -233,6 +233,8 @@ class Accordion extends StatelessWidget with CommonParams {
             sectionClosingHapticFeedback: child.sectionClosingHapticFeedback ??
                 sectionClosingHapticFeedback,
             accordionId: accordionId,
+            onOpenSection: child.onOpenSection,
+            onCloseSection: child.onCloseSection,
           ),
         );
       },

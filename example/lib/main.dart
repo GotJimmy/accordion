@@ -1,4 +1,5 @@
 import 'package:accordion/accordion.dart';
+import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -46,9 +47,8 @@ class AccordionPage extends StatelessWidget //__
           headerBackgroundColorOpened: Colors.black54,
           headerPadding:
               const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
-          // sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
-          // sectionClosingHapticFeedback: SectionHapticFeedback.light,
-          // openAndCloseAnimation: false,
+          sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
+          sectionClosingHapticFeedback: SectionHapticFeedback.light,
           children: [
             AccordionSection(
               isOpen: true,
@@ -59,21 +59,50 @@ class AccordionPage extends StatelessWidget //__
               content: Text(_loremIpsum, style: _contentStyle),
               contentHorizontalPadding: 20,
               contentBorderWidth: 1,
-              // sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
-              // sectionClosingHapticFeedback: SectionHapticFeedback.vibrate,
+              // onOpenSection: () => print('onOpenSection ...'),
+              // onCloseSection: () => print('onCloseSection ...'),
             ),
             AccordionSection(
               isOpen: true,
               leftIcon: const Icon(Icons.compare_rounded, color: Colors.white),
-              header: Text('About Us', style: _headerStyle),
+              header: Text('Nested Accordion', style: _headerStyle),
               contentBorderColor: const Color(0xffffffff),
               headerBackgroundColorOpened: Colors.amber,
-              content: Row(
+              content: Accordion(
+                maxOpenSections: 1,
+                headerBackgroundColorOpened: Colors.black54,
+                headerPadding:
+                    const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
                 children: [
-                  const Icon(Icons.compare_rounded,
-                      size: 120, color: Colors.orangeAccent),
-                  Flexible(
-                      flex: 1, child: Text(_loremIpsum, style: _contentStyle)),
+                  AccordionSection(
+                    isOpen: true,
+                    leftIcon:
+                        const Icon(Icons.insights_rounded, color: Colors.white),
+                    headerBackgroundColor: Colors.black38,
+                    headerBackgroundColorOpened: Colors.black54,
+                    header: Text('Nested Section #1', style: _headerStyle),
+                    content: Text(_loremIpsum, style: _contentStyle),
+                    contentHorizontalPadding: 20,
+                    contentBorderColor: Colors.black54,
+                  ),
+                  AccordionSection(
+                    isOpen: true,
+                    leftIcon:
+                        const Icon(Icons.compare_rounded, color: Colors.white),
+                    header: Text('Nested Section #2', style: _headerStyle),
+                    headerBackgroundColor: Colors.black38,
+                    headerBackgroundColorOpened: Colors.black54,
+                    contentBorderColor: Colors.black54,
+                    content: Row(
+                      children: [
+                        const Icon(Icons.compare_rounded,
+                            size: 120, color: Colors.orangeAccent),
+                        Flexible(
+                            flex: 1,
+                            child: Text(_loremIpsum, style: _contentStyle)),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -169,45 +198,6 @@ class AccordionPage extends StatelessWidget //__
               content:
                   const Icon(Icons.people, size: 200, color: Color(0xff999999)),
             ),
-            // AccordionSection(
-            //   isOpen: false,
-            //   leftIcon: const Icon(Icons.person_add, color: Colors.white),
-            //   header: Text('Accordion within Accordion', style: _headerStyle),
-            //   contentHorizontalPadding: 15,
-            //   contentVerticalPadding: 15,
-            //   content: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Flexible(
-            //         flex: 1,
-            //         child: Text(
-            //           '\nTo your right you have an accordion nested within an accordion:',
-            //           style: _contentStyle,
-            //           textAlign: TextAlign.right,
-            //         ),
-            //       ),
-            //       Container(
-            //         width: 200,
-            //         height: 200,
-            //         child: Accordion(
-            //           headerBackgroundColor: Colors.blue[200],
-            //           headerPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-            //           contentBackgroundColor: Colors.blue[50],
-            //           contentBorderRadius: 10,
-            //           children: [
-            //             AccordionSection(
-            //                 isOpen: false, header: Text('Section #1', style: _headerStyle), content: Text('This is sub-accordion #1 ...', style: _contentStyle)),
-            //             AccordionSection(
-            //                 isOpen: false, header: Text('Section #2', style: _headerStyle), content: Text('This is sub-accordion #2 ...', style: _contentStyle)),
-            //             AccordionSection(
-            //                 isOpen: false, header: Text('Section #3', style: _headerStyle), content: Text('This is sub-accordion #3 ...', style: _contentStyle)),
-            //           ],
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             AccordionSection(
               isOpen: false,
               leftIcon: const Icon(Icons.map, color: Colors.white),

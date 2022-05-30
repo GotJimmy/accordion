@@ -54,7 +54,7 @@ class ListController extends GetxController {
   final openSections = <UniqueKey>[];
   StreamController<String> controllerIsOpen =
       StreamController<String>.broadcast();
-  final keys = List<UniqueKey>.generate(1000, (index) => UniqueKey());
+  final keys = List<UniqueKey>.generate(10000, (index) => UniqueKey());
 
   /// Maximum number of open sections at any given time.
   /// Opening a new section will close the "oldest" open section
