@@ -1,3 +1,7 @@
+## [2.2.4]
+* updated Flutter SDK version
+* fixed null-aware operation as per issue #23
+
 ## [2.2.3]
 * added some missing documentation
 
