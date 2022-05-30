@@ -11,8 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  get: ^4.6.1
-  scroll_to_index: ^2.1.1
+  get: ^4.6.5
+  scroll_to_index: ^3.0.1
 
 flutter:
   uses-material-design: true
