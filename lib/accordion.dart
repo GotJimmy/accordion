@@ -93,6 +93,7 @@ class Accordion extends StatelessWidget with CommonParams {
   final double paddingListBottom;
   final bool disableScrolling;
   static bool sectionAnimation = true;
+  static bool sectionScaleAnimation = true;
   final listCtrl = Get.put(ListController());
 
   Accordion({
@@ -124,6 +125,7 @@ class Accordion extends StatelessWidget with CommonParams {
     SectionHapticFeedback? sectionOpeningHapticFeedback,
     SectionHapticFeedback? sectionClosingHapticFeedback,
     bool? openAndCloseAnimation,
+    bool? scaleWhenAnimating,
     String? accordionId,
   }) : super(key: key) {
     final listCtrl = Get.put(ListController(), tag: hashCode.toString());
@@ -162,6 +164,7 @@ class Accordion extends StatelessWidget with CommonParams {
     this.sectionClosingHapticFeedback =
         sectionClosingHapticFeedback ?? SectionHapticFeedback.none;
     sectionAnimation = openAndCloseAnimation ?? true;
+    sectionScaleAnimation = scaleWhenAnimating ?? true;
     this.accordionId = hashCode.toString();
   }
 
