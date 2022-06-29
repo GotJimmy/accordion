@@ -242,7 +242,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
             child: SizeTransition(
               sizeFactor: sectionCtrl.controller,
               child: ScaleTransition(
-                scale: sectionCtrl.controller,
+                scale: Accordion.sectionScaleAnimation ? sectionCtrl.controller : const AlwaysStoppedAnimation(1.0),
                 child: Center(
                   child: Container(
                     clipBehavior: Clip.antiAlias,
