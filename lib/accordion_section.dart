@@ -163,7 +163,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
 
   @override
   build(context) {
-    final _borderRadius = headerBorderRadius ?? 10;
+    final borderRadius = headerBorderRadius ?? 10;
 
     return Obx(
       () => Column(
@@ -212,8 +212,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
                         : headerBackgroundColor) ??
                     Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(_borderRadius),
-                  bottom: Radius.circular(_isOpen ? 0 : _borderRadius),
+                  top: Radius.circular(borderRadius),
+                  bottom: Radius.circular(_isOpen ? 0 : borderRadius),
                 ),
               ),
               child: Row(
@@ -242,7 +242,9 @@ class AccordionSection extends StatelessWidget with CommonParams {
             child: SizeTransition(
               sizeFactor: sectionCtrl.controller,
               child: ScaleTransition(
-                scale: Accordion.sectionScaleAnimation ? sectionCtrl.controller : const AlwaysStoppedAnimation(1.0),
+                scale: Accordion.sectionScaleAnimation
+                    ? sectionCtrl.controller
+                    : const AlwaysStoppedAnimation(1.0),
                 child: Center(
                   child: Container(
                     clipBehavior: Clip.antiAlias,

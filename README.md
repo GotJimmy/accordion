@@ -29,31 +29,7 @@ Enjoy!
 <br>
 
 ## Sample Code
-
-```dart
-Accordion(
-	maxOpenSections: 2,
-	headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
-	leftIcon: Icon(Icons.audiotrack, color: Colors.white),
-	children: [
-		AccordionSection(
-			isOpen: true,
-			header: Text('Introduction', TextStyle(color: Colors.white, fontSize: 17)),
-			content: Text('This is the introduction right here ...'),
-		),
-		AccordionSection(
-			isOpen: true,
-			header: Text('About Us', TextStyle(color: Colors.white, fontSize: 17)),
-			content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
-		),
-		AccordionSection(
-			isOpen: true,
-			header: Text('Company Info', TextStyle(color: Colors.white, fontSize: 17)),
-			content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
-		),
-	],
-),
-```
+Please see Example page.
 
 <br>
 
@@ -94,6 +70,7 @@ The following properties can be set globally for all sections or for each sectio
 | paddingListHorizontal | horizontal padding of the `Accordion` list                                                                                                        |         double         |    no    | 10.0          |
 |      disableScrolling | disables internal scrolling of the `Accordion` widget. Useful when the `Accordion` is used within a ListView or something else already scrollable |          bool          |    no    | false         |
 | openAndCloseAnimation | controls if sections should animate when opened or closed                                                                                         |          bool          |    no    | true          |
+|    scaleWhenAnimating | controls if sections use a scale effectwhen opened or closed                                                                                      |          bool          |    no    | true          |
 
 <br><br>
 ## Properties for `AccordionSection`

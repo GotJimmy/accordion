@@ -45,6 +45,8 @@ class AccordionPage extends StatelessWidget //__
         body: Accordion(
           maxOpenSections: 2,
           headerBackgroundColorOpened: Colors.black54,
+          scaleWhenAnimating: true,
+          openAndCloseAnimation: true,
           headerPadding:
               const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
           sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,

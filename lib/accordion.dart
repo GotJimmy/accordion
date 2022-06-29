@@ -26,32 +26,7 @@
 /// The content area basically provides the container in which you drop
 /// whatever you want to display when `AccordionSection` opens. Background
 /// and borders can be set globally or individually per section.
-///
-/// ```dart
-/// 	Accordion(
-/// 		maxOpenSections: 1,
-/// 		headerTextStyle:
-/// 			TextStyle(color: Colors.white, fontSize: 17),
-/// 		leftIcon: Icon(Icons.audiotrack, color: Colors.white),
-/// 		children: [
-/// 			AccordionSection(
-/// 				isOpen: true,
-/// 				header: Text('Introduction', style: TextStyle(color: Colors.white, fontSize: 20)),
-/// 				content: Icon(Icons.airplanemode_active, size: 200),
-/// 			),
-/// 			AccordionSection(
-/// 				isOpen: true,
-/// 				header: Text('About Us', style: TextStyle(color: Colors.white, fontSize: 20)),
-/// 				content: Icon(Icons.airline_seat_flat, size: 120),
-/// 			),
-/// 			AccordionSection(
-/// 				isOpen: true,
-/// 				header: Text('Company Info', style: TextStyle(color: Colors.white, fontSize: 20)),
-/// 				content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
-/// 			),
-/// 		],
-/// 	)
-/// ```
+
 library accordion;
 
 import 'package:accordion/accordion_section.dart';
@@ -62,30 +37,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 
 export 'accordion_section.dart';
 
-/// The container list for all accordion sections. Usage:
-/// ```dart
-/// 	Accordion(
-/// 		maxOpenSections: 1,
-/// 		leftIcon: Icon(Icons.audiotrack, color: Colors.white),
-/// 		children: [
-/// 			AccordionSection(
-/// 				isOpen: true,
-/// 				header: Text('Introduction', style: TextStyle(color: Colors.white, fontSize: 20)),
-/// 				content: Icon(Icons.airplanemode_active, size: 200),
-/// 			),
-/// 			AccordionSection(
-/// 				isOpen: true,
-/// 				header: Text('About Us', style: TextStyle(color: Colors.white, fontSize: 20)),
-/// 				content: Icon(Icons.airline_seat_flat, size: 120),
-/// 			),
-/// 			AccordionSection(
-/// 				isOpen: true,
-/// 				header: Text('Company Info', style: TextStyle(color: Colors.white, fontSize: 20)),
-/// 				content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
-/// 			),
-/// 		],
-/// 	)
-/// ```
+/// The container list for all accordion sections.
 class Accordion extends StatelessWidget with CommonParams {
   final List<AccordionSection> children;
   final double paddingListHorizontal;

@@ -1,3 +1,7 @@
+## [2.5.0]
+* merged PR from @gslender making scale animations optional. See `scaleWhenAnimating`
+* updated code example in README
+
 ## [2.4.0]
 * merged PR from @anatolinicolae
 * updated to latest versions of GetX & scroll_to_index
