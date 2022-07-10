@@ -2,38 +2,31 @@
 
 An expandable Flutter widget list where each item can be expanded or collapsed simply by clicking on the header.
 
-<br>
-
 Simple to use accordion widget with lots of preset properties. Use the `maxOpenSections` property to automatically close sections when opening a new section. This is especially helpful if you always want your list to look clean -- just set this parameter to 1 and whenever you open a new section the previous one closes. `scrollIntoView` paramter can be set to `fast`, `slow`, or `none` and makes sure that just opened items will be fully visible. This parameter will only take affect if there are enough items in the list so scrolling is feasible.
 
 Many parameters can be set globally on `Accordion` as well as individually on each `AccordionSection` (see list below).
 
-The header consists of the left and right icons (right icon is preset to arrow down). Both can be set globally and individually. 
+The header consists of the left and right icons (right icon is preset to arrow down). Both can be set globally and individually.
 As of version 2.1: the `headerText`, `headerTextStyle` & `headerTextAlign` parameters have been removed and should be replaced with the `header` widget parameter.
 
 The content area basically provides the container in which you drop whatever you want to display when `AccordionSection` opens. Background and borders can be set globally or individually per section.
 
 Side note: it is possible to nest an `Accordion` within an `AccordionSection`
+
 - see the example app (in the "Accordion within Accordion" section) for further info
 
 Enjoy!
-
-<br>
-
 
 |                                                                                            |                                                                                             |
 | :----------------------------------------------------------------------------------------: | ------------------------------------------------------------------------------------------- |
 | ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/assets/accordion_demo.gif) | ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/assets/accordion_demo3.gif) |
 
-
-<br>
-
 ## Sample Code
+
 Please see Example page.
 
-<br>
-
 ## Common Properties
+
 The following properties can be set globally for all sections or for each section individually:
 
 |                     Property | Description                                                                                                                                                                                                             |         Type          | Required | Default value                                                     |
@@ -57,8 +50,6 @@ The following properties can be set globally for all sections or for each sectio
 | sectionOpeningHapticFeedback | if to play a haptic feedback when opening a section                                                                                                                                                                     | SectionHapticFeedback |    no    | SectionHapticFeedback.none                                        |
 | sectionClosingHapticFeedback | if to play a haptic feedback when closing a section                                                                                                                                                                     | SectionHapticFeedback |    no    | SectionHapticFeedback.none                                        |
 
-<br><br>
-
 ## Properties for `Accordion`
 
 |              Property | Description                                                                                                                                       |          Type          | Required | Default value |
@@ -72,7 +63,6 @@ The following properties can be set globally for all sections or for each sectio
 | openAndCloseAnimation | controls if sections should animate when opened or closed                                                                                         |          bool          |    no    | true          |
 |    scaleWhenAnimating | controls if sections use a scale effectwhen opened or closed                                                                                      |          bool          |    no    | true          |
 
-<br><br>
 ## Properties for `AccordionSection`
 
 |              Property | Description                                                                    |   Type   | Required | Default value |
@@ -84,5 +74,3 @@ The following properties can be set globally for all sections or for each sectio
 | paddingListHorizontal | horizontal padding of the `Accordion` list                                     |  double  |    no    | 10.0          |
 |         onOpenSection | callback function when this section opens                                      | Function |    no    |               |
 |        onCloseSection | callback function when this section closes                                     | Function |    no    |               |
-
-

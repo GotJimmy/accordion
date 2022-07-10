@@ -76,7 +76,11 @@ class Accordion extends StatelessWidget with CommonParams {
     this.disableScrolling = false,
     SectionHapticFeedback? sectionOpeningHapticFeedback,
     SectionHapticFeedback? sectionClosingHapticFeedback,
+
+    /// if to use any animation when opening and closing sections
     bool? openAndCloseAnimation,
+
+    /// if to use horizontal scaling of a section when opening or closing
     bool? scaleWhenAnimating,
     String? accordionId,
   }) : super(key: key) {

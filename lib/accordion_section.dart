@@ -38,7 +38,11 @@ class AccordionSection extends StatelessWidget with CommonParams {
   late final UniqueKey uniqueKey;
   late final int index;
   final bool isOpen;
+
+  /// Callback function for when a section opens
   final Function? onOpenSection;
+
+  /// Callback functionf or when a section closes
   final Function? onCloseSection;
 
   /// The text to be displayed in the header
