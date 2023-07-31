@@ -63,6 +63,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
     EdgeInsets? headerPadding,
     Widget? leftIcon,
     Widget? rightIcon,
+    bool? flipLeftIconIfOpen = false,
     bool? flipRightIconIfOpen = true,
     Color? contentBackgroundColor,
     Color? contentBorderColor,
@@ -90,6 +91,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
     this.headerPadding = headerPadding;
     this.leftIcon = leftIcon;
     this.rightIcon = rightIcon;
+    this.flipLeftIconIfOpen?.value = flipLeftIconIfOpen ?? false;
     this.flipRightIconIfOpen?.value = flipRightIconIfOpen ?? true;
     this.contentBackgroundColor = contentBackgroundColor;
     this.contentBorderColor = contentBorderColor;
@@ -115,6 +117,9 @@ class AccordionSection extends StatelessWidget with CommonParams {
   /// if this section is open or closed
   get _flipQuarterTurns =>
       flipRightIconIfOpen?.value == true ? (_isOpen ? 2 : 0) : 0;
+
+  get _flipQuarterTurnsLeft =>
+      flipLeftIconIfOpen?.value == true ? (_isOpen ? 2 : 0) : 0;
 
   /// getter indication the open or closed status of this section
   get _isOpen {
@@ -222,7 +227,9 @@ class AccordionSection extends StatelessWidget with CommonParams {
               ),
               child: Row(
                 children: [
-                  if (leftIcon != null) leftIcon!,
+                  if (leftIcon != null)
+                    RotatedBox(
+                        quarterTurns: _flipQuarterTurnsLeft, child: leftIcon!),
                   Expanded(
                     flex: 10,
                     child: Padding(

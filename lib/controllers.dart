@@ -33,6 +33,7 @@ mixin CommonParams {
   late final double? headerBorderRadius;
   late final EdgeInsets? headerPadding;
   late final Widget? leftIcon, rightIcon;
+  late final RxBool? flipLeftIconIfOpen = false.obs;
   late final RxBool? flipRightIconIfOpen = true.obs;
   late final Color? contentBackgroundColor;
   late final Color? contentBorderColor;
