@@ -44,6 +44,8 @@ class Accordion extends StatelessWidget with CommonParams {
   final double paddingListTop;
   final double paddingListBottom;
   final bool disableScrolling;
+  final bool? flipLeftIconIfOpen;
+  final bool? flipRightIconIfOpen;
   static bool sectionAnimation = true;
   static bool sectionScaleAnimation = true;
   final listCtrl = Get.put(ListController());
@@ -59,7 +61,8 @@ class Accordion extends StatelessWidget with CommonParams {
     Widget? leftIcon,
     Widget? rightIcon,
     Widget? header,
-    bool? flipRightIconIfOpen,
+    this.flipLeftIconIfOpen = false,
+    this.flipRightIconIfOpen = true,
     Color? contentBackgroundColor,
     Color? contentBorderColor,
     double? contentBorderWidth,
@@ -103,7 +106,8 @@ class Accordion extends StatelessWidget with CommonParams {
     this.headerBorderRadius = headerBorderRadius;
     this.leftIcon = leftIcon;
     this.rightIcon = rightIcon;
-    this.flipRightIconIfOpen?.value = flipRightIconIfOpen ?? true;
+    SectionController.flipLeftIconIfOpen = flipLeftIconIfOpen!;
+    SectionController.flipRightIconIfOpen = flipRightIconIfOpen!;
     this.contentBackgroundColor = contentBackgroundColor;
     this.contentBorderColor = contentBorderColor;
     this.contentBorderWidth = contentBorderWidth;
@@ -127,6 +131,7 @@ class Accordion extends StatelessWidget with CommonParams {
   @override
   build(context) {
     final listCtrl = Get.put(ListController(), tag: hashCode.toString());
+
     return ListView.builder(
       itemCount: children.length,
       controller: listCtrl.controller,
@@ -170,8 +175,6 @@ class Accordion extends StatelessWidget with CommonParams {
                   color: Colors.white60,
                   size: 20,
                 ),
-            flipRightIconIfOpen:
-                child.flipRightIconIfOpen?.value ?? flipRightIconIfOpen?.value,
             paddingBetweenClosedSections: child.paddingBetweenClosedSections ??
                 paddingBetweenClosedSections,
             paddingBetweenOpenSections:

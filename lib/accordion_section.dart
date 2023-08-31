@@ -63,7 +63,6 @@ class AccordionSection extends StatelessWidget with CommonParams {
     EdgeInsets? headerPadding,
     Widget? leftIcon,
     Widget? rightIcon,
-    bool? flipRightIconIfOpen = true,
     Color? contentBackgroundColor,
     Color? contentBorderColor,
     double? contentBorderWidth,
@@ -90,7 +89,6 @@ class AccordionSection extends StatelessWidget with CommonParams {
     this.headerPadding = headerPadding;
     this.leftIcon = leftIcon;
     this.rightIcon = rightIcon;
-    this.flipRightIconIfOpen?.value = flipRightIconIfOpen ?? true;
     this.contentBackgroundColor = contentBackgroundColor;
     this.contentBorderColor = contentBorderColor;
     this.contentBorderWidth = contentBorderWidth ?? 1;
@@ -111,10 +109,16 @@ class AccordionSection extends StatelessWidget with CommonParams {
   }
 
   /// getter to flip the widget vertically (Icon by default)
+  /// on the left of this section header to visually indicate
+  /// if this section is open or closed
+  get _flipQuarterTurnsLeft =>
+      SectionController.flipLeftIconIfOpen && _isOpen ? 2 : 0;
+
+  /// getter to flip the widget vertically (Icon by default)
   /// on the right of this section header to visually indicate
   /// if this section is open or closed
-  get _flipQuarterTurns =>
-      flipRightIconIfOpen?.value == true ? (_isOpen ? 2 : 0) : 0;
+  get _flipQuarterTurnsRight =>
+      SectionController.flipRightIconIfOpen && _isOpen ? 2 : 0;
 
   /// getter indication the open or closed status of this section
   get _isOpen {
@@ -222,7 +226,11 @@ class AccordionSection extends StatelessWidget with CommonParams {
               ),
               child: Row(
                 children: [
-                  if (leftIcon != null) leftIcon!,
+                  if (leftIcon != null)
+                    RotatedBox(
+                      quarterTurns: _flipQuarterTurnsLeft,
+                      child: leftIcon!,
+                    ),
                   Expanded(
                     flex: 10,
                     child: Padding(
@@ -233,7 +241,9 @@ class AccordionSection extends StatelessWidget with CommonParams {
                   ),
                   if (rightIcon != null)
                     RotatedBox(
-                        quarterTurns: _flipQuarterTurns, child: rightIcon!),
+                      quarterTurns: _flipQuarterTurnsRight,
+                      child: rightIcon!,
+                    ),
                 ],
               ),
             ),

@@ -43,7 +43,9 @@ class AccordionPage extends StatelessWidget //__
           title: const Text('Accordion'),
         ),
         body: Accordion(
-          maxOpenSections: 2,
+          paddingListHorizontal: 20,
+          paddingBetweenClosedSections: 0,
+          paddingBetweenOpenSections: 100,
           headerBackgroundColorOpened: Colors.black54,
           scaleWhenAnimating: true,
           openAndCloseAnimation: true,
@@ -55,7 +57,7 @@ class AccordionPage extends StatelessWidget //__
             AccordionSection(
               isOpen: true,
               leftIcon: const Icon(Icons.insights_rounded, color: Colors.white),
-              headerBackgroundColor: Colors.black,
+              headerBackgroundColor: Colors.green,
               headerBackgroundColorOpened: Colors.red,
               header: Text('Introduction', style: _headerStyle),
               content: Text(_loremIpsum, style: _contentStyle),
@@ -63,6 +65,14 @@ class AccordionPage extends StatelessWidget //__
               contentBorderWidth: 1,
               // onOpenSection: () => print('onOpenSection ...'),
               // onCloseSection: () => print('onCloseSection ...'),
+            ),
+            AccordionSection(
+              isOpen: true,
+              leftIcon: const Icon(Icons.insights_rounded, color: Colors.white),
+              headerBackgroundColor: Colors.black,
+              headerBackgroundColorOpened: Colors.red,
+              header: Text('A Text Field', style: _headerStyle),
+              content: TextFormField(),
             ),
             AccordionSection(
               isOpen: true,
@@ -115,7 +125,6 @@ class AccordionPage extends StatelessWidget //__
               content: DataTable(
                 sortAscending: true,
                 sortColumnIndex: 1,
-                dataRowHeight: 40,
                 showBottomBorder: false,
                 columns: [
                   DataColumn(

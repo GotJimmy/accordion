@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
 import 'package:get/get.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -33,7 +32,6 @@ mixin CommonParams {
   late final double? headerBorderRadius;
   late final EdgeInsets? headerPadding;
   late final Widget? leftIcon, rightIcon;
-  late final RxBool? flipRightIconIfOpen = true.obs;
   late final Color? contentBackgroundColor;
   late final Color? contentBorderColor;
   late final double? contentBorderWidth;
@@ -94,6 +92,8 @@ class SectionController extends GetxController
   late final controller = AnimationController(vsync: this);
   final isSectionOpen = false.obs;
   bool firstRun = true;
+  static bool flipLeftIconIfOpen = false;
+  static bool flipRightIconIfOpen = true;
 
   @override
   void onClose() {
