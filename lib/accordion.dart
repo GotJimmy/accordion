@@ -57,6 +57,9 @@ class Accordion extends StatelessWidget with CommonParams {
     int? initialOpeningSequenceDelay,
     Color? headerBackgroundColor,
     Color? headerBackgroundColorOpened,
+    Color? headerBorderColor,
+    Color? headerBorderColorOpened,
+    double? headerBorderWidth,
     double? headerBorderRadius,
     Widget? leftIcon,
     Widget? rightIcon,
@@ -70,7 +73,7 @@ class Accordion extends StatelessWidget with CommonParams {
     double? contentHorizontalPadding,
     double? contentVerticalPadding,
     this.paddingListTop = 20.0,
-    this.paddingListBottom = 40.0,
+    this.paddingListBottom = 20.0,
     this.paddingListHorizontal = 10.0,
     EdgeInsets? headerPadding,
     double? paddingBetweenOpenSections,
@@ -103,6 +106,9 @@ class Accordion extends StatelessWidget with CommonParams {
     this.headerBackgroundColor = headerBackgroundColor;
     this.headerBackgroundColorOpened =
         headerBackgroundColorOpened ?? headerBackgroundColor;
+    this.headerBorderColor = headerBorderColor;
+    this.headerBorderColorOpened = headerBorderColorOpened ?? headerBorderColor;
+    this.headerBorderWidth = headerBorderWidth;
     this.headerBorderRadius = headerBorderRadius;
     this.leftIcon = leftIcon;
     this.rightIcon = rightIcon;
@@ -111,13 +117,12 @@ class Accordion extends StatelessWidget with CommonParams {
     this.contentBackgroundColor = contentBackgroundColor;
     this.contentBorderColor = contentBorderColor;
     this.contentBorderWidth = contentBorderWidth;
-    this.contentBorderRadius = contentBorderRadius ?? 10;
+    this.contentBorderRadius = contentBorderRadius;
     this.contentHorizontalPadding = contentHorizontalPadding;
     this.contentVerticalPadding = contentVerticalPadding;
-    this.headerPadding = headerPadding ??
-        const EdgeInsets.symmetric(horizontal: 15, vertical: 7);
-    this.paddingBetweenOpenSections = paddingBetweenOpenSections ?? 10;
-    this.paddingBetweenClosedSections = paddingBetweenClosedSections ?? 3;
+    this.headerPadding = headerPadding;
+    this.paddingBetweenOpenSections = paddingBetweenOpenSections;
+    this.paddingBetweenClosedSections = paddingBetweenClosedSections;
     this.scrollIntoViewOfItems = scrollIntoViewOfItems;
     this.sectionOpeningHapticFeedback =
         sectionOpeningHapticFeedback ?? SectionHapticFeedback.none;
@@ -164,6 +169,11 @@ class Accordion extends StatelessWidget with CommonParams {
             headerBackgroundColorOpened: child.headerBackgroundColorOpened ??
                 headerBackgroundColorOpened ??
                 headerBackgroundColor,
+            headerBorderColor: child.headerBorderColor ?? headerBorderColor,
+            headerBorderColorOpened: child.headerBorderColorOpened ??
+                headerBorderColorOpened ??
+                headerBorderColor,
+            headerBorderWidth: child.headerBorderWidth ?? headerBorderWidth,
             headerBorderRadius: child.headerBorderRadius ?? headerBorderRadius,
             headerPadding: child.headerPadding ?? headerPadding,
             header: child.header,

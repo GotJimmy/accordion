@@ -6,12 +6,16 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 
 /// ScrollIntoViewOfItems is used to adjust the position of newly
 /// opened sections in the center of the screen
-enum ScrollIntoViewOfItems { none, slow, fast }
+enum ScrollIntoViewOfItems {
+  none,
+  slow,
+  fast,
+}
 
 /// SectionHapticFeedback controls which (if any) haptic feedback
 /// should be played when clicking the header of a section.
 /// Can be applied to both `Accordion` for all sections or
-/// to `AccordionSection` for individula sections.
+/// to `AccordionSection` for individual sections.
 enum SectionHapticFeedback {
   none,
   light,
@@ -27,8 +31,21 @@ const springFast = SpringDescription(mass: 1, stiffness: 200, damping: 30);
 /// `CommonParams` is used for both `Accordion` (for all sections)
 /// and `AccordionSections` for individual sections.
 mixin CommonParams {
+  /// background color of header when section is closed
   late final Color? headerBackgroundColor;
+
+  /// background color of header when section is open
   late final Color? headerBackgroundColorOpened;
+
+  /// border color of header when section is closed
+  late final Color? headerBorderColor;
+
+  /// border color of header when section is open
+  late final Color? headerBorderColorOpened;
+
+  /// width of header border. Set to 0 if no header border is desired.
+  late final double? headerBorderWidth;
+
   late final double? headerBorderRadius;
   late final EdgeInsets? headerPadding;
   late final Widget? leftIcon, rightIcon;
@@ -50,9 +67,9 @@ mixin CommonParams {
 class ListController extends GetxController {
   final controller = AutoScrollController(axis: Axis.vertical);
   final openSections = <UniqueKey>[];
+  final keys = List<UniqueKey>.generate(10000, (index) => UniqueKey());
   StreamController<String> controllerIsOpen =
       StreamController<String>.broadcast();
-  final keys = List<UniqueKey>.generate(10000, (index) => UniqueKey());
 
   /// Maximum number of open sections at any given time.
   /// Opening a new section will close the "oldest" open section

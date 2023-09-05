@@ -59,6 +59,9 @@ class AccordionSection extends StatelessWidget with CommonParams {
     required this.content,
     Color? headerBackgroundColor,
     Color? headerBackgroundColorOpened,
+    Color? headerBorderColor,
+    Color? headerBorderColorOpened,
+    double? headerBorderWidth,
     double? headerBorderRadius,
     EdgeInsets? headerPadding,
     Widget? leftIcon,
@@ -85,18 +88,22 @@ class AccordionSection extends StatelessWidget with CommonParams {
     this.headerBackgroundColor = headerBackgroundColor;
     this.headerBackgroundColorOpened =
         headerBackgroundColorOpened ?? headerBackgroundColor;
+    this.headerBorderColor = headerBorderColor ?? headerBackgroundColor;
+    this.headerBorderColorOpened =
+        headerBorderColorOpened ?? headerBackgroundColorOpened;
+    this.headerBorderWidth = headerBorderWidth;
     this.headerBorderRadius = headerBorderRadius;
     this.headerPadding = headerPadding;
     this.leftIcon = leftIcon;
     this.rightIcon = rightIcon;
     this.contentBackgroundColor = contentBackgroundColor;
     this.contentBorderColor = contentBorderColor;
-    this.contentBorderWidth = contentBorderWidth ?? 1;
-    this.contentBorderRadius = contentBorderRadius ?? 10;
-    this.contentHorizontalPadding = contentHorizontalPadding ?? 10;
-    this.contentVerticalPadding = contentVerticalPadding ?? 10;
-    this.paddingBetweenOpenSections = paddingBetweenOpenSections ?? 10;
-    this.paddingBetweenClosedSections = paddingBetweenClosedSections ?? 10;
+    this.contentBorderWidth = contentBorderWidth;
+    this.contentBorderRadius = contentBorderRadius;
+    this.contentHorizontalPadding = contentHorizontalPadding;
+    this.contentVerticalPadding = contentVerticalPadding;
+    this.paddingBetweenOpenSections = paddingBetweenOpenSections;
+    this.paddingBetweenClosedSections = paddingBetweenClosedSections;
     this.scrollIntoViewOfItems =
         scrollIntoViewOfItems ?? ScrollIntoViewOfItems.fast;
     this.sectionOpeningHapticFeedback = sectionOpeningHapticFeedback;
@@ -172,14 +179,20 @@ class AccordionSection extends StatelessWidget with CommonParams {
   @override
   build(context) {
     final borderRadius = headerBorderRadius ?? 10;
+    final contentBorderRadius = this.contentBorderRadius ?? 10;
 
     return Obx(
       () => Column(
         key: uniqueKey,
         children: [
           InkWell(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(borderRadius),
+              bottom: Radius.circular(_isOpen ? 0 : borderRadius),
+            ),
             onTap: () {
               final listCtrl = Get.put(ListController(), tag: accordionId);
+
               listCtrl.updateSections(uniqueKey);
               _playHapticFeedback(_isOpen);
 
@@ -223,6 +236,15 @@ class AccordionSection extends StatelessWidget with CommonParams {
                   top: Radius.circular(borderRadius),
                   bottom: Radius.circular(_isOpen ? 0 : borderRadius),
                 ),
+                border: Border.all(
+                  color:
+                      (_isOpen ? headerBorderColorOpened : headerBorderColor) ??
+                          Theme.of(context).primaryColor,
+                  width: (headerBorderWidth ?? 0),
+                  style: (headerBorderWidth ?? 0) <= 0
+                      ? BorderStyle.none
+                      : BorderStyle.solid,
+                ),
               ),
               child: Row(
                 children: [
@@ -251,8 +273,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
           Padding(
             padding: EdgeInsets.only(
                 bottom: _isOpen
-                    ? paddingBetweenOpenSections!
-                    : paddingBetweenClosedSections!),
+                    ? paddingBetweenOpenSections ?? 10
+                    : paddingBetweenClosedSections ?? 10),
             child: SizeTransition(
               sizeFactor: sectionCtrl.controller,
               child: ScaleTransition(
@@ -266,7 +288,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
                       color:
                           contentBorderColor ?? Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.vertical(
-                          bottom: Radius.circular(contentBorderRadius!)),
+                          bottom: Radius.circular(contentBorderRadius)),
                     ),
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(
@@ -281,18 +303,18 @@ class AccordionSection extends StatelessWidget with CommonParams {
                             color: Colors.white,
                             borderRadius: BorderRadius.vertical(
                                 bottom: Radius.circular(
-                                    contentBorderRadius! / 1.02))),
+                                    contentBorderRadius / 1.02))),
                         child: Container(
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
                               color: contentBackgroundColor,
                               borderRadius: BorderRadius.vertical(
                                   bottom: Radius.circular(
-                                      contentBorderRadius! / 1.02))),
+                                      contentBorderRadius / 1.02))),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: contentHorizontalPadding!,
-                              vertical: contentVerticalPadding!,
+                              horizontal: contentHorizontalPadding ?? 10,
+                              vertical: contentVerticalPadding ?? 10,
                             ),
                             child: Center(
                               child: content,

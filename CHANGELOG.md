@@ -3,6 +3,7 @@
 * fixed `flipRightIconIfOpen` not reacting when set for all sections in `Accordion`
 * added `flipLeftIconIfOpen` -- thanks @janbennettet-datacom
 * added `headerBorder` for each `AccordionSection` -- thanks @KeeganDC
+* fixed some properties not working on `Accordion`
 * added screenshot for pub.dev
 
 ## [2.5.1]

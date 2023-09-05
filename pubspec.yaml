@@ -27,7 +27,6 @@ topics:
   - ui
 
 screenshots:
-  - path: assets/accordion_demo3.gif
-  - path: assets/accordion_demo2.gif
-  - path: assets/accordion_demo.gif
+  - description: 'Accordion example in action'
+    path: example/accordion_demo.gif
   

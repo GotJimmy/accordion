@@ -1,6 +1,7 @@
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() async {
   runApp(const AccordionApp());
@@ -25,16 +26,18 @@ class AccordionApp extends StatelessWidget {
 /// Main example page
 class AccordionPage extends StatelessWidget //__
 {
-  const AccordionPage({Key? key}) : super(key: key);
-
-  final _headerStyle = const TextStyle(
-      color: Color(0xffffffff), fontSize: 15, fontWeight: FontWeight.bold);
-  final _contentStyleHeader = const TextStyle(
+  static const headerStyle = TextStyle(
+      color: Color(0xffffffff), fontSize: 18, fontWeight: FontWeight.bold);
+  static const contentStyleHeader = TextStyle(
       color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w700);
-  final _contentStyle = const TextStyle(
+  static const contentStyle = TextStyle(
       color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
-  final _loremIpsum =
+  static const loremIpsum =
       '''Lorem ipsum is typically a corrupted version of 'De finibus bonorum et malorum', a 1st century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin.''';
+  static const slogan =
+      'Do not forget to play around with all sorts of colors, backgrounds, borders, etc.';
+
+  const AccordionPage({super.key});
 
   @override
   build(context) => Scaffold(
@@ -43,10 +46,14 @@ class AccordionPage extends StatelessWidget //__
           title: const Text('Accordion'),
         ),
         body: Accordion(
-          paddingListHorizontal: 20,
-          paddingBetweenClosedSections: 0,
-          paddingBetweenOpenSections: 100,
-          headerBackgroundColorOpened: Colors.black54,
+          headerBorderColor: Colors.blueGrey,
+          headerBorderColorOpened: Colors.transparent,
+          // headerBorderWidth: 1,
+          headerBackgroundColorOpened: Colors.green,
+          contentBackgroundColor: Colors.white,
+          contentBorderColor: Colors.green,
+          contentBorderWidth: 3,
+          contentHorizontalPadding: 20,
           scaleWhenAnimating: true,
           openAndCloseAnimation: true,
           headerPadding:
@@ -56,63 +63,68 @@ class AccordionPage extends StatelessWidget //__
           children: [
             AccordionSection(
               isOpen: true,
-              leftIcon: const Icon(Icons.insights_rounded, color: Colors.white),
-              headerBackgroundColor: Colors.green,
-              headerBackgroundColorOpened: Colors.red,
-              header: Text('Introduction', style: _headerStyle),
-              content: Text(_loremIpsum, style: _contentStyle),
-              contentHorizontalPadding: 20,
-              contentBorderWidth: 1,
-              // onOpenSection: () => print('onOpenSection ...'),
-              // onCloseSection: () => print('onCloseSection ...'),
+              contentVerticalPadding: 20,
+              leftIcon:
+                  const Icon(Icons.text_fields_rounded, color: Colors.white),
+              header: const Text('Simple Text', style: headerStyle),
+              content: const Text(loremIpsum, style: contentStyle),
             ),
             AccordionSection(
               isOpen: true,
-              leftIcon: const Icon(Icons.insights_rounded, color: Colors.white),
-              headerBackgroundColor: Colors.black,
-              headerBackgroundColorOpened: Colors.red,
-              header: Text('A Text Field', style: _headerStyle),
-              content: TextFormField(),
+              leftIcon: const Icon(Icons.input, color: Colors.white),
+              header: const Text('Text Field & Button', style: headerStyle),
+              contentHorizontalPadding: 40,
+              contentVerticalPadding: 20,
+              content: const MyInputForm(),
             ),
             AccordionSection(
               isOpen: true,
-              leftIcon: const Icon(Icons.compare_rounded, color: Colors.white),
-              header: Text('Nested Accordion', style: _headerStyle),
-              contentBorderColor: const Color(0xffffffff),
+              leftIcon:
+                  const Icon(Icons.child_care_rounded, color: Colors.white),
+              header: const Text('Nested Accordion', style: headerStyle),
+              content: const MyNestedAccordion(),
+            ),
+            AccordionSection(
+              isOpen: false,
+              leftIcon: const Icon(Icons.shopping_cart, color: Colors.white),
+              header: const Text('DataTable', style: headerStyle),
+              content: const MyDataTable(),
+            ),
+            AccordionSection(
+              isOpen: false,
+              leftIcon:
+                  const Icon(Icons.circle_outlined, color: Colors.black54),
+              rightIcon: const Icon(
+                Icons.keyboard_arrow_down,
+                color: Colors.black54,
+                size: 20,
+              ),
+              headerBackgroundColor: Colors.transparent,
               headerBackgroundColorOpened: Colors.amber,
-              content: Accordion(
-                maxOpenSections: 1,
-                headerBackgroundColorOpened: Colors.black54,
-                headerPadding:
-                    const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+              headerBorderColor: Colors.black54,
+              headerBorderColorOpened: Colors.black54,
+              headerBorderWidth: 1,
+              contentBackgroundColor: Colors.amber,
+              contentBorderColor: Colors.black54,
+              contentBorderWidth: 1,
+              contentVerticalPadding: 30,
+              header: const Text('Custom: Header with Border',
+                  style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold)),
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AccordionSection(
-                    isOpen: true,
-                    leftIcon:
-                        const Icon(Icons.insights_rounded, color: Colors.white),
-                    headerBackgroundColor: Colors.black38,
-                    headerBackgroundColorOpened: Colors.black54,
-                    header: Text('Nested Section #1', style: _headerStyle),
-                    content: Text(_loremIpsum, style: _contentStyle),
-                    contentHorizontalPadding: 20,
-                    contentBorderColor: Colors.black54,
-                  ),
-                  AccordionSection(
-                    isOpen: true,
-                    leftIcon:
-                        const Icon(Icons.compare_rounded, color: Colors.white),
-                    header: Text('Nested Section #2', style: _headerStyle),
-                    headerBackgroundColor: Colors.black38,
-                    headerBackgroundColorOpened: Colors.black54,
-                    contentBorderColor: Colors.black54,
-                    content: Row(
-                      children: [
-                        const Icon(Icons.compare_rounded,
-                            size: 120, color: Colors.orangeAccent),
-                        Flexible(
-                            flex: 1,
-                            child: Text(_loremIpsum, style: _contentStyle)),
-                      ],
+                  const Icon(
+                    Icons.label_important_outline_rounded,
+                    size: 50,
+                  ).paddingOnly(right: 20),
+                  const Flexible(
+                    child: Text(
+                      slogan,
+                      maxLines: 4,
+                      style: TextStyle(color: Colors.black45, fontSize: 17),
                     ),
                   ),
                 ],
@@ -120,103 +132,270 @@ class AccordionPage extends StatelessWidget //__
             ),
             AccordionSection(
               isOpen: false,
-              leftIcon: const Icon(Icons.food_bank, color: Colors.white),
-              header: Text('Company Info', style: _headerStyle),
-              content: DataTable(
-                sortAscending: true,
-                sortColumnIndex: 1,
-                showBottomBorder: false,
-                columns: [
-                  DataColumn(
-                      label: Text('ID', style: _contentStyleHeader),
-                      numeric: true),
-                  DataColumn(
-                      label: Text('Description', style: _contentStyleHeader)),
-                  DataColumn(
-                      label: Text('Price', style: _contentStyleHeader),
-                      numeric: true),
-                ],
-                rows: [
-                  DataRow(
-                    cells: [
-                      DataCell(Text('1',
-                          style: _contentStyle, textAlign: TextAlign.right)),
-                      DataCell(Text('Fancy Product', style: _contentStyle)),
-                      DataCell(Text(r'$ 199.99',
-                          style: _contentStyle, textAlign: TextAlign.right))
-                    ],
-                  ),
-                  DataRow(
-                    cells: [
-                      DataCell(Text('2',
-                          style: _contentStyle, textAlign: TextAlign.right)),
-                      DataCell(Text('Another Product', style: _contentStyle)),
-                      DataCell(Text(r'$ 79.00',
-                          style: _contentStyle, textAlign: TextAlign.right))
-                    ],
-                  ),
-                  DataRow(
-                    cells: [
-                      DataCell(Text('3',
-                          style: _contentStyle, textAlign: TextAlign.right)),
-                      DataCell(Text('Really Cool Stuff', style: _contentStyle)),
-                      DataCell(Text(r'$ 9.99',
-                          style: _contentStyle, textAlign: TextAlign.right))
-                    ],
-                  ),
-                  DataRow(
-                    cells: [
-                      DataCell(Text('4',
-                          style: _contentStyle, textAlign: TextAlign.right)),
-                      DataCell(
-                          Text('Last Product goes here', style: _contentStyle)),
-                      DataCell(Text(r'$ 19.99',
-                          style: _contentStyle, textAlign: TextAlign.right))
-                    ],
+              leftIcon: const Icon(Icons.circle, color: Colors.white),
+              headerBackgroundColor: Colors.deepOrange,
+              headerBackgroundColorOpened: Colors.brown,
+              headerBorderWidth: 1,
+              contentBackgroundColor: Colors.brown,
+              contentBorderWidth: 0,
+              contentVerticalPadding: 30,
+              header: const Text('Custom: Other Colors', style: headerStyle),
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.label_important_outline_rounded,
+                    size: 50,
+                    color: Colors.white54,
+                  ).paddingOnly(right: 20),
+                  const Flexible(
+                    child: Text(
+                      slogan,
+                      maxLines: 4,
+                      style: TextStyle(color: Colors.white54, fontSize: 17),
+                    ),
                   ),
                 ],
               ),
             ),
             AccordionSection(
               isOpen: false,
-              leftIcon: const Icon(Icons.contact_page, color: Colors.white),
-              header: Text('Contact', style: _headerStyle),
-              content: Wrap(
-                children: List.generate(
-                    30,
-                    (index) => const Icon(Icons.contact_page,
-                        size: 30, color: Color(0xff999999))),
+              leftIcon: const Icon(Icons.circle, color: Colors.white),
+              headerBackgroundColor: Colors.green[900],
+              headerBackgroundColorOpened: Colors.lightBlue,
+              headerBorderColorOpened: Colors.yellow,
+              headerBorderWidth: 10,
+              contentBackgroundColor: Colors.lightBlue,
+              contentBorderColor: Colors.yellow,
+              contentBorderWidth: 10,
+              contentVerticalPadding: 30,
+              header: const Text('Custom: Heavy Borders', style: headerStyle),
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.label_important_outline_rounded,
+                    size: 50,
+                    color: Colors.white54,
+                  ).paddingOnly(right: 20),
+                  const Flexible(
+                    child: Text(
+                      slogan,
+                      maxLines: 4,
+                      style: TextStyle(color: Colors.white54, fontSize: 17),
+                    ),
+                  ),
+                ],
               ),
             ),
             AccordionSection(
               isOpen: false,
-              leftIcon: const Icon(Icons.computer, color: Colors.white),
-              header: Text('Jobs', style: _headerStyle),
-              content: const Icon(Icons.computer,
-                  size: 200, color: Color(0xff999999)),
+              leftIcon: const Icon(Icons.circle, color: Colors.white),
+              headerBorderRadius: 30,
+              headerBackgroundColor: Colors.purple,
+              headerBackgroundColorOpened: Colors.purple,
+              headerBorderColorOpened: Colors.white,
+              headerBorderWidth: 2,
+              contentBackgroundColor: Colors.purple,
+              contentBorderColor: Colors.white,
+              contentBorderWidth: 2,
+              contentBorderRadius: 100,
+              contentVerticalPadding: 30,
+              header: const Text('Custom: Very Round', style: headerStyle),
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.label_important_outline_rounded,
+                    size: 50,
+                    color: Colors.white54,
+                  ).paddingOnly(right: 20),
+                  const Flexible(
+                    child: Text(
+                      slogan,
+                      maxLines: 4,
+                      style: TextStyle(color: Colors.white54, fontSize: 17),
+                    ),
+                  ),
+                ],
+              ),
             ),
             AccordionSection(
               isOpen: false,
-              leftIcon: const Icon(Icons.movie, color: Colors.white),
-              header: Text('Culture', style: _headerStyle),
-              content:
-                  const Icon(Icons.movie, size: 200, color: Color(0xff999999)),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.people, color: Colors.white),
-              header: Text('Community', style: _headerStyle),
-              content:
-                  const Icon(Icons.people, size: 200, color: Color(0xff999999)),
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.map, color: Colors.white),
-              header: Text('Map', style: _headerStyle),
-              content:
-                  const Icon(Icons.map, size: 200, color: Color(0xff999999)),
+              leftIcon: const Icon(Icons.circle, color: Colors.white),
+              headerBorderRadius: 0,
+              headerBackgroundColor: Colors.black87,
+              headerBackgroundColorOpened: Colors.black87,
+              headerBorderColorOpened: const Color(0xffaaaaaa),
+              headerBorderWidth: 1,
+              contentBackgroundColor: Colors.black54,
+              contentBorderColor: const Color(0xffaaaaaa),
+              contentBorderWidth: 1,
+              contentBorderRadius: 0,
+              contentVerticalPadding: 30,
+              header: const Text('Android', style: headerStyle),
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.label_important_outline_rounded,
+                    size: 50,
+                    color: Colors.white54,
+                  ).paddingOnly(right: 20),
+                  const Flexible(
+                    child: Text(
+                      slogan,
+                      maxLines: 4,
+                      style: TextStyle(color: Colors.white54, fontSize: 17),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       );
 } //__
+
+class MyInputForm extends StatelessWidget //__
+{
+  const MyInputForm({super.key});
+
+  @override
+  Widget build(context) //__
+  {
+    return Column(
+      children: [
+        TextFormField(
+          decoration: InputDecoration(
+            label: const Text('Some text goes here ...'),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ).marginOnly(bottom: 10),
+        ElevatedButton(
+          onPressed: () {},
+          child: const Text('Submit'),
+        )
+      ],
+    );
+  }
+}
+
+class MyDataTable extends StatelessWidget //__
+{
+  const MyDataTable({super.key});
+
+  @override
+  Widget build(context) //__
+  {
+    return DataTable(
+      sortAscending: true,
+      sortColumnIndex: 1,
+      showBottomBorder: false,
+      columns: const [
+        DataColumn(
+            label: Text('ID', style: AccordionPage.contentStyleHeader),
+            numeric: true),
+        DataColumn(
+            label:
+                Text('Description', style: AccordionPage.contentStyleHeader)),
+        DataColumn(
+            label: Text('Price', style: AccordionPage.contentStyleHeader),
+            numeric: true),
+      ],
+      rows: const [
+        DataRow(
+          cells: [
+            DataCell(Text('1',
+                style: AccordionPage.contentStyle, textAlign: TextAlign.right)),
+            DataCell(Text('Fancy Product', style: AccordionPage.contentStyle)),
+            DataCell(Text(r'$ 199.99',
+                style: AccordionPage.contentStyle, textAlign: TextAlign.right))
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text('2',
+                style: AccordionPage.contentStyle, textAlign: TextAlign.right)),
+            DataCell(
+                Text('Another Product', style: AccordionPage.contentStyle)),
+            DataCell(Text(r'$ 79.00',
+                style: AccordionPage.contentStyle, textAlign: TextAlign.right))
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text('3',
+                style: AccordionPage.contentStyle, textAlign: TextAlign.right)),
+            DataCell(
+                Text('Really Cool Stuff', style: AccordionPage.contentStyle)),
+            DataCell(Text(r'$ 9.99',
+                style: AccordionPage.contentStyle, textAlign: TextAlign.right))
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text('4',
+                style: AccordionPage.contentStyle, textAlign: TextAlign.right)),
+            DataCell(Text('Last Product goes here',
+                style: AccordionPage.contentStyle)),
+            DataCell(Text(r'$ 19.99',
+                style: AccordionPage.contentStyle, textAlign: TextAlign.right))
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class MyNestedAccordion extends StatelessWidget //__
+{
+  const MyNestedAccordion({super.key});
+
+  @override
+  Widget build(context) //__
+  {
+    return Accordion(
+      paddingListTop: 0,
+      paddingListBottom: 0,
+      maxOpenSections: 1,
+      headerBackgroundColorOpened: Colors.black54,
+      headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+      children: [
+        AccordionSection(
+          isOpen: true,
+          leftIcon: const Icon(Icons.insights_rounded, color: Colors.white),
+          headerBackgroundColor: Colors.black38,
+          headerBackgroundColorOpened: Colors.black54,
+          header:
+              const Text('Nested Section #1', style: AccordionPage.headerStyle),
+          content: const Text(AccordionPage.loremIpsum,
+              style: AccordionPage.contentStyle),
+          contentHorizontalPadding: 20,
+          contentBorderColor: Colors.black54,
+        ),
+        AccordionSection(
+          isOpen: true,
+          leftIcon: const Icon(Icons.compare_rounded, color: Colors.white),
+          header:
+              const Text('Nested Section #2', style: AccordionPage.headerStyle),
+          headerBackgroundColor: Colors.black38,
+          headerBackgroundColorOpened: Colors.black54,
+          contentBorderColor: Colors.black54,
+          content: const Row(
+            children: [
+              Icon(Icons.compare_rounded,
+                  size: 120, color: Colors.orangeAccent),
+              Flexible(
+                  flex: 1,
+                  child: Text(AccordionPage.loremIpsum,
+                      style: AccordionPage.contentStyle)),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}

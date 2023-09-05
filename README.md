@@ -15,6 +15,12 @@ Side note: it is possible to nest an `Accordion` within an `AccordionSection`
 
 - see the example app (in the "Accordion within Accordion" section) for further info
 
+### Common mistakes
+
+Please avoid wrapping the entire `Accordion` widget in your state management system since this might cause the opening animation to play each time your state changes.
+Instead, only wrap the content of an `AccordionSection` with your state management that actually requires updating. Better yet, extract the entire content part of an
+`AccordionSection` into its own widget and handle your state management needs there locally.
+
 Enjoy!
 
 |                                                                                            |                                                                                             |
@@ -27,16 +33,18 @@ Please see Example page.
 
 ## Common Properties
 
-The following properties can be set globally for all sections or for each section individually:
+The following properties can be set globally for all sections in `Accordion` or for each section individually in `AccordionSection`:
 
 |                     Property | Description                                                                                                                                                                                                             |         Type          | Required | Default value                                                     |
 | ---------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------: | :------: | ----------------------------------------------------------------- |
 |        headerBackgroundColor | background color of the section header                                                                                                                                                                                  |         Color         |    no    | primaryColor (of theme)                                           |
 |  headerBackgroundColorOpened | background color of the section when header is open                                                                                                                                                                     |         Color         |    no    | headerBackgroundColor                                             |  | headerBorderRadius | border radius of the section header | double | no | 30 |
+|        headerBorderColor | border color of header when section is closed                                                                                                                                                                                  |         Color         |    no    | primaryColor (of theme)                                           |
+|        headerBorderColorOpened | border color of header when section is open                                                                                                                                                                                  |         Color         |    no    | primaryColor (of theme)                                           |
+|        headerBorderWidth | width of header border. Set to 0 if no header border is desired.                                                                                                                                                                                  |         bool         |    no    | 0                                           |
 |                headerPadding | padding of the title in the section header                                                                                                                                                                              |      EdgeInsets       |    no    | EdgeInsets.symmetric(horizontal: 20, vertical: 10)                |
 |                     leftIcon | widget to the left of the title in the section header                                                                                                                                                                   |        Widget         |    no    | null                                                              |
 |                    rightIcon | widget to the right of the title in the section header                                                                                                                                                                  |        Widget         |    no    | Icon(Icons.keyboard_arrow_down, color: Colors.white60, size:  20) |
-|          flipRightIconIfOpen | if the right icon in the header should be flipped when section is open                                                                                                                                                  |         bool          |    no    | true                                                              |
 |       contentBackgroundColor | background color of the content part of the section                                                                                                                                                                     |         Color         |    no    | Colors.white                                                      |
 |           contentBorderColor | border color of the content part of the section                                                                                                                                                                         |         Color         |    no    | Colors.white                                                      |
 |           contentBorderWidth | border width of the content part of the section                                                                                                                                                                         |        double         |    no    | 0                                                                 |
@@ -56,6 +64,8 @@ The following properties can be set globally for all sections or for each sectio
 | --------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------: | :------: | ------------- |
 |       maxOpenSections | maximum number of open sections at any given time. Opening a new section will close the "oldest" open section                                     |          int           |    no    | 1             |
 |              children | the list of `AccordionSection`                                                                                                                    | List<AccordionSection> |   YES    | []            |
+|          flipLeftIconIfOpen | if the left icon in the header should be flipped when section is open                                                                                                                                                  |         bool          |    no    | false                                                              |
+|          flipRightIconIfOpen | if the right icon in the header should be flipped when section is open                                                                                                                                                  |         bool          |    no    | true                                                              |
 |        paddingListTop | padding of the `Accordion` list at the top                                                                                                        |         double         |    no    | 20.0          |
 |     paddingListBottom | padding of the `Accordion` list at the bottom                                                                                                     |         double         |    no    | 40.0          |
 | paddingListHorizontal | horizontal padding of the `Accordion` list                                                                                                        |         double         |    no    | 10.0          |
