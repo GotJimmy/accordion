@@ -23,13 +23,9 @@ Instead, only wrap the content of an `AccordionSection` with your state manageme
 
 Enjoy!
 
-|                                                                                            |                                                                                             |
-| :----------------------------------------------------------------------------------------: | ------------------------------------------------------------------------------------------- |
-| ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/assets/accordion_demo.gif) | ![](https://raw.githubusercontent.com/GotJimmy/accordion/master/assets/accordion_demo3.gif) |
+## The included example
 
-## Sample Code
-
-Please see Example page.
+![](https://raw.githubusercontent.com/GotJimmy/accordion/master/example/accordion_demo.gif)
 
 ## Common Properties
 
