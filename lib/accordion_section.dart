@@ -57,6 +57,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
     this.isOpen = false,
     required this.header,
     required this.content,
+    Widget? headerOpen,
     Color? headerBackgroundColor,
     Color? headerBackgroundColorOpened,
     Color? headerBorderColor,
@@ -66,6 +67,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
     EdgeInsets? headerPadding,
     Widget? leftIcon,
     Widget? rightIcon,
+    Widget? rightIconOpen,
     Color? contentBackgroundColor,
     Color? contentBorderColor,
     double? contentBorderWidth,
@@ -94,8 +96,10 @@ class AccordionSection extends StatelessWidget with CommonParams {
     this.headerBorderWidth = headerBorderWidth;
     this.headerBorderRadius = headerBorderRadius;
     this.headerPadding = headerPadding;
+    this.headerOpen = headerOpen;
     this.leftIcon = leftIcon;
     this.rightIcon = rightIcon;
+    this.rightIconOpen = rightIconOpen;
     this.contentBackgroundColor = contentBackgroundColor;
     this.contentBorderColor = contentBorderColor;
     this.contentBorderWidth = contentBorderWidth;
@@ -185,88 +189,102 @@ class AccordionSection extends StatelessWidget with CommonParams {
       () => Column(
         key: uniqueKey,
         children: [
-          InkWell(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(borderRadius),
-              bottom: Radius.circular(_isOpen ? 0 : borderRadius),
-            ),
-            onTap: () {
-              final listCtrl = Get.put(ListController(), tag: accordionId);
-
-              listCtrl.updateSections(uniqueKey);
-              _playHapticFeedback(_isOpen);
-
-              if (_isOpen &&
-                  scrollIntoViewOfItems != ScrollIntoViewOfItems.none &&
-                  listCtrl.controller.hasClients) {
-                Timer(
-                  250.milliseconds,
-                  () {
-                    listCtrl.controller.cancelAllHighlights();
-                    listCtrl.controller.scrollToIndex(index,
-                        preferPosition: AutoScrollPosition.middle,
-                        duration:
-                            (scrollIntoViewOfItems == ScrollIntoViewOfItems.fast
-                                    ? .5
-                                    : 1)
-                                .seconds);
-                  },
-                );
-              }
-
-              if (_isOpen) {
-                if (onCloseSection != null) onCloseSection!.call();
-              } else {
-                if (onOpenSection != null) onOpenSection!.call();
-              }
-            },
-            child: AnimatedContainer(
-              duration: Accordion.sectionAnimation
-                  ? 750.milliseconds
-                  : 0.milliseconds,
-              curve: Curves.easeOut,
-              alignment: Alignment.center,
-              padding: headerPadding,
-              decoration: BoxDecoration(
-                color: (_isOpen
-                        ? headerBackgroundColorOpened
-                        : headerBackgroundColor) ??
-                    Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(borderRadius),
-                  bottom: Radius.circular(_isOpen ? 0 : borderRadius),
-                ),
-                border: Border.all(
-                  color:
-                      (_isOpen ? headerBorderColorOpened : headerBorderColor) ??
-                          Theme.of(context).primaryColor,
-                  width: (headerBorderWidth ?? 0),
-                  style: (headerBorderWidth ?? 0) <= 0
-                      ? BorderStyle.none
-                      : BorderStyle.solid,
-                ),
+          Container(
+            decoration: BoxDecoration(
+              color: headerBackgroundColor ?? Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(borderRadius),
+                bottom: Radius.circular(_isOpen ? 0 : borderRadius),
               ),
-              child: Row(
-                children: [
-                  if (leftIcon != null)
-                    RotatedBox(
-                      quarterTurns: _flipQuarterTurnsLeft,
-                      child: leftIcon!,
-                    ),
-                  Expanded(
-                    flex: 10,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: leftIcon == null ? 0 : 15),
-                      child: header,
-                    ),
+            ),
+            child: InkWell(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(borderRadius),
+                bottom: Radius.circular(_isOpen ? 0 : borderRadius),
+              ),
+              onTap: () {
+                final listCtrl = Get.put(ListController(), tag: accordionId);
+
+                listCtrl.updateSections(uniqueKey);
+                _playHapticFeedback(_isOpen);
+
+                if (_isOpen &&
+                    scrollIntoViewOfItems != ScrollIntoViewOfItems.none &&
+                    listCtrl.controller.hasClients) {
+                  Timer(
+                    250.milliseconds,
+                    () {
+                      listCtrl.controller.cancelAllHighlights();
+                      listCtrl.controller.scrollToIndex(index,
+                          preferPosition: AutoScrollPosition.middle,
+                          duration: (scrollIntoViewOfItems ==
+                                      ScrollIntoViewOfItems.fast
+                                  ? .5
+                                  : 1)
+                              .seconds);
+                    },
+                  );
+                }
+
+                if (_isOpen) {
+                  if (onCloseSection != null) onCloseSection!.call();
+                } else {
+                  if (onOpenSection != null) onOpenSection!.call();
+                }
+              },
+              child: AnimatedContainer(
+                duration: Accordion.sectionAnimation
+                    ? 750.milliseconds
+                    : 0.milliseconds,
+                curve: Curves.easeOut,
+                alignment: Alignment.center,
+                padding: headerPadding,
+                decoration: BoxDecoration(
+                  color: (_isOpen
+                          ? headerBackgroundColorOpened
+                          : headerBackgroundColor) ??
+                      Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(borderRadius),
+                    bottom: Radius.circular(_isOpen ? 0 : borderRadius),
                   ),
-                  if (rightIcon != null)
-                    RotatedBox(
-                      quarterTurns: _flipQuarterTurnsRight,
-                      child: rightIcon!,
+                  border: Border.all(
+                    color: (_isOpen
+                            ? headerBorderColorOpened
+                            : headerBorderColor) ??
+                        Theme.of(context).primaryColor,
+                    width: (headerBorderWidth ?? 0),
+                    style: (headerBorderWidth ?? 0) <= 0
+                        ? BorderStyle.none
+                        : BorderStyle.solid,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    if (leftIcon != null)
+                      RotatedBox(
+                        quarterTurns: _flipQuarterTurnsLeft,
+                        child: leftIcon!,
+                      ),
+                    Expanded(
+                      flex: 10,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: leftIcon == null ? 0 : 15),
+                        child: _isOpen ? headerOpen ?? header : header,
+                      ),
                     ),
-                ],
+                    if (rightIcon != null)
+                      (rightIconOpen != null)
+                          ? _isOpen
+                              ? rightIconOpen!
+                              : rightIcon!
+                          : RotatedBox(
+                              quarterTurns: _flipQuarterTurnsRight,
+                              child: rightIcon!,
+                            )
+                  ],
+                ),
               ),
             ),
           ),

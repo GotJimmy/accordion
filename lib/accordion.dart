@@ -177,6 +177,7 @@ class Accordion extends StatelessWidget with CommonParams {
             headerBorderRadius: child.headerBorderRadius ?? headerBorderRadius,
             headerPadding: child.headerPadding ?? headerPadding,
             header: child.header,
+            headerOpen: child.headerOpen,
             leftIcon: child.leftIcon ?? leftIcon,
             rightIcon: child.rightIcon ??
                 rightIcon ??
@@ -185,6 +186,7 @@ class Accordion extends StatelessWidget with CommonParams {
                   color: Colors.white60,
                   size: 20,
                 ),
+            rightIconOpen: child.rightIconOpen,
             paddingBetweenClosedSections: child.paddingBetweenClosedSections ??
                 paddingBetweenClosedSections,
             paddingBetweenOpenSections:

@@ -48,7 +48,8 @@ mixin CommonParams {
 
   late final double? headerBorderRadius;
   late final EdgeInsets? headerPadding;
-  late final Widget? leftIcon, rightIcon;
+  late final Widget? headerOpen;
+  late final Widget? leftIcon, rightIcon, rightIconOpen;
   late final Color? contentBackgroundColor;
   late final Color? contentBorderColor;
   late final double? contentBorderWidth;
