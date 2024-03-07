@@ -49,7 +49,7 @@ mixin CommonParams {
   late final double? headerBorderRadius;
   late final EdgeInsets? headerPadding;
   late final Widget? headerOpen;
-  late final Widget? leftIcon, rightIcon, rightIconOpen;
+  late final Widget? leftIcon, leftIconOpen, rightIcon, rightIconOpen;
   late final Color? contentBackgroundColor;
   late final Color? contentBorderColor;
   late final double? contentBorderWidth;
@@ -69,8 +69,7 @@ class ListController extends GetxController {
   final controller = AutoScrollController(axis: Axis.vertical);
   final openSections = <UniqueKey>[];
   final keys = List<UniqueKey>.generate(10000, (index) => UniqueKey());
-  StreamController<String> controllerIsOpen =
-      StreamController<String>.broadcast();
+  StreamController<String> controllerIsOpen = StreamController<String>.broadcast();
 
   /// Maximum number of open sections at any given time.
   /// Opening a new section will close the "oldest" open section
@@ -85,9 +84,7 @@ class ListController extends GetxController {
   /// adds or removes a section key from the list of open sections
   /// and notifies sections to open or close accordingly
   void updateSections(UniqueKey key) {
-    openSections.contains(key)
-        ? openSections.remove(key)
-        : openSections.add(key);
+    openSections.contains(key) ? openSections.remove(key) : openSections.add(key);
 
     while (openSections.length > maxOpenSections) {
       openSections.removeAt(0);
@@ -105,8 +102,7 @@ class ListController extends GetxController {
 }
 
 /// Controller for `AccordionSection` widgets
-class SectionController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class SectionController extends GetxController with GetSingleTickerProviderStateMixin {
   late final controller = AnimationController(vsync: this);
   final isSectionOpen = false.obs;
   bool firstRun = true;

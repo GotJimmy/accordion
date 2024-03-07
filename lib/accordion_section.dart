@@ -66,6 +66,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
     double? headerBorderRadius,
     EdgeInsets? headerPadding,
     Widget? leftIcon,
+    Widget? leftIconOpen,
     Widget? rightIcon,
     Widget? rightIconOpen,
     Color? contentBackgroundColor,
@@ -96,6 +97,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
     this.headerPadding = headerPadding;
     this.headerOpen = headerOpen;
     this.leftIcon = leftIcon;
+    this.leftIconOpen = leftIconOpen;
     this.rightIcon = rightIcon;
     this.rightIconOpen = rightIconOpen;
     this.contentBackgroundColor = contentBackgroundColor;
@@ -237,10 +239,14 @@ class AccordionSection extends StatelessWidget with CommonParams {
                 child: Row(
                   children: [
                     if (leftIcon != null)
-                      RotatedBox(
-                        quarterTurns: _flipQuarterTurnsLeft,
-                        child: leftIcon!,
-                      ),
+                      (leftIconOpen != null)
+                          ? _isOpen
+                              ? leftIconOpen!
+                              : leftIcon!
+                          : RotatedBox(
+                              quarterTurns: _flipQuarterTurnsLeft,
+                              child: leftIcon!,
+                            ),
                     Expanded(
                       flex: 10,
                       child: Padding(
