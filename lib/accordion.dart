@@ -62,7 +62,9 @@ class Accordion extends StatelessWidget with CommonParams {
     double? headerBorderWidth,
     double? headerBorderRadius,
     Widget? leftIcon,
+    Widget? leftIconOpen,
     Widget? rightIcon,
+    Widget? rightIconOpen,
     Widget? header,
     this.flipLeftIconIfOpen = false,
     this.flipRightIconIfOpen = true,
@@ -96,22 +98,22 @@ class Accordion extends StatelessWidget with CommonParams {
 
     int index = 0;
     for (var child in children) {
-      if (child.isOpen &&
-          listCtrl.openSections.length < listCtrl.maxOpenSections) {
+      if (child.isOpen && listCtrl.openSections.length < listCtrl.maxOpenSections) {
         listCtrl.openSections.add(listCtrl.keys.elementAt(index));
       }
       index++;
     }
 
     this.headerBackgroundColor = headerBackgroundColor;
-    this.headerBackgroundColorOpened =
-        headerBackgroundColorOpened ?? headerBackgroundColor;
+    this.headerBackgroundColorOpened = headerBackgroundColorOpened ?? headerBackgroundColor;
     this.headerBorderColor = headerBorderColor;
     this.headerBorderColorOpened = headerBorderColorOpened ?? headerBorderColor;
     this.headerBorderWidth = headerBorderWidth;
     this.headerBorderRadius = headerBorderRadius;
     this.leftIcon = leftIcon;
+    this.leftIconOpen = leftIconOpen;
     this.rightIcon = rightIcon;
+    this.rightIconOpen = rightIconOpen;
     SectionController.flipLeftIconIfOpen = flipLeftIconIfOpen!;
     SectionController.flipRightIconIfOpen = flipRightIconIfOpen!;
     this.contentBackgroundColor = contentBackgroundColor;
@@ -124,10 +126,8 @@ class Accordion extends StatelessWidget with CommonParams {
     this.paddingBetweenOpenSections = paddingBetweenOpenSections;
     this.paddingBetweenClosedSections = paddingBetweenClosedSections;
     this.scrollIntoViewOfItems = scrollIntoViewOfItems;
-    this.sectionOpeningHapticFeedback =
-        sectionOpeningHapticFeedback ?? SectionHapticFeedback.none;
-    this.sectionClosingHapticFeedback =
-        sectionClosingHapticFeedback ?? SectionHapticFeedback.none;
+    this.sectionOpeningHapticFeedback = sectionOpeningHapticFeedback ?? SectionHapticFeedback.none;
+    this.sectionClosingHapticFeedback = sectionClosingHapticFeedback ?? SectionHapticFeedback.none;
     sectionAnimation = openAndCloseAnimation ?? true;
     sectionScaleAnimation = scaleWhenAnimating ?? true;
     this.accordionId = hashCode.toString();
@@ -141,9 +141,7 @@ class Accordion extends StatelessWidget with CommonParams {
       itemCount: children.length,
       controller: listCtrl.controller,
       shrinkWrap: true,
-      physics: disableScrolling
-          ? const NeverScrollableScrollPhysics()
-          : const AlwaysScrollableScrollPhysics(),
+      physics: disableScrolling ? const NeverScrollableScrollPhysics() : const AlwaysScrollableScrollPhysics(),
       padding: EdgeInsets.only(
         top: paddingListTop,
         bottom: paddingListBottom,
@@ -164,20 +162,18 @@ class Accordion extends StatelessWidget with CommonParams {
             index: index,
             isOpen: child.isOpen,
             scrollIntoViewOfItems: scrollIntoViewOfItems,
-            headerBackgroundColor:
-                child.headerBackgroundColor ?? headerBackgroundColor,
-            headerBackgroundColorOpened: child.headerBackgroundColorOpened ??
-                headerBackgroundColorOpened ??
-                headerBackgroundColor,
+            headerBackgroundColor: child.headerBackgroundColor ?? headerBackgroundColor,
+            headerBackgroundColorOpened:
+                child.headerBackgroundColorOpened ?? headerBackgroundColorOpened ?? headerBackgroundColor,
             headerBorderColor: child.headerBorderColor ?? headerBorderColor,
-            headerBorderColorOpened: child.headerBorderColorOpened ??
-                headerBorderColorOpened ??
-                headerBorderColor,
+            headerBorderColorOpened: child.headerBorderColorOpened ?? headerBorderColorOpened ?? headerBorderColor,
             headerBorderWidth: child.headerBorderWidth ?? headerBorderWidth,
             headerBorderRadius: child.headerBorderRadius ?? headerBorderRadius,
             headerPadding: child.headerPadding ?? headerPadding,
             header: child.header,
+            headerOpen: child.headerOpen,
             leftIcon: child.leftIcon ?? leftIcon,
+            leftIconOpen: child.leftIconOpen ?? leftIconOpen,
             rightIcon: child.rightIcon ??
                 rightIcon ??
                 const Icon(
@@ -185,25 +181,18 @@ class Accordion extends StatelessWidget with CommonParams {
                   color: Colors.white60,
                   size: 20,
                 ),
-            paddingBetweenClosedSections: child.paddingBetweenClosedSections ??
-                paddingBetweenClosedSections,
-            paddingBetweenOpenSections:
-                child.paddingBetweenOpenSections ?? paddingBetweenOpenSections,
+            rightIconOpen: child.rightIconOpen ?? rightIconOpen,
+            paddingBetweenClosedSections: child.paddingBetweenClosedSections ?? paddingBetweenClosedSections,
+            paddingBetweenOpenSections: child.paddingBetweenOpenSections ?? paddingBetweenOpenSections,
             content: child.content,
-            contentBackgroundColor:
-                child.contentBackgroundColor ?? contentBackgroundColor,
+            contentBackgroundColor: child.contentBackgroundColor ?? contentBackgroundColor,
             contentBorderColor: child.contentBorderColor ?? contentBorderColor,
             contentBorderWidth: child.contentBorderWidth ?? contentBorderWidth,
-            contentBorderRadius:
-                child.contentBorderRadius ?? contentBorderRadius,
-            contentHorizontalPadding:
-                child.contentHorizontalPadding ?? contentHorizontalPadding,
-            contentVerticalPadding:
-                child.contentVerticalPadding ?? contentVerticalPadding,
-            sectionOpeningHapticFeedback: child.sectionOpeningHapticFeedback ??
-                sectionOpeningHapticFeedback,
-            sectionClosingHapticFeedback: child.sectionClosingHapticFeedback ??
-                sectionClosingHapticFeedback,
+            contentBorderRadius: child.contentBorderRadius ?? contentBorderRadius,
+            contentHorizontalPadding: child.contentHorizontalPadding ?? contentHorizontalPadding,
+            contentVerticalPadding: child.contentVerticalPadding ?? contentVerticalPadding,
+            sectionOpeningHapticFeedback: child.sectionOpeningHapticFeedback ?? sectionOpeningHapticFeedback,
+            sectionClosingHapticFeedback: child.sectionClosingHapticFeedback ?? sectionClosingHapticFeedback,
             accordionId: accordionId,
             onOpenSection: child.onOpenSection,
             onCloseSection: child.onCloseSection,
