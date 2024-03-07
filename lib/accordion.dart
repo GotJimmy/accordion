@@ -62,7 +62,9 @@ class Accordion extends StatelessWidget with CommonParams {
     double? headerBorderWidth,
     double? headerBorderRadius,
     Widget? leftIcon,
+    Widget? leftIconOpen,
     Widget? rightIcon,
+    Widget? rightIconOpen,
     Widget? header,
     this.flipLeftIconIfOpen = false,
     this.flipRightIconIfOpen = true,
@@ -109,7 +111,9 @@ class Accordion extends StatelessWidget with CommonParams {
     this.headerBorderWidth = headerBorderWidth;
     this.headerBorderRadius = headerBorderRadius;
     this.leftIcon = leftIcon;
+    this.leftIconOpen = leftIconOpen;
     this.rightIcon = rightIcon;
+    this.rightIconOpen = rightIconOpen;
     SectionController.flipLeftIconIfOpen = flipLeftIconIfOpen!;
     SectionController.flipRightIconIfOpen = flipRightIconIfOpen!;
     this.contentBackgroundColor = contentBackgroundColor;
@@ -169,7 +173,7 @@ class Accordion extends StatelessWidget with CommonParams {
             header: child.header,
             headerOpen: child.headerOpen,
             leftIcon: child.leftIcon ?? leftIcon,
-            leftIconOpen: child.leftIconOpen,
+            leftIconOpen: child.leftIconOpen ?? leftIconOpen,
             rightIcon: child.rightIcon ??
                 rightIcon ??
                 const Icon(
@@ -177,7 +181,7 @@ class Accordion extends StatelessWidget with CommonParams {
                   color: Colors.white60,
                   size: 20,
                 ),
-            rightIconOpen: child.rightIconOpen,
+            rightIconOpen: child.rightIconOpen ?? rightIconOpen,
             paddingBetweenClosedSections: child.paddingBetweenClosedSections ?? paddingBetweenClosedSections,
             paddingBetweenOpenSections: child.paddingBetweenOpenSections ?? paddingBetweenOpenSections,
             content: child.content,
